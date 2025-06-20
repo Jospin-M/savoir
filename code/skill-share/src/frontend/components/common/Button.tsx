@@ -1,5 +1,5 @@
 import type { MouseEventHandler } from "react";
-import styles from "./General.module.css"
+import styles from "./Common.module.css"
 
 type ButtonProps = {
     prompt: string,

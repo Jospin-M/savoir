@@ -1,5 +1,6 @@
 import "./App.css"
 import Login from "./frontend/pages/Auth/Login"
+import SignUp from "./frontend/pages/Auth/SignUp";
 
 function App() {
   // Ensure all children are always centered
@@ -10,7 +11,7 @@ function App() {
   return (
     <>
       <div>
-        <Login></Login>
+        <SignUp></SignUp>
       </div>
     </>
   );
