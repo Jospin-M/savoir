@@ -1,9 +1,14 @@
-import styles from "./General.module.css"
 import { type ReactNode } from "react";
+import styles from "./Common.module.css"
 
-export default function Rectangle({ children }: { children: ReactNode }) {
+type RectangleProps = {
+    cssClass: string,
+    children: ReactNode
+}
+
+export default function Rectangle({ cssClass, children }: RectangleProps) {
     return (
-        <div className={styles.login_background}>
+        <div className={styles[cssClass]}>
             {children}
         </div>
     );

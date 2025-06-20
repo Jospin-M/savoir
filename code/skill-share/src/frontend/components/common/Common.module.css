@@ -42,10 +42,16 @@
   margin-left: 25px;
 }
 
-.login_background {
+.login_page_background {
   width: 70%;
   height: 500px;
   background-color: #F2EFE9;
   border-radius: 16px;
 }
 
+.sign_up_page_background {
+  width: 70%;
+  height: 550px;
+  background-color: #F2EFE9;
+  border-radius: 16px;
+}

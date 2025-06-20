@@ -3,12 +3,11 @@ import { Eye, EyeOff } from "lucide-react"
 import styles from "./Auth.module.css"
 
 type PasswordInputBoxProps = {
-    input: string,
-    name: string,
+    name: string
     handleChange: ChangeEventHandler<HTMLInputElement>
 }
 
-export default function PasswordInputBox({ input, handleChange, name }: PasswordInputBoxProps ) {
+export default function PasswordInputBox({ name, handleChange }: PasswordInputBoxProps ) {
     const [visible, setVisible] = useState(true);
 
     return (
@@ -16,7 +15,7 @@ export default function PasswordInputBox({ input, handleChange, name }: Password
             <label className={styles.password_box_title}>Password</label> 
             
             <div style={{position: "relative"}}>
-                <input type={visible ? "password" : "text"} name={name} className={styles.password_input_box} value={input} onChange={handleChange}/>
+                <input type={visible ? "password" : "text"}  className={styles.password_input_box} name={name} onChange={handleChange}/>
         
                 <div className={styles.password_icon_container}>
                     <span onClick={() => setVisible(!visible)} className={styles.password_icon}>   
