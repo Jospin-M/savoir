@@ -6,13 +6,17 @@ import Button from "../../components/common/Button.tsx";
 import Divider from "../../components/common/Divider.tsx";
 import Hyperlink from "../../components/auth/Hyperlink.tsx";
 import styles from "../../components/Auth/Auth.module.css";
+
 import { useState } from "react";
+
+import { validateInputLength } from "../../components/common/validators/formValidators.ts";
 
 export default function Login() {
     // explore other ways to use box shadow
     
     const [form, setForm] = useState({ username: "", password: "" });
-
+    const invalidInputLength = !(validateInputLength(form.username, 1) && validateInputLength(form.password, 5))
+    
     // research using custom hooks for reuse of function across components so that function doesn't need to
     // be defined in each component
     function saveInput(event: React.ChangeEvent<HTMLInputElement>) { 
@@ -24,11 +28,6 @@ export default function Login() {
         }));
     }
 
-    // implement handler that does not allow submission if username or password don't meet length requirements
-    // --> grey out login button
-    // this behaviour should be mirrored on other auth forms
-    // implement loading icon
-    
     function submitInput() { // replace with controller when backend is implemented so that error is appropriately shown on invalid input
         console.log("Submitted data: ", form.username, form.password);
     }
@@ -44,7 +43,7 @@ export default function Login() {
                     <div className={styles.input_container}> 
                         <InputBox input_box_title="Username or email" type="email" name="username" input={form.username} handleChange={saveInput}/> 
                         <PasswordInputBox name="password" input={form.password} handleChange={saveInput}/>
-                        <Button prompt="Log In" handleClick={submitInput}/>
+                        <Button prompt="Log In" handleClick={submitInput} isDisabled={invalidInputLength}/>
                     </div> 
 
                     <div className={styles.div_container}>
