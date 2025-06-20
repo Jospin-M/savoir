@@ -1,0 +1,149 @@
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab: wght@400;700&display=swap');
+
+.box_container {
+    width: 95%;
+    padding-right: 200px;
+    padding-top: 0px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box_shadow {
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.15);
+}
+
+.box_header {
+    font-family: "Roboto Slab", sans-serif;
+    font-size: 30px;
+    font-weight: 0; /*debug this*/
+    color: #403f4c;
+    text-align: center;
+}
+
+.input_box {
+    width: 99%;
+    max-width: 600px;
+    height: 30px;
+    border-radius: 8px;
+    margin-left: 36px;
+    padding-left: 5px;
+    outline: none;
+
+    font-family: "Roboto Slab", serif;
+    font-size: 15px;
+    color: #403F4C;
+    background-color: #D9D9D9;
+}
+
+.input_box_title {
+    padding-top: 0px;
+    margin-left: 35px;
+    
+    font-family: "Roboto Slab", serif;
+    font-size: 12px;
+    color: #403F4C;
+}
+
+.input_box_container {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+    margin-bottom: 10px;
+    padding-left: 18px;
+    padding-right: 75px;
+}
+
+.password_box_title {
+    font-family: "Roboto Slab", serif;
+    font-size: 12px;
+    color: #403F4C;
+
+    padding-top: 0px;
+}
+
+.password_input_box {
+    width: 95%;
+    max-width: 600px;
+    height: 30px;
+    border-radius: 8px;
+    background-color: #D9D9D9;
+    outline: none;
+
+    position: relative;
+
+    font-family: "Roboto Slab", serif;
+    font-size: 15px;
+    color: #403F4C;
+    padding-left: 5px;
+    padding-right: 23px;
+}
+
+.password_input_box_container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.password_component {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.password_icon_container {
+    position: absolute;
+    padding-bottom: 50%;
+    margin-left: 98%;
+    padding-top: 4%;
+    top: 0;
+    left: 0;
+}
+
+.password_icon {
+    position: absolute;
+    height: 100%;
+    cursor: pointer;
+}
+
+.input_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 35px;
+    margin-right: 25px;
+}
+
+.div_container {
+    margin-top: 40px;
+}
+
+.hyperlink_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    gap: 8px;
+}
+
+.hyperlink {
+    font-family: "Roboto Slab", sans-serif;
+    font-size: 14px;
+    color: #403f4c;
+    text-align: center;
+}
+

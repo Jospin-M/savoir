@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
+
+.button {
+  background-color: #EC9A29;
+  border: none;
+  border-radius: 8px;
+
+  width: 90;
+  padding: 5px 10px;
+  cursor: pointer;
+  height: 60;
+}
+
+.button_title {
+  max-width: 200px;
+  font-family:"Roboto Slab",serif;
+  font-size: 15px;
+  color: #FFFFFF;
+}
+
+.button_container {
+  display: flex;
+  justify-content: center;
+
+  margin-top: 24px;
+  margin-left: 25px;
+}
+
+.login_background {
+  width: 70%;
+  height: 500px;
+  background-color: #F2EFE9;
+  border-radius: 16px;
+}
+
