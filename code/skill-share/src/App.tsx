@@ -1,7 +1,7 @@
 import "./App.css"
 import Login from "./frontend/pages/Auth/Login"
 import SignUp from "./frontend/pages/Auth/SignUp";
-import VerifyCode from "./frontend/pages/Auth/VerfiyCode";
+import VerifyCode from "./frontend/pages/Auth/VerifyCode";
 
 function App() {
   // Ensure all children are always centered
@@ -12,7 +12,7 @@ function App() {
   return (
     <>
       <div>
-        <VerifyCode></VerifyCode>
+        <VerifyCode/>
       </div>
     </>
   );

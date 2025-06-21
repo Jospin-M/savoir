@@ -27,7 +27,7 @@ export default function Login() {
                     <div className={styles.login_input_container}> 
                         <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput}/> 
                         <PasswordInputBox name="password" inputBoxName="Password" handleChange={saveInput}/>
-                        <Button prompt="Log In" isDisabled={validateAuthForm(form)} handleClick={submitForm(form)}/>
+                        <Button prompt="Log In"  buttonCSS="auth_button" isDisabled={validateAuthForm(form)} handleClick={submitForm(form)}/>
                     </div> 
 
                     <div className={styles.div_container}>
