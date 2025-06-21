@@ -26,7 +26,7 @@ export default function SignUp() {
                     <div className={styles.sign_up_input_container}> 
                         <InputBox input_box_title="Full Name" type="text" name="fullName" handleChange={saveInput}/> 
                         <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput}/> 
-                        <PasswordInputBox name="password" handleChange={saveInput}/>
+                        <PasswordInputBox name="password" inputBoxName="Password" handleChange={saveInput}/>
                         <Button prompt="Create Account" isDisabled={validateSignUpForm(form)} handleClick={submitForm(form)}/>
                     </div> 
 
