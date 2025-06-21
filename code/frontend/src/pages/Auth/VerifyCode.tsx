@@ -7,7 +7,7 @@ import styles from "../../components/auth/Auth.module.css"
 import { useState } from "react";
 import { useForm } from "../../hooks/useForm";
 
-import { validateInputLength } from "../../components/common/listeners/formValidators";
+import { validateInputLength } from "../../components/listeners/formValidators";
 
 export default function VerifyCode() {
     const [code, saveInput] = useForm(useState({ code: "" }));

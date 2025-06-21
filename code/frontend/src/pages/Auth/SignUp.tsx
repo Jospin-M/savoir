@@ -9,8 +9,8 @@ import styles from "../../components/Auth/Auth.module.css";
 import { useState } from "react";
 import { useForm } from "../../hooks/useForm.ts";
 
-import { validateSignUpForm } from "../../components/common/listeners/formValidators.ts";
-import { submitForm } from "../../components/common/listeners/submitForm.ts";
+import { validateSignUpForm } from "../../components/listeners/formValidators.ts";
+import { submitForm } from "../../components/listeners/eventHandlers.ts";
 
 export default function SignUp() {
     const [form, saveInput] = useForm(useState({ fullName: "", email: "", password: "" }));

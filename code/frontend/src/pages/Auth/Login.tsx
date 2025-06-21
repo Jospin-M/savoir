@@ -8,8 +8,8 @@ import styles from "../../components/Auth/Auth.module.css";
 
 import { useState } from "react";
 
-import { validateAuthForm } from "../../components/common/listeners/formValidators.ts";
-import { submitForm } from "../../components/common/listeners/submitForm.ts";
+import { validateAuthForm } from "../../components/listeners/formValidators.ts";
+import { submitForm } from "../../components/listeners/eventHandlers.ts";
 import { useForm } from "../../hooks/useForm.ts";
 
 export default function Login() {
