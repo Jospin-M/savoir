@@ -1,7 +1,7 @@
 import "./App.css"
-import Login from "./frontend/pages/Auth/Login"
-import SignUp from "./frontend/pages/Auth/SignUp";
-import VerifyCode from "./frontend/pages/Auth/VerifyCode";
+import Login from "./pages/Auth/Login"
+import SignUp from "./pages/Auth/SignUp";
+import VerifyCode from "./pages/Auth/VerifyCode";
 
 function App() {
   // Ensure all children are always centered
