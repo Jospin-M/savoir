@@ -5,7 +5,7 @@
  * @param minLength - the minimum length of the user's input
  * @returns True if the input is greater than the minimum length, false otherwise.
  */
-function validateInputLength(input: string, minLength: number): boolean {
+export function validateInputLength(input: string, minLength: number): boolean {
     return input.length >= minLength;
 }
 
@@ -50,4 +50,4 @@ export function validateSignUpForm(form: { fullName: string, email: string, pass
     return !(validName && validEmail && validPassword);
 }
 
-// LOOK INTO ZOD FOR INPUT VALIDATION
+// LOOK INTO ZOD FOR INPUT VALIDATION WITH DATABASE

@@ -1,18 +1,18 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
 
-.button {
+.auth_button {
   background-color: #EC9A29;
   border: none;
   border-radius: 8px;
 
-  width: 90;
+  width: 90px;
+  height: 30px;
   padding: 5px 10px;
-  height: 60;
   
   cursor: pointer;
 }
 
-.button:disabled {
+.auth_button:disabled {
   background-color: #EC9A29;
   border: none;
   border-radius: 8px;
@@ -39,12 +39,12 @@
   justify-content: center;
 
   margin-top: 24px;
-  margin-left: 25px;
 }
 
 .login_page_background {
   width: 70%;
   height: 500px;
+  
   background-color: #F2EFE9;
   border-radius: 16px;
 }
@@ -52,13 +52,15 @@
 .sign_up_page_background {
   width: 70%;
   height: 550px;
+  
   background-color: #F2EFE9;
   border-radius: 16px;
 }
 
 .verification_page_background {
-  width: 50%;
-  height: 550px;
+  width: 406.84px;
+  height: 450px;
+
   background-color: #F2EFE9;
   border-radius: 16px;
 }
