@@ -8,30 +8,14 @@ import styles from "../../components/Auth/Auth.module.css";
 
 import { useState } from "react";
 
-import { validateInputLength } from "../../components/common/validators/formValidators.ts";
+import { validateAuthForm } from "../../components/common/listeners/formValidators.ts";
+import { submitForm } from "../../components/common/listeners/submitForm.ts";
+import { useForm } from "../../hooks/useForm.ts";
 
 export default function Login() {
     // explore other ways to use box shadow
+    const [form, saveInput] = useForm(useState({ email: "", password: "" }))
     
-    const [form, setForm] = useState({ email: "", password: "" });
-    const invalidInputLength = !(validateInputLength(form.email, 6) && validateInputLength(form.password, 8))
-    
-    // research using custom hooks for reuse of function across components so that function doesn't need to
-    // be defined in each component
-    function saveInput(event: React.ChangeEvent<HTMLInputElement>) { 
-        const { name, value } = event.target;
-        console.log("Name: ", name)
-        console.log("Value: ", value)
-        setForm(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    }
-
-    function submitInput() { // replace with axios-controller when backend is implemented so that error is appropriately shown on invalid input
-        console.log("Submitted data: ", form.email, form.password);
-    }
-
     return (
         <Background>
             <div className={styles.login_box_container}>
@@ -43,7 +27,7 @@ export default function Login() {
                     <div className={styles.login_input_container}> 
                         <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput}/> 
                         <PasswordInputBox name="password" handleChange={saveInput}/>
-                        <Button prompt="Log In" isDisabled={invalidInputLength} handleClick={submitInput}/>
+                        <Button prompt="Log In" isDisabled={validateAuthForm(form)} handleClick={submitForm(form)}/>
                     </div> 
 
                     <div className={styles.div_container}>

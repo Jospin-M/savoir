@@ -7,9 +7,13 @@ import Divider from "../../components/common/Divider.tsx";
 import styles from "../../components/Auth/Auth.module.css";
 
 import { useState } from "react";
+import { useForm } from "../../hooks/useForm.ts";
+
+import { validateSignUpForm } from "../../components/common/listeners/formValidators.ts";
+import { submitForm } from "../../components/common/listeners/submitForm.ts";
 
 export default function SignUp() {
-    const [form, setForm] = useState({ email: "", password: "", name: "", username: "" });
+    const [form, saveInput] = useForm(useState({ fullName: "", email: "", password: "" }));
 
     return (
         <Background>
@@ -20,10 +24,10 @@ export default function SignUp() {
                     </div>
 
                     <div className={styles.sign_up_input_container}> 
-                        <InputBox input_box_title="Full Name" type="text" name="fullname" handleChange={() => {}}/> 
-                        <InputBox input_box_title="Email" type="email" name="email" handleChange={() => {}}/> 
-                        <PasswordInputBox name="password" handleChange={() => {}}/>
-                        <Button prompt="Create Account" isDisabled={false} handleClick={() => {}}/>
+                        <InputBox input_box_title="Full Name" type="text" name="fullName" handleChange={saveInput}/> 
+                        <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput}/> 
+                        <PasswordInputBox name="password" handleChange={saveInput}/>
+                        <Button prompt="Create Account" isDisabled={validateSignUpForm(form)} handleClick={submitForm(form)}/>
                     </div> 
 
                     <div className={styles.div_container}>
