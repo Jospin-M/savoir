@@ -49,3 +49,5 @@ export function validateSignUpForm(form: { fullName: string, email: string, pass
 
     return !(validName && validEmail && validPassword);
 }
+
+// LOOK INTO ZOD FOR INPUT VALIDATION
