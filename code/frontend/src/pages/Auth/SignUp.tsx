@@ -15,6 +15,11 @@ import { submitForm } from "../../components/common/listeners/submitForm.ts";
 export default function SignUp() {
     const [form, saveInput] = useForm(useState({ fullName: "", email: "", password: "" }));
 
+    const [fullNam, setFullName] = useState("");
+    const [emai, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState("");
+
     return (
         <Background>
             <div className={styles.sign_up_box_container}>
