@@ -10,11 +10,9 @@ function App() {
   document.body.style.alignItems = "center";
 
   return (
-    <>
-      <div>
-        <VerifyCode/>
-      </div>
-    </>
+    <div>
+        <Login/>
+    </div>
   );
 }
 
