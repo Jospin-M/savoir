@@ -195,6 +195,8 @@
     text-align: center;
 
     cursor: pointer;
+
+    text-decoration: none;
 }
 
 .auth_hyperlink:hover {
@@ -237,4 +239,9 @@
     gap: 80px;
     margin-top: 60px;
     margin-right: 30px;
+}
+
+.error_message {
+    color: red;
+    padding-top: 4px;
 }
