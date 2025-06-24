@@ -21,8 +21,6 @@ export default function Login() {
     const [loading, setLoading] = useState(false);
     const { session, logInUser } = UserAuth();
     const navigate = useNavigate();
-
-    console.log(session);
     
     async function handleLogin(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();

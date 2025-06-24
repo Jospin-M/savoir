@@ -6,6 +6,7 @@ import VerifyCode from "./pages/Auth/VerifyCode.tsx";
 import Background from "./components/auth/Background.tsx";
 import { PrivateRoute } from "./components/PrivateRoute.tsx";
 
+// TODO: verify 'confirm' email function works
 export const router = createBrowserRouter([
     { path: "/", element: <Background/> }, // will be replaced with home page
     { path: "/signup", element: <SignUp /> },
