@@ -1,8 +1,5 @@
-import { createClient } from "@supabase/supabase-js"
-
-const supabaseURL: string = import.meta.env.VITE_SUPABASE_URL!;
-const supabaseKey: string = import.meta.env.VITE_SUPABASE_ANON_KEY!;
-const supabase = createClient(supabaseURL, supabaseKey);
+import supabase from "./supabaseClient.ts";
+import React from "react";
 
 type AuthCredentials = {
     email: string,
@@ -41,14 +38,15 @@ export async function signUpNewUser({ email, password }: AuthCredentials) {
 
         return { success: false, error };
     }
-        return { success: true, data };
+    
+    return { success: true, data };
 }
 
 export async function signOut() {
     const { error } = await supabase.auth.signOut();
 
     if(error) {
-        console.error("There was ane error signing out: ", error);
+        console.error("There was an error signing out: ", error);
     }
 }
 
@@ -63,3 +61,15 @@ export function updateSession(setSession: React.Dispatch<React.SetStateAction<{}
         }
     });
 }
+
+// PUT MAIL SERVICE HERE
+
+/*
+    - add user record to 'users' table (after concrete implementation, put generalized version in supabaseClient that
+    defines the basic operations (SELECT, INSERT, UPDATE, DELETE) and takes table names as parameters -> services will define wrapper functions
+    - 
+
+
+
+    - when implementing server, create endpoint for each table and it
+*/

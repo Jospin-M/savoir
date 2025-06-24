@@ -20,8 +20,6 @@ export default function SignUp() {
     const [loading, setLoading] = useState(false);
     const { session, signUpNewUser } = UserAuth();
     const navigate = useNavigate();
-
-    console.log(session);
     
     async function handleSignUp(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();

@@ -45,8 +45,6 @@ export function validateSignUpForm(form: { fullName: string, email: string, pass
     const validEmail = validateEmail(form.email);
     const validPassword = validateInputLength(form.password, 8);
     
-    console.log("valid name: ", validName, "valid email: ", validEmail, "valid password: ", validPassword)
-
     return !(validName && validEmail && validPassword);
 }
 
