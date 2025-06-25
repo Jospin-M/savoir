@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState, useContext, type ReactNode } from "react";
-import { logInUser, signUpNewUser, signOut, updateSession } from "../../../backend/src/services/authService.ts";
+import { logInUser, signUpNewUser, signOut, updateSession } from "../../../backend/src/clients/authClient.ts";
 
 type AuthContextType = {
     session: any;
