@@ -17,22 +17,26 @@ import { UserAuth } from "../../context/AuthContext.tsx";
 export default function SignUp() {
     const [form, saveInput] = useForm(useState({ fullName: "", email: "", password: "" }));
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false); // handle loading state
     const { session, signUpNewUser } = UserAuth();
     const navigate = useNavigate();
     
+    // move this code to server middleware
     async function handleSignUp(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
         setLoading(true);
 
         try {
-            const result = await signUpNewUser({ email: form.email, password: form.password });
+            const result = await signUpNewUser({ fullName: form.fullName, email: form.email, password: form.password });
             
-            if(result.success) {
-                navigate("/verify"); // change to dashboard once page has been made
+            if(result.status === 201) {
+                setError("");
+                navigate("/verify"); 
+            } else {
+                setError("Email address taken.");
             }
         } catch(err) {
-            setError("An error occured.");
+            console.log(err);
         } finally {
             setLoading(false);
         }
