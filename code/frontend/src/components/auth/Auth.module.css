@@ -242,6 +242,10 @@
 }
 
 .error_message {
-    color: red;
-    padding-top: 4px;
+    color: red; 
+    margin-bottom: -10px;
+
+    font-family: "Roboto Slab", serif;
+    font-size: 15px;
+    
 }

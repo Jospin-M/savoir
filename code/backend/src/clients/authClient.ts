@@ -42,12 +42,13 @@ export async function signUpNewUser({ fullName, email, password }: RegistrationF
         return { success: false, error };
     }
 
+    // this code should be added to the service code - the services will be middleware
     const id: string = data.user!.id;
     const [ first_name, last_name ] = fullName.split(" ");
-    // implement password hashing with bcrypt
+
     // handle case where there is already an account with that email
 
-    return insertData<UsersSchema>("users", { id, first_name, last_name, email, password })
+    return insertData<UsersSchema>("users", { id, first_name, last_name, email })
 }
 
 export async function signOut() {
@@ -60,7 +61,7 @@ export async function signOut() {
 
 export function updateSession(setSession: React.Dispatch<React.SetStateAction<{}>>) {
     supabase.auth.getSession().then(({ data: { session }} ) => {
-        setSession(session!);
+        setSession(session!); // research why session needs to be passed here
     });
 
     supabase.auth.onAuthStateChange((_event, session) => {
@@ -73,11 +74,5 @@ export function updateSession(setSession: React.Dispatch<React.SetStateAction<{}
 // PUT MAIL SERVICE HERE
 
 /*
-    - add user record to 'users' table (after concrete implementation, put generalized version in supabaseClient that
-    defines the basic operations (SELECT, INSERT, UPDATE, DELETE) and takes table names as parameters -> services will define wrapper functions
-    - 
-
-
-
     - when implementing server, create endpoint for each table and it
 */
