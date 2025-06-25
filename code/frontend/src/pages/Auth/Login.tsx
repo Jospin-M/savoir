@@ -7,15 +7,38 @@ import Divider from "../../components/common/Divider.tsx";
 import styles from "../../components/Auth/Auth.module.css";
 
 import { useState } from "react";
-
-import { validateAuthForm } from "../../components/listeners/formValidators.ts";
-import { submitForm } from "../../components/listeners/eventHandlers.ts";
 import { useForm } from "../../hooks/useForm.ts";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
+import { validateAuthForm } from "../../components/common/listeners/formValidators.ts";
+import { UserAuth } from "../../context/AuthContext.tsx";
 
 export default function Login() {
     // explore other ways to use box shadow
     const [form, saveInput] = useForm(useState({ email: "", password: "" }))
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const { session, logInUser } = UserAuth();
+    const navigate = useNavigate();
     
+    async function handleLogin(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        event.preventDefault();
+        setLoading(true);
+
+        try {
+            const result = await logInUser({ email: form.email, password: form.password });
+            
+            if(result.success) {
+                navigate("/"); // change to dashboard once page has been made
+            }
+        } catch(err) {
+            setError("An error occured.");
+        } finally {
+            setLoading(false);
+        }
+    }
+
     return (
         <Background>
             <div className={styles.login_box_container}>
@@ -27,7 +50,7 @@ export default function Login() {
                     <div className={styles.login_input_container}> 
                         <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput}/> 
                         <PasswordInputBox name="password" inputBoxName="Password" handleChange={saveInput}/>
-                        <Button prompt="Log In"  buttonCSS="auth_button" isDisabled={validateAuthForm(form)} handleClick={submitForm(form)}/>
+                        <Button prompt="Log In"  buttonCSS="auth_button" isDisabled={validateAuthForm(form)} handleClick={handleLogin}/>
                     </div> 
 
                     <div className={styles.div_container}>
@@ -39,8 +62,7 @@ export default function Login() {
 
                         <div className={styles.text_hyperlink_container}>
                             Don't have an account? 
-                            
-                            <a className={styles.auth_hyperlink}>Sign Up</a>
+                            <Link className={styles.auth_hyperlink} to="/signup">Sign Up</Link>
                         </div>
                     </div>
                 </Rectangle>
