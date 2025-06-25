@@ -11,7 +11,7 @@ import { useForm } from "../../hooks/useForm.ts";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-import { validateAuthForm } from "../../components/common/listeners/formValidators.ts";
+import { validateAuthForm } from "../../../src/components/listeners/formValidators.ts";
 import { UserAuth } from "../../context/AuthContext.tsx";
 
 export default function Login() {
