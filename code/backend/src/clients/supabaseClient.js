@@ -38,13 +38,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.supabase = void 0;
 exports.insertData = insertData;
-var ssr_1 = require("@supabase/ssr");
+var supabase_js_1 = require("@supabase/supabase-js");
 var dotenv = require("dotenv");
 dotenv.config();
+console.log(dotenv.config());
 // move from keys to cloud storage
-var supabaseURL = process.env.VITE_SUPABASE_URL;
-var supabaseKey = process.env.VITE_SUPABASE_ANON_KEY;
-var supabase = (0, ssr_1.createBrowserClient)(supabaseURL, supabaseKey);
+var supabaseURL = process.env.SUPABASE_URL;
+var supabaseKey = process.env.SUPABASE_ANON_KEY;
+var supabase = (0, supabase_js_1.createClient)(supabaseURL, supabaseKey);
 exports.supabase = supabase;
 function insertData(tableName, data) {
     return __awaiter(this, void 0, void 0, function () {

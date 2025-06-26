@@ -12,33 +12,29 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { validateSignUpForm } from "../../../src/components/listeners/formValidators.ts";
-import { UserAuth } from "../../context/AuthContext.tsx";
+import { createHTTPRequest } from "../../../../backend/src/routes/utils.ts";
 
 export default function SignUp() {
     const [form, saveInput] = useForm(useState({ fullName: "", email: "", password: "" }));
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false); // handle loading state
-    const { session, signUpNewUser } = UserAuth();
     const navigate = useNavigate();
     
+    const domain = import.meta.env.VITE_DOMAIN;
+
     // move this code to server middleware
     async function handleSignUp(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
         setLoading(true);
 
-        try {
-            const result = await signUpNewUser({ fullName: form.fullName, email: form.email, password: form.password });
-            
-            if(result.status === 201) {
-                setError("");
-                navigate("/verify"); 
-            } else {
-                setError("Email address taken.");
-            }
-        } catch(err) {
-            console.log(err);
-        } finally {
-            setLoading(false);
+        const result = await fetch(domain + "api/auth/register", createHTTPRequest("POST", { fullName: form.fullName, email: form.email, password: form.password }));
+        const response = await result.json();
+
+        if(response.error) {
+            setError(response.error);
+        } else {
+            setError("");
+            navigate("/verify"); 
         }
     }
 

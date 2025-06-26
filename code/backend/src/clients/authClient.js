@@ -43,55 +43,51 @@ exports.updateSession = updateSession;
 var supabaseClient_1 = require("./supabaseClient");
 function logInUser(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, email, password, _b, data, error, error_1;
+        var _a, email, password, _b, data, error;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
                     _a = req.body, email = _a.email, password = _a.password;
-                    _c.label = 1;
-                case 1:
-                    _c.trys.push([1, 3, , 4]);
                     return [4 /*yield*/, supabaseClient_1.supabase.auth.signInWithPassword({
                             email: email,
                             password: password
                         })];
-                case 2:
+                case 1:
                     _b = _c.sent(), data = _b.data, error = _b.error;
-                    if (error) {
+                    if ((error === null || error === void 0 ? void 0 : error.status) == 400) {
                         req.error = error;
                         next();
                     }
-                    console.log("Sign-in success: ", data);
-                    return [2 /*return*/, { success: true, data: data }];
-                case 3:
-                    error_1 = _c.sent();
-                    console.error("An error occured: ", error_1);
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
+                    res.send(data);
+                    return [2 /*return*/];
             }
         });
     });
 }
-function signUpNewUser(_a) {
-    return __awaiter(this, arguments, void 0, function (_b) {
-        var _c, data, error, id, _d, first_name, last_name;
-        var fullName = _b.fullName, email = _b.email, password = _b.password;
-        return __generator(this, function (_e) {
-            switch (_e.label) {
-                case 0: return [4 /*yield*/, supabaseClient_1.supabase.auth.signUp({
-                        email: email,
-                        password: password
-                    })];
+function signUpNewUser(req, res, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, fullName, email, password, _b, data, error, id, _c, first_name, last_name, _d, _e;
+        return __generator(this, function (_f) {
+            switch (_f.label) {
+                case 0:
+                    _a = req.body, fullName = _a.fullName, email = _a.email, password = _a.password;
+                    return [4 /*yield*/, supabaseClient_1.supabase.auth.signUp({
+                            email: email,
+                            password: password
+                        })];
                 case 1:
-                    _c = _e.sent(), data = _c.data, error = _c.error;
-                    if (error) {
-                        console.error("There was a problem signing up: ", error);
-                        return [2 /*return*/, { success: false, error: error }];
+                    _b = _f.sent(), data = _b.data, error = _b.error;
+                    if ((error === null || error === void 0 ? void 0 : error.status) == 422) {
+                        req.error = error;
+                        next();
                     }
                     id = data.user.id;
-                    _d = fullName.split(" "), first_name = _d[0], last_name = _d[1];
-                    // handle case where there is already an account with that email
-                    return [2 /*return*/, (0, supabaseClient_1.insertData)("users", { id: id, first_name: first_name, last_name: last_name, email: email })];
+                    _c = fullName.split(" "), first_name = _c[0], last_name = _c[1];
+                    _e = (_d = res.status(201)).json;
+                    return [4 /*yield*/, (0, supabaseClient_1.insertData)("users", { id: id, first_name: first_name, last_name: last_name, email: email })];
+                case 2:
+                    _e.apply(_d, [_f.sent()]);
+                    return [2 /*return*/];
             }
         });
     });

@@ -27,7 +27,7 @@ export default function Login() {
     async function handleLogin(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
         
-        /*const result = await fetch(domain + "api/login", createHTTPRequest("POST", form));
+        const result = await fetch(domain + "api/auth/login", createHTTPRequest("POST", form));
         const response = await result.json();
        
         if(response.error) {
@@ -35,7 +35,7 @@ export default function Login() {
         } else {
             setError("");
             navigate("/"); // navigate to profile page once created
-        }*/
+        }
     }
 
     return (
