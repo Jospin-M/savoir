@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState, useContext, type ReactNode } from "react";
-import { updateSession } from "../../../backend/src/clients/authClient.ts";
+//import { updateSession } from "../../../backend/src/clients/authClient.ts";
 
 type AuthContextType = {
     session: any
@@ -13,7 +13,7 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
     const [ session, setSession ] = useState({})!;
 
     useEffect(() => {
-        updateSession(setSession);
+       // updateSession(setSession);
     }, []);
 
     return (
