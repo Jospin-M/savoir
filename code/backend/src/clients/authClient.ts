@@ -1,32 +1,29 @@
-import { supabase, insertData } from "./supabaseClient.ts";
-import React from "react";
+import { supabase, insertData } from "./supabaseClient"
 
-import type { RegistrationForm } from "../types/forms.ts";
-import type { UsersSchema } from "../types/tableSchemas.ts";
+import type { RegistrationForm } from "../types/forms";
+import type { UsersSchema } from "../types/tableSchemas";
+
+import * as utils from "../routes/utils";
 
 type AuthCredentials = {
     email: string,
     password: string
 }
 
-export async function logInUser({ email, password }: AuthCredentials) {
-    try {
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email: email,
-            password: password
-        });
-
-        if(error) {
-            console.error("Sign in error occured: ", error);
-
-            return {sucess: false, error: error.message}
-        }
-
-        console.log("Sign-in success: ", data);
-
-        return { success: true, data };
-    } catch(error) {
-        console.error("An error occured: ", error);
+export async function logInUser(req: any, res: any, next: Function) {
+    const { email, password }: AuthCredentials = req.body;
+   
+    const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password
+    });
+    
+    if(!data.user) {
+        req.error = error;
+        
+        next();
+    } else {
+        utils.sendHTTPResponse(res, 200, data);
     }
 }
 
@@ -60,11 +57,15 @@ export async function signOut() {
 }
 
 export function updateSession(setSession: React.Dispatch<React.SetStateAction<{}>>) {
-    supabase.auth.getSession().then(({ data: { session }} ) => {
-        setSession(session!); // research why session needs to be passed here
+    type Data = {
+        data: any
+    };
+    
+    supabase.auth.getSession().then(({ data }: Data) => {
+        setSession(data.session); // research why session needs to be passed here
     });
 
-    supabase.auth.onAuthStateChange((_event, session) => {
+    supabase.auth.onAuthStateChange((_event: Event, session: any) => {
         if(session) {
             setSession(session);
         } // maybe default to no session if no valid one is found

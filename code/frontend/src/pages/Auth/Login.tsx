@@ -12,31 +12,28 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { validateAuthForm } from "../../../src/components/listeners/formValidators.ts";
-import { UserAuth } from "../../context/AuthContext.tsx";
+//import { createHTTPRequest } from "../../../../backend/src/routes/utils.ts";
 
 export default function Login() {
     // explore other ways to use box shadow
     const [form, saveInput] = useForm(useState({ email: "", password: "" }))
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
-    const { session, logInUser } = UserAuth();
     const navigate = useNavigate();
+
+    const domain = import.meta.env.VITE_DOMAIN;
     
     async function handleLogin(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
-        setLoading(true);
-
-        try {
-            const result = await logInUser({ email: form.email, password: form.password });
-            
-            if(result.success) {
-                navigate("/"); // change to dashboard once page has been made
-            }
-        } catch(err) {
-            setError("An error occured.");
-        } finally {
-            setLoading(false);
-        }
+        
+        /*const result = await fetch(domain + "api/auth/login", createHTTPRequest("POST", form));
+        const response = await result.json();
+        
+        if(response.error) {
+            setError(response.error);
+        } else {
+            setError("");
+            navigate("/"); // navigate to profile page once created
+        }*/
     }
 
     return (
@@ -51,6 +48,7 @@ export default function Login() {
                         <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput}/> 
                         <PasswordInputBox name="password" inputBoxName="Password" handleChange={saveInput}/>
                         <Button prompt="Log In"  buttonCSS="auth_button" isDisabled={validateAuthForm(form)} handleClick={handleLogin}/>
+                        {error && <p className={styles.error_message}>{error}</p>}
                     </div> 
 
                     <div className={styles.div_container}>

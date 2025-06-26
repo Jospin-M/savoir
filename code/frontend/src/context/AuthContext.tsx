@@ -1,18 +1,12 @@
 import { createContext, useEffect, useState, useContext, type ReactNode } from "react";
-import { logInUser, signUpNewUser, signOut, updateSession } from "../../../backend/src/clients/authClient.ts";
+import { updateSession } from "../../../backend/src/clients/authClient.ts";
 
 type AuthContextType = {
-    session: any;
-    signUpNewUser: Function;
-    signOut: Function,
-    logInUser: Function
+    session: any
 }
 
 const AuthContext = createContext<AuthContextType>({
-    session: undefined,
-    signUpNewUser: ()=>{},
-    signOut: ()=>{},
-    logInUser: ()=>{}
+    session: undefined
 });
 
 export function AuthContextProvider({ children }: { children: ReactNode }) {
@@ -23,7 +17,7 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ session, signUpNewUser, signOut, logInUser }}>
+        <AuthContext.Provider value={{ session }}>
             {children}
         </AuthContext.Provider>
     );

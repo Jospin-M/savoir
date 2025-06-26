@@ -18,7 +18,7 @@ export default function SignUp() {
     const [form, saveInput] = useForm(useState({ fullName: "", email: "", password: "" }));
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false); // handle loading state
-    const { session, signUpNewUser } = UserAuth();
+    const { session } = UserAuth();
     const navigate = useNavigate();
     
     // move this code to server middleware
@@ -26,7 +26,7 @@ export default function SignUp() {
         event.preventDefault();
         setLoading(true);
 
-        try {
+        /*try {
             const result = await signUpNewUser({ fullName: form.fullName, email: form.email, password: form.password });
             
             if(result.status === 201) {
@@ -39,7 +39,7 @@ export default function SignUp() {
             console.log(err);
         } finally {
             setLoading(false);
-        }
+        }*/
     }
 
     return (
