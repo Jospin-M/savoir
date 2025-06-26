@@ -12,28 +12,30 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { validateAuthForm } from "../../../src/components/listeners/formValidators.ts";
-//import { createHTTPRequest } from "../../../../backend/src/routes/utils.ts";
+
+import { createHTTPRequest } from "../../../../backend/src/routes/utils.ts"
 
 export default function Login() {
     // explore other ways to use box shadow
     const [form, saveInput] = useForm(useState({ email: "", password: "" }))
     const [error, setError] = useState("");
-    const navigate = useNavigate();
-
-    const domain = import.meta.env.VITE_DOMAIN;
     
+    const navigate = useNavigate();
+    
+    const domain = import.meta.env.VITE_DOMAIN;
+
     async function handleLogin(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
         
-        /*const result = await fetch(domain + "api/auth/login", createHTTPRequest("POST", form));
+        const result = await fetch(domain + "api/login", createHTTPRequest("POST", form));
         const response = await result.json();
-        
+       
         if(response.error) {
             setError(response.error);
         } else {
             setError("");
             navigate("/"); // navigate to profile page once created
-        }*/
+        }
     }
 
     return (

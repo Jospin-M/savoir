@@ -1,9 +1,9 @@
-import { logInUser } from "../clients/authClient";
+import { logInUser } from "../clients/authClient"
 import { handleError } from "../services/authService";
 
 const express = require("express");
-const authRouter = express.Router();
+const router = express.Router();
 
-authRouter.post("/login", logInUser, handleError);
+router.post("/login", logInUser, handleError);
 
-export { authRouter };
+export default router;

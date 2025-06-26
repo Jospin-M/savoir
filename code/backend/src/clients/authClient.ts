@@ -1,9 +1,8 @@
-import { supabase, insertData } from "./supabaseClient"
+import { supabase, insertData } from "./supabaseClient";
+import React from "react";
 
 import type { RegistrationForm } from "../types/forms";
 import type { UsersSchema } from "../types/tableSchemas";
-
-import * as utils from "../routes/utils";
 
 type AuthCredentials = {
     email: string,
@@ -12,18 +11,24 @@ type AuthCredentials = {
 
 export async function logInUser(req: any, res: any, next: Function) {
     const { email, password }: AuthCredentials = req.body;
-   
-    const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password
-    });
     
-    if(!data.user) {
-        req.error = error;
-        
-        next();
-    } else {
-        utils.sendHTTPResponse(res, 200, data);
+    try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+        if(error) {
+            req.error = error;
+            
+            next();
+        }
+
+        console.log("Sign-in success: ", data);
+
+        return { success: true, data };
+    } catch(error) {
+        console.error("An error occured: ", error);
     }
 }
 

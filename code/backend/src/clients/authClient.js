@@ -41,28 +41,33 @@ exports.signUpNewUser = signUpNewUser;
 exports.signOut = signOut;
 exports.updateSession = updateSession;
 var supabaseClient_1 = require("./supabaseClient");
-var utils = require("../routes/utils");
 function logInUser(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, email, password, _b, data, error;
+        var _a, email, password, _b, data, error, error_1;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
                     _a = req.body, email = _a.email, password = _a.password;
+                    _c.label = 1;
+                case 1:
+                    _c.trys.push([1, 3, , 4]);
                     return [4 /*yield*/, supabaseClient_1.supabase.auth.signInWithPassword({
                             email: email,
                             password: password
                         })];
-                case 1:
+                case 2:
                     _b = _c.sent(), data = _b.data, error = _b.error;
-                    if (!data.user) {
+                    if (error) {
                         req.error = error;
                         next();
                     }
-                    else {
-                        utils.sendHTTPResponse(res, 200, data);
-                    }
-                    return [2 /*return*/];
+                    console.log("Sign-in success: ", data);
+                    return [2 /*return*/, { success: true, data: data }];
+                case 3:
+                    error_1 = _c.sent();
+                    console.error("An error occured: ", error_1);
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/];
             }
         });
     });
@@ -109,8 +114,8 @@ function signOut() {
 }
 function updateSession(setSession) {
     supabaseClient_1.supabase.auth.getSession().then(function (_a) {
-        var data = _a.data;
-        setSession(data.session); // research why session needs to be passed here
+        var session = _a.data.session;
+        setSession(session); // research why session needs to be passed here
     });
     supabaseClient_1.supabase.auth.onAuthStateChange(function (_event, session) {
         if (session) {
