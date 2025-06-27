@@ -1,5 +1,5 @@
 export function handleError(req: any, res: any) {
-    console.log(req.error.status);
+    console.log(req.error);
     
     switch(req.error.status) {
         case 400:

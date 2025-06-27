@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { validateSignUpForm } from "../../../src/components/listeners/formValidators.ts";
-import { createHTTPRequest } from "../../../../backend/src/routes/utils.ts";
+import { createHTTPRequest, setCookie } from "../../../../backend/src/routes/utils.ts";
 
 export default function SignUp() {
     const [form, saveInput] = useForm(useState({ fullName: "", email: "", password: "" }));
@@ -25,19 +25,18 @@ export default function SignUp() {
     // move this code to server middleware
     async function handleSignUp(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
-        setLoading(true);
 
-        const result = await fetch(domain + "api/auth/register", createHTTPRequest("POST", { fullName: form.fullName, email: form.email, password: form.password }));
+        const result = await fetch(domain + "api/auth/register", createHTTPRequest("POST",  form));
         const response = await result.json();
-
+        console.log(response);
         if(response.error) {
             setError(response.error);
         } else {
             setError("");
-            navigate("/verify"); 
+            navigate("/verify", { state: response }); 
         }
     }
-
+    // {error && <p className={styles.error_message}>{error}</p>}
     return (
         <Background>
             <div className={styles.sign_up_box_container}>
@@ -51,7 +50,7 @@ export default function SignUp() {
                         <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput}/> 
                         <PasswordInputBox name="password" inputBoxName="Password" handleChange={saveInput}/>
                         <Button prompt="Register" buttonCSS="auth_button" isDisabled={validateSignUpForm(form)} handleClick={handleSignUp}/>
-                        {error && <p className={styles.error_message}>{error}</p>}
+                        
                     </div> 
 
                     <div className={styles.div_container}>

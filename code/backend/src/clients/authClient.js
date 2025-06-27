@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.logInUser = logInUser;
 exports.signUpNewUser = signUpNewUser;
+exports.verifyUser = verifyUser;
 exports.signOut = signOut;
 exports.updateSession = updateSession;
 var supabaseClient_1 = require("./supabaseClient");
@@ -54,11 +55,11 @@ function logInUser(req, res, next) {
                         })];
                 case 1:
                     _b = _c.sent(), data = _b.data, error = _b.error;
-                    if ((error === null || error === void 0 ? void 0 : error.status) == 400) {
+                    if (error) {
                         req.error = error;
                         next();
                     }
-                    res.send(data);
+                    res.send(data); // client will save access and refresh tokens
                     return [2 /*return*/];
             }
         });
@@ -66,9 +67,9 @@ function logInUser(req, res, next) {
 }
 function signUpNewUser(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, fullName, email, password, _b, data, error, id, _c, first_name, last_name, _d, _e;
-        return __generator(this, function (_f) {
-            switch (_f.label) {
+        var _a, fullName, email, password, _b, data, error, session, id, _c, first_name, last_name;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
                 case 0:
                     _a = req.body, fullName = _a.fullName, email = _a.email, password = _a.password;
                     return [4 /*yield*/, supabaseClient_1.supabase.auth.signUp({
@@ -76,17 +77,48 @@ function signUpNewUser(req, res, next) {
                             password: password
                         })];
                 case 1:
-                    _b = _f.sent(), data = _b.data, error = _b.error;
-                    if ((error === null || error === void 0 ? void 0 : error.status) == 422) {
+                    _b = _d.sent(), data = _b.data, error = _b.error;
+                    if (error) {
                         req.error = error;
                         next();
                     }
-                    id = data.user.id;
-                    _c = fullName.split(" "), first_name = _c[0], last_name = _c[1];
-                    _e = (_d = res.status(201)).json;
-                    return [4 /*yield*/, (0, supabaseClient_1.insertData)("users", { id: id, first_name: first_name, last_name: last_name, email: email })];
-                case 2:
-                    _e.apply(_d, [_f.sent()]);
+                    else {
+                        session = data.session;
+                        id = data.user.id;
+                        _c = fullName.split(" "), first_name = _c[0], last_name = _c[1];
+                        res.status(201).json({
+                            message: "Account created succesfully.",
+                            session: session,
+                            user: { id: id, first_name: first_name, last_name: last_name, email: email }
+                        });
+                    }
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+function verifyUser(req, res, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, id, firstName, lastName, email, code, _b, data, error;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    _a = req.body.userInfo.user, id = _a.id, firstName = _a.firstName, lastName = _a.lastName, email = _a.email;
+                    code = req.body.verificationCode.code;
+                    console.log("Verfication payload:", {
+                        email: email,
+                        token: code,
+                        type: "email"
+                    });
+                    return [4 /*yield*/, supabaseClient_1.supabase.auth.verifyOtp({
+                            email: email,
+                            token: code,
+                            type: "email"
+                        })];
+                case 1:
+                    _b = _c.sent(), data = _b.data, error = _b.error;
+                    console.log(data);
+                    console.log(error);
                     return [2 /*return*/];
             }
         });
@@ -111,7 +143,7 @@ function signOut() {
 function updateSession(setSession) {
     supabaseClient_1.supabase.auth.getSession().then(function (_a) {
         var session = _a.data.session;
-        setSession(session); // research why session needs to be passed here
+        setSession(session); // might not be necessary, wait until more features have been implemented to decide
     });
     supabaseClient_1.supabase.auth.onAuthStateChange(function (_event, session) {
         if (session) {
