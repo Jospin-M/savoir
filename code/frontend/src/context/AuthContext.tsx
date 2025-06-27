@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState, useContext, type ReactNode } from "react";
-// import { updateSession } from "../../../backend/src/clients/authClient.ts";
+//import { supabase } from "../../../backend/src/clients/supabaseClient.ts";
 
 type AuthContextType = {
     session: any
@@ -12,8 +12,12 @@ const AuthContext = createContext<AuthContextType>({
 export function AuthContextProvider({ children }: { children: ReactNode }) {
     const [ session, setSession ] = useState({})!;
 
+    /**
+     * 1. make requests to backend to update session
+     */
+
     useEffect(() => {
-        // updateSession(setSession);
+       // updateSession(setSession);
     }, []);
 
     return (

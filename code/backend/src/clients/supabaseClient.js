@@ -41,12 +41,12 @@ exports.insertData = insertData;
 var supabase_js_1 = require("@supabase/supabase-js");
 var dotenv = require("dotenv");
 dotenv.config();
-console.log(dotenv.config());
 // move from keys to cloud storage
 var supabaseURL = process.env.SUPABASE_URL;
 var supabaseKey = process.env.SUPABASE_ANON_KEY;
 var supabase = (0, supabase_js_1.createClient)(supabaseURL, supabaseKey);
 exports.supabase = supabase;
+console.log("Supabase instance created");
 function insertData(tableName, data) {
     return __awaiter(this, void 0, void 0, function () {
         var response;

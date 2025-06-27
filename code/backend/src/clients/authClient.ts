@@ -6,7 +6,7 @@ import type { UsersSchema } from "../types/tableSchemas";
 
 type AuthCredentials = {
     email: string,
-    password: string
+    password: string,
 }
 
 export async function logInUser(req: any, res: any, next: Function) {
@@ -17,13 +17,13 @@ export async function logInUser(req: any, res: any, next: Function) {
         password: password
     });
 
-    if(error?.status == 400) {
+    if(error) {
         req.error = error;
         
         next();
     } 
     
-    res.send(data);
+    res.send(data); // client will save access and refresh tokens
 }
 
 export async function signUpNewUser(req: any, res: any, next: Function) {
@@ -34,16 +34,35 @@ export async function signUpNewUser(req: any, res: any, next: Function) {
         password: password
     });
 
-    if(error?.status == 422) {
+    if(error) {
         req.error = error;
         
         next();
-    } 
-    
-    const id: string = data.user!.id;
-    const [ first_name, last_name ] = fullName.split(" ");
+    } else {
+        const session = data.session;
+        const id: string = data.user!.id;
+        const [ first_name, last_name ] = fullName.split(" ");
 
-    res.status(201).json(await insertData<UsersSchema>("users", { id, first_name, last_name, email }));
+        res.status(201).json({ 
+            message: "Account created succesfully.", 
+            session, 
+            user: { id, first_name, last_name, email }});
+    }
+    //res.status(201).json(await insertData<UsersSchema>("users", { id, first_name, last_name, email })); -- move this line to verify user, called on successful account creation
+}
+
+export async function verifyUser(req: any, res: any, next: Function) {
+    const { id, firstName, lastName, email } = req.body.userInfo.user; 
+    const code = req.body.verificationCode.code;
+    
+    const { data, error } = await supabase.auth.verifyOtp({
+        email: email,
+        token: code,
+        type: "email"
+    });
+
+    console.log(data);
+    console.log(error);
 }
 
 export async function signOut() { // fully implement with server once option is available

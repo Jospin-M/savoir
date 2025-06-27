@@ -6,4 +6,5 @@ var express = require("express");
 var router = express.Router();
 router.post("/login", authClient_1.logInUser, authService_1.handleError);
 router.post("/register", authClient_1.signUpNewUser, authService_1.handleError);
+router.post("/verify", authClient_1.verifyUser, authService_1.handleError);
 exports.default = router;

@@ -24,7 +24,7 @@ export default function Login() {
     
     const domain = import.meta.env.VITE_DOMAIN;
 
-    async function handleLogin(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    async function handleLogin(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) { // generalize method
         event.preventDefault();
         
         const result = await fetch(domain + "api/auth/login", createHTTPRequest("POST", form));
