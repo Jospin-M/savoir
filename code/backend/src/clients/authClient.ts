@@ -39,30 +39,38 @@ export async function signUpNewUser(req: any, res: any, next: Function) {
         
         next();
     } else {
-        const session = data.session;
         const id: string = data.user!.id;
-        const [ first_name, last_name ] = fullName.split(" ");
+        const [ firstName, lastName ] = fullName.split(" ");
 
         res.status(201).json({ 
-            message: "Account created succesfully.", 
-            session, 
-            user: { id, first_name, last_name, email }});
+            message: "User account created. Verification needed.", 
+            user: { id, firstName, lastName, email }
+        });
     }
-    //res.status(201).json(await insertData<UsersSchema>("users", { id, first_name, last_name, email })); -- move this line to verify user, called on successful account creation
 }
 
 export async function verifyUser(req: any, res: any, next: Function) {
-    const { id, firstName, lastName, email } = req.body.userInfo.user; 
+    const { id, firstName, lastName, email } = req.body.verificationRequest.user; 
     const code = req.body.verificationCode.code;
-    
     const { data, error } = await supabase.auth.verifyOtp({
         email: email,
         token: code,
-        type: "email"
+        type: "signup"
     });
 
-    console.log(data);
-    console.log(error);
+    if(error) {
+        req.error = error;
+
+        next();
+    } 
+
+    res.status(201).json({
+        message: "Account verified.",
+        session: data.session
+    });
+
+    // we can insert record using user's access token because we know it'll be fresh
+    // insert data in database and save cookie (do in client-side code) -> handle refresh 
 }
 
 export async function signOut() { // fully implement with server once option is available

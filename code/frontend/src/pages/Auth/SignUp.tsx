@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { validateSignUpForm } from "../../../src/components/listeners/formValidators.ts";
-import { createHTTPRequest, setCookie } from "../../../../backend/src/routes/utils.ts";
+import { sendHTTPRequest } from "../../../../backend/src/routes/utils.ts";
 
 export default function SignUp() {
     const [form, saveInput] = useForm(useState({ fullName: "", email: "", password: "" }));
@@ -20,15 +20,14 @@ export default function SignUp() {
     const [loading, setLoading] = useState(false); // handle loading state
     const navigate = useNavigate();
     
-    const domain = import.meta.env.VITE_DOMAIN;
-
     // move this code to server middleware
     async function handleSignUp(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
 
-        const result = await fetch(domain + "api/auth/register", createHTTPRequest("POST",  form));
-        const response = await result.json();
+        const response = await sendHTTPRequest("/auth/register", "POST", form);
+        
         console.log(response);
+
         if(response.error) {
             setError(response.error);
         } else {
@@ -36,7 +35,7 @@ export default function SignUp() {
             navigate("/verify", { state: response }); 
         }
     }
-    // {error && <p className={styles.error_message}>{error}</p>}
+    
     return (
         <Background>
             <div className={styles.sign_up_box_container}>
@@ -50,7 +49,7 @@ export default function SignUp() {
                         <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput}/> 
                         <PasswordInputBox name="password" inputBoxName="Password" handleChange={saveInput}/>
                         <Button prompt="Register" buttonCSS="auth_button" isDisabled={validateSignUpForm(form)} handleClick={handleSignUp}/>
-                        
+                        {error && <p className={styles.error_message}>{error}</p>}
                     </div> 
 
                     <div className={styles.div_container}>

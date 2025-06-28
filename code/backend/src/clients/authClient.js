@@ -67,7 +67,7 @@ function logInUser(req, res, next) {
 }
 function signUpNewUser(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, fullName, email, password, _b, data, error, session, id, _c, first_name, last_name;
+        var _a, fullName, email, password, _b, data, error, id, _c, firstName, lastName;
         return __generator(this, function (_d) {
             switch (_d.label) {
                 case 0:
@@ -83,13 +83,11 @@ function signUpNewUser(req, res, next) {
                         next();
                     }
                     else {
-                        session = data.session;
                         id = data.user.id;
-                        _c = fullName.split(" "), first_name = _c[0], last_name = _c[1];
+                        _c = fullName.split(" "), firstName = _c[0], lastName = _c[1];
                         res.status(201).json({
-                            message: "Account created succesfully.",
-                            session: session,
-                            user: { id: id, first_name: first_name, last_name: last_name, email: email }
+                            message: "User account created. Verification needed.",
+                            user: { id: id, firstName: firstName, lastName: lastName, email: email }
                         });
                     }
                     return [2 /*return*/];
@@ -103,22 +101,23 @@ function verifyUser(req, res, next) {
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
-                    _a = req.body.userInfo.user, id = _a.id, firstName = _a.firstName, lastName = _a.lastName, email = _a.email;
+                    _a = req.body.verificationRequest.user, id = _a.id, firstName = _a.firstName, lastName = _a.lastName, email = _a.email;
                     code = req.body.verificationCode.code;
-                    console.log("Verfication payload:", {
-                        email: email,
-                        token: code,
-                        type: "email"
-                    });
                     return [4 /*yield*/, supabaseClient_1.supabase.auth.verifyOtp({
                             email: email,
                             token: code,
-                            type: "email"
+                            type: "signup"
                         })];
                 case 1:
                     _b = _c.sent(), data = _b.data, error = _b.error;
-                    console.log(data);
-                    console.log(error);
+                    if (error) {
+                        req.error = error;
+                        next();
+                    }
+                    res.status(201).json({
+                        message: "Account verified.",
+                        session: data.session
+                    });
                     return [2 /*return*/];
             }
         });
