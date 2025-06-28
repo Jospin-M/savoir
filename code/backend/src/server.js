@@ -7,6 +7,9 @@ var authRoutes_1 = require("./routes/authRoutes");
 var PORT = 3000;
 app.use(cors());
 app.use(express.json());
+app.use(function (req, res, next) {
+    console.log("middle");
+});
 app.use("/api/auth/", authRoutes_1.default);
 app.listen(PORT, function () {
     console.log("Server is running on http://localhost:".concat(PORT));

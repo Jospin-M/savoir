@@ -9,21 +9,28 @@ import { useForm } from "../../hooks/useForm";
 
 import { validateInputLength } from "../../components/listeners/formValidators";
 import { useNavigate, useLocation } from "react-router-dom";
-import { sendHTTPRequest } from "../../../../backend/src/routes/utils";
+import { sendHTTPRequest, setCookie } from "../../../../backend/src/routes/utils";
 
 export default function VerifyCode() {
     const [code, saveInput] = useForm(useState({ code: "" }));
-    const location = useLocation();
+    const [error, setError] = useState("");
     const navigate = useNavigate();
-    const DOMAIN = import.meta.env.VITE_DOMAIN;
-    const userData = location.state;
+    const location = useLocation();
+    const loginResponse = location.state;
+    
     async function handleVerification(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
+        
+        const response = await sendHTTPRequest("/auth/verify", "POST", { verificationCode: code, verificationRequest: loginResponse });
+        console.log(response);
 
-        
-        
-        console.log(userData);
-        const response = sendHTTPRequest("/auth/verify", "POST", { verificationCode: code, userInfo: userData });
+        if(response.error) {
+            setError(response.error);
+        } else {
+            setCookie(response.session);
+            setError("");
+            navigate("/");
+        }
     }
 
     return (
@@ -41,6 +48,7 @@ export default function VerifyCode() {
 
                         <div className={styles.verification_input_box_container}>
                             <PasswordInputBox name="code" inputBoxName="Verification Code" handleChange={saveInput}/>
+                            {error && <p className={styles.error_message}>{error}</p>}
                         </div>
 
                         <div className={styles.navigation_buttons_container}>

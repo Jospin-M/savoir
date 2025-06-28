@@ -13,7 +13,7 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
     const [ session, setSession ] = useState({})!;
 
     /**
-     * 1. make requests to backend to update session
+     * 1. set session to log in 
      */
 
     useEffect(() => {
