@@ -9,12 +9,10 @@ const supabaseKey: string = process.env.SUPABASE_ANON_KEY!;
 let supabase: SupabaseClient = createClient(supabaseURL, supabaseKey);
 
 async function insertData<T>(tableName: string, data: T): Promise<any> {
-    //const authenticatedClient = createClient();
-    
     const response =  await supabase!
         .from(tableName)
         .insert(data);
-    console.log(response);
+        
     return response;
 }
 

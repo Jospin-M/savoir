@@ -13,19 +13,18 @@ import { Link } from "react-router-dom";
 
 import { validateAuthForm } from "../../../src/components/listeners/formValidators.ts";
 
-import { getAccessToken, sendHTTPRequest } from "../../../../backend/src/routes/utils.ts"
+import { sendHTTPRequest } from "../../../../backend/src/routes/utils.ts"
 
 export default function Login() {
     // explore other ways to use box shadow
     const [form, saveInput] = useForm(useState({ email: "", password: "" }))
     const [error, setError] = useState("");
     const navigate = useNavigate();
-    //console.log(getAccessToken());
+    
     async function handleLogin(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) { // generalize method
         event.preventDefault();
         
         const response = await sendHTTPRequest("/auth/login", "POST", form);
-        
         console.log(response);
 
         if(response.error) {

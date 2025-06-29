@@ -25,7 +25,6 @@ export default function SignUp() {
         event.preventDefault();
 
         const response = await sendHTTPRequest("/auth/register", "POST", form);
-        
         console.log(response);
 
         if(response.error) {

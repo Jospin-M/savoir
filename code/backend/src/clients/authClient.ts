@@ -21,9 +21,11 @@ export async function logInUser(req: any, res: any, next: Function) {
         req.error = error;
         
         next();
+
+        return;
     } 
     
-    res.send(data); // client will save access and refresh tokens
+    res.send(data); 
 }
 
 export async function checkEmail(providedEmail: string) {
@@ -85,12 +87,8 @@ export async function verifyUser(req: any, res: any, next: Function) {
             session: data.session
         });
 
-        insertData("users", { id, first_name, last_name, email });
+        insertData<UsersSchema>("users", { id, first_name, last_name, email });
     }
-
-    //
-    // we can insert record here without worry about expiration because we know user's session will be fresh
-    // insert data in database and save cookie (do in client-side code) -> handle refresh 
 }
 
 export async function signOut() { // fully implement with server once option is available
@@ -112,9 +110,3 @@ export function updateSession(setSession: React.Dispatch<React.SetStateAction<{}
         } // maybe default to no session if no valid one is found
     });
 }
-
-// PUT MAIL SERVICE HERE
-
-/*
-    - when implementing server, create endpoint for each table and it
-*/
