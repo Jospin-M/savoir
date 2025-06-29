@@ -59,8 +59,9 @@ function logInUser(req, res, next) {
                     if (error) {
                         req.error = error;
                         next();
+                        return [2 /*return*/];
                     }
-                    res.send(data); // client will save access and refresh tokens
+                    res.send(data);
                     return [2 /*return*/];
             }
         });
@@ -77,9 +78,6 @@ function checkEmail(providedEmail) {
                         .eq("email", providedEmail)];
                 case 1:
                     _a = _b.sent(), count = _a.count, error = _a.error;
-                    //const response = data![0];
-                    console.log("Data: ", count);
-                    console.log("Error: ", error);
                     return [2 /*return*/, count == 1];
             }
         });
@@ -94,10 +92,6 @@ function signUpNewUser(req, res, next) {
                     _a = req.body, fullName = _a.fullName, email = _a.email, password = _a.password;
                     return [4 /*yield*/, checkEmail(email)];
                 case 1:
-                    // add user to 'public.users' table on verification, then implement checkEmail() - which will
-                    // query 'public.users' to check if there's any accounts using the email provided in the registration form
-                    // -- if such a record exists, set req.error.code = "email_exists" and handle error appropriately in utils.ts/handleError
-                    // ** 'return' might be necessary here
                     if (_d.sent()) {
                         req.error = { code: "email_exists" };
                         next();
@@ -184,7 +178,3 @@ function updateSession(setSession) {
         } // maybe default to no session if no valid one is found
     });
 }
-// PUT MAIL SERVICE HERE
-/*
-    - when implementing server, create endpoint for each table and it
-*/ 

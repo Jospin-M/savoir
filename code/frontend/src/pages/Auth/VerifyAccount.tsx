@@ -9,7 +9,7 @@ import { useForm } from "../../hooks/useForm";
 
 import { validateInputLength } from "../../components/listeners/formValidators";
 import { useNavigate, useLocation } from "react-router-dom";
-import { sendHTTPRequest, setCookie } from "../../../../backend/src/routes/utils";
+import { sendHTTPRequest } from "../../../../backend/src/routes/utils";
 
 export default function VerifyCode() {
     const [code, saveInput] = useForm(useState({ code: "" }));
@@ -27,7 +27,6 @@ export default function VerifyCode() {
         if(response.error) {
             setError(response.error);
         } else {
-            setCookie(response.session);
             setError("");
             navigate("/");
         }

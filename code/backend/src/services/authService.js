@@ -2,10 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleError = handleError;
 function handleError(req, res) {
-    console.log(req.error);
-    // handle case where email domain doesn't exist
-    // instead of handle cases by status number, handle them by the value of the error code 
-    // -- this change is response to bug with email address on account registration
+    // console.log(req.error);
     switch (req.error.code) {
         case "invalid_credentials":
             res.json({ error: "Incorrect email or password." });

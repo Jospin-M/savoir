@@ -1,4 +1,9 @@
-import { type ChangeEventHandler } from "react";
+import { type ChangeEventHandler }   from "react";
+
+/**
+ * Generalize handleMethod
+ * Use React form
+ */
 
 /**
  * Provides a custom hook that dynamically updates the variables managing a form's state.
