@@ -22,6 +22,7 @@ app.use((req: any, res: any, next: Function) => {
      * -- so that the server can perform the desired action using the information of the client that
      * -- sent the request 
      */
+    next();
 });
 
 app.use("/api/auth/", router);

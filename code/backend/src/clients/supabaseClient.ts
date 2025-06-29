@@ -14,7 +14,7 @@ async function insertData<T>(tableName: string, data: T): Promise<any> {
     const response =  await supabase!
         .from(tableName)
         .insert(data);
-        
+    console.log(response);
     return response;
 }
 

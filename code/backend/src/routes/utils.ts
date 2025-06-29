@@ -43,10 +43,12 @@ export function getAccessToken() {
 
 export function isTokenExpired() {
     const { access_token, refresh_token, expires_at } = JSON.parse(getCookieValue("session")!);
-    const currentTime = Date.now() / 1000;
+    const currentTime = Date.now();
     const fiveMinutes = 5 * 60;
 
     console.log(expires_at - fiveMinutes > currentTime);
+    console.log(expires_at);
+    console.log(currentTime / 1000)
     console.log("Access Token:", access_token);
     console.log("Refresh Token:", refresh_token);
 }

@@ -20,7 +20,7 @@ export default function Login() {
     const [form, saveInput] = useForm(useState({ email: "", password: "" }))
     const [error, setError] = useState("");
     const navigate = useNavigate();
-    console.log(getAccessToken());
+    //console.log(getAccessToken());
     async function handleLogin(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) { // generalize method
         event.preventDefault();
         

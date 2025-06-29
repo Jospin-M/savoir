@@ -38,7 +38,7 @@ export default function VerifyCode() {
             <div className={styles.verfication_box_container}>
                 <Rectangle cssClass={"verification_page_background"}>
                     <div className={styles.box}>
-                        <h1 className={styles.box_header}>Verify Code</h1>
+                        <h1 className={styles.box_header}>Verify Account</h1>
                     </div>
 
                     <div className={styles.verification_input_container}>

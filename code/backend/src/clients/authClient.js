@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.logInUser = logInUser;
+exports.checkEmail = checkEmail;
 exports.signUpNewUser = signUpNewUser;
 exports.verifyUser = verifyUser;
 exports.signOut = signOut;
@@ -65,18 +66,48 @@ function logInUser(req, res, next) {
         });
     });
 }
+function checkEmail(providedEmail) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, count, error;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0: return [4 /*yield*/, supabaseClient_1.supabase
+                        .from("users")
+                        .select("*", { count: "exact", head: true })
+                        .eq("email", providedEmail)];
+                case 1:
+                    _a = _b.sent(), count = _a.count, error = _a.error;
+                    //const response = data![0];
+                    console.log("Data: ", count);
+                    console.log("Error: ", error);
+                    return [2 /*return*/, count == 1];
+            }
+        });
+    });
+}
 function signUpNewUser(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, fullName, email, password, _b, data, error, id, _c, firstName, lastName;
+        var _a, fullName, email, password, _b, data, error, id, _c, first_name, last_name;
         return __generator(this, function (_d) {
             switch (_d.label) {
                 case 0:
                     _a = req.body, fullName = _a.fullName, email = _a.email, password = _a.password;
+                    return [4 /*yield*/, checkEmail(email)];
+                case 1:
+                    // add user to 'public.users' table on verification, then implement checkEmail() - which will
+                    // query 'public.users' to check if there's any accounts using the email provided in the registration form
+                    // -- if such a record exists, set req.error.code = "email_exists" and handle error appropriately in utils.ts/handleError
+                    // ** 'return' might be necessary here
+                    if (_d.sent()) {
+                        req.error = { code: "email_exists" };
+                        next();
+                        return [2 /*return*/];
+                    }
                     return [4 /*yield*/, supabaseClient_1.supabase.auth.signUp({
                             email: email,
                             password: password
                         })];
-                case 1:
+                case 2:
                     _b = _d.sent(), data = _b.data, error = _b.error;
                     if (error) {
                         req.error = error;
@@ -84,10 +115,10 @@ function signUpNewUser(req, res, next) {
                     }
                     else {
                         id = data.user.id;
-                        _c = fullName.split(" "), firstName = _c[0], lastName = _c[1];
+                        _c = fullName.split(" "), first_name = _c[0], last_name = _c[1];
                         res.status(201).json({
                             message: "User account created. Verification needed.",
-                            user: { id: id, firstName: firstName, lastName: lastName, email: email }
+                            user: { id: id, first_name: first_name, last_name: last_name, email: email }
                         });
                     }
                     return [2 /*return*/];
@@ -97,11 +128,11 @@ function signUpNewUser(req, res, next) {
 }
 function verifyUser(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, id, firstName, lastName, email, code, _b, data, error;
+        var _a, id, first_name, last_name, email, code, _b, data, error;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
-                    _a = req.body.verificationRequest.user, id = _a.id, firstName = _a.firstName, lastName = _a.lastName, email = _a.email;
+                    _a = req.body.verificationRequest.user, id = _a.id, first_name = _a.first_name, last_name = _a.last_name, email = _a.email;
                     code = req.body.verificationCode.code;
                     return [4 /*yield*/, supabaseClient_1.supabase.auth.verifyOtp({
                             email: email,
@@ -114,10 +145,13 @@ function verifyUser(req, res, next) {
                         req.error = error;
                         next();
                     }
-                    res.status(201).json({
-                        message: "Account verified.",
-                        session: data.session
-                    });
+                    else {
+                        res.status(201).json({
+                            message: "Account verified.",
+                            session: data.session
+                        });
+                        (0, supabaseClient_1.insertData)("users", { id: id, first_name: first_name, last_name: last_name, email: email });
+                    }
                     return [2 /*return*/];
             }
         });
