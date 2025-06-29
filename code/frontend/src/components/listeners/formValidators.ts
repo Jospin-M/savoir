@@ -32,7 +32,7 @@ function validateEmail(email: string): boolean {
     const emailRegex2 = /^[^\s@]+@[^\s@]+\.[^\s@]{2}$/; 
     const emailRegex3 = /^[^\s@]+@[^\s@]+\.[^\s@]{3}$/;
 
-    return emailRegex2.test(email) || emailRegex3.test(email);
+    return emailRegex2.test(email) || emailRegex3.test(email)
 }
 
 /**

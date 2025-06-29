@@ -26,31 +26,48 @@ export async function logInUser(req: any, res: any, next: Function) {
     res.send(data); // client will save access and refresh tokens
 }
 
+export async function checkEmail(providedEmail: string) {
+    const { count, error } = await supabase
+        .from("users")
+        .select("*", { count: "exact", head: true })
+        .eq("email", providedEmail);
+
+    return count == 1;
+}
+
 export async function signUpNewUser(req: any, res: any, next: Function) {
     const { fullName, email, password }: RegistrationForm = req.body;
-    
+
+    if(await checkEmail(email)) {
+        req.error = { code: "email_exists" };
+
+        next();
+        
+        return;
+    }
+
     const { data, error } = await supabase.auth.signUp({
         email: email,
         password: password
     });
 
     if(error) {
-        req.error = error;
+        req.error = error; 
         
         next();
     } else {
         const id: string = data.user!.id;
-        const [ firstName, lastName ] = fullName.split(" ");
+        const [ first_name, last_name ] = fullName.split(" ");
 
         res.status(201).json({ 
             message: "User account created. Verification needed.", 
-            user: { id, firstName, lastName, email }
+            user: { id, first_name, last_name, email }
         });
     }
 }
 
 export async function verifyUser(req: any, res: any, next: Function) {
-    const { id, firstName, lastName, email } = req.body.verificationRequest.user; 
+    const { id, first_name, last_name, email } = req.body.verificationRequest.user; 
     const code = req.body.verificationCode.code;
     const { data, error } = await supabase.auth.verifyOtp({
         email: email,
@@ -62,14 +79,17 @@ export async function verifyUser(req: any, res: any, next: Function) {
         req.error = error;
 
         next();
-    } 
+    } else {
+        res.status(201).json({
+            message: "Account verified.",
+            session: data.session
+        });
 
-    res.status(201).json({
-        message: "Account verified.",
-        session: data.session
-    });
+        insertData("users", { id, first_name, last_name, email });
+    }
 
-    // we can insert record using user's access token because we know it'll be fresh
+    //
+    // we can insert record here without worry about expiration because we know user's session will be fresh
     // insert data in database and save cookie (do in client-side code) -> handle refresh 
 }
 
