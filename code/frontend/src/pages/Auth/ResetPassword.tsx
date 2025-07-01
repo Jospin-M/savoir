@@ -20,14 +20,18 @@ export default function ResetPassword() {
     async function handleReset(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
 
-        const response = await sendHTTPRequest("/auth/password/request-password-reset", "POST", form);
+        /*const response = await sendHTTPRequest("/auth/password/request-password-reset", "POST", form);
+       
         console.log(response);
 
         if(response.error) {
             setError(response.error);
         } else {
-
-        }
+            setError("");
+            navigate("/auth/verify");
+        }*/
+        setError("");
+        navigate("/auth/verifyAccount");
     }
 
     return (

@@ -16,12 +16,12 @@ export default function VerifyCode() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
     const location = useLocation();
-    const loginResponse = location.state;
+    const registrationResponse = location.state;
     
     async function handleVerification(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
         
-        const response = await sendHTTPRequest("/auth/verify", "POST", { verificationCode: code, verificationRequest: loginResponse });
+        const response = await sendHTTPRequest("/auth/verify", "POST", { verificationCode: code, verificationRequest: registrationResponse });
         console.log(response);
 
         if(response.error) {
@@ -50,8 +50,8 @@ export default function VerifyCode() {
                             {error && <p className={styles.error_message}>{error}</p>}
                         </div>
 
-                        <div className={styles.verification__buttons_container}>
-                            <Button prompt="Back" buttonCSS="auth_button" isDisabled={false} handleClick={()=>navigate("/auth/signup")}/>
+                        <div className={styles.verification_navigation_buttons_container}>
+                            <Button prompt="Back" buttonCSS="auth_button" isDisabled={false} handleClick={()=>navigate("/auth/password/reset")}/>
                             <Button prompt="Verify" buttonCSS="auth_button" isDisabled={!validateInputLength(code.code, 6)} handleClick={handleVerification}/>
                         </div>
                     </div>

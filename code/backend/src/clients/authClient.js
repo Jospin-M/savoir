@@ -154,22 +154,31 @@ function verifyUser(req, res, next) {
 }
 function requestPasswordReset(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var email, _a, _b;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        var email, _a, _b, _c, data, error;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
                 case 0:
                     email = req.body.email;
                     return [4 /*yield*/, checkEmailExists(email)];
                 case 1:
-                    if (!!(_c.sent())) return [3 /*break*/, 3];
+                    if (!!(_d.sent())) return [3 /*break*/, 3];
                     req.error = { code: "email_invalid" };
                     _b = (_a = console).log;
                     return [4 /*yield*/, checkEmailExists(email)];
                 case 2:
-                    _b.apply(_a, [!(_c.sent())]);
+                    _b.apply(_a, [!(_d.sent())]);
                     next();
                     return [2 /*return*/];
-                case 3: return [2 /*return*/];
+                case 3: return [4 /*yield*/, supabaseClient_1.supabase.auth.resetPasswordForEmail(email, { redirectTo: "" })];
+                case 4:
+                    _c = _d.sent(), data = _c.data, error = _c.error;
+                    if (error) {
+                        console.log(error);
+                    }
+                    else {
+                        console.log(data);
+                    }
+                    return [2 /*return*/];
             }
         });
     });
