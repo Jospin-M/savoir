@@ -55,11 +55,11 @@ export default function Login() {
                     </div>
 
                     <div className={styles.auth_hyperlink_container}>
-                        <a className={styles.auth_hyperlink}>Forgot Password?</a>
+                        <Link className={styles.auth_hyperlink} to="/auth/password/reset">Forgot Password?</Link>
 
                         <div className={styles.text_hyperlink_container}>
                             Don't have an account? 
-                            <Link className={styles.auth_hyperlink} to="/signup">Sign Up</Link>
+                            <Link className={styles.auth_hyperlink} to="/auth/signup">Sign Up</Link>
                         </div>
                     </div>
                 </Rectangle>

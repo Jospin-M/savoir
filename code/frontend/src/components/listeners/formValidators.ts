@@ -26,7 +26,7 @@ export function validateAuthForm(form: { email: string, password: string }): boo
  * 
  * @param email  - the email entered by the user
  */
-function validateEmail(email: string): boolean {
+export function validateEmail(email: string): boolean {
     // handle cases where mail server has a TLD of 2 or 3 characters
 
     const emailRegex2 = /^[^\s@]+@[^\s@]+\.[^\s@]{2}$/; 
