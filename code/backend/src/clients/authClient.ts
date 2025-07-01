@@ -28,7 +28,7 @@ export async function logInUser(req: any, res: any, next: Function) {
     res.send(data); 
 }
 
-export async function checkEmail(providedEmail: string) {
+export async function checkEmailExists(providedEmail: string) {
     const { count, error } = await supabase
         .from("users")
         .select("*", { count: "exact", head: true })
@@ -40,7 +40,7 @@ export async function checkEmail(providedEmail: string) {
 export async function signUpNewUser(req: any, res: any, next: Function) {
     const { fullName, email, password }: RegistrationForm = req.body;
 
-    if(await checkEmail(email)) {
+    if(await checkEmailExists(email)) {
         req.error = { code: "email_exists" };
 
         next();
@@ -89,6 +89,20 @@ export async function verifyUser(req: any, res: any, next: Function) {
 
         insertData<UsersSchema>("users", { id, first_name, last_name, email });
     }
+}
+
+export async function requestPasswordReset(req: any, res: any, next: Function) {
+    const { email } = req.body;
+    
+    if(!(await checkEmailExists(email))) {
+        req.error = { code: "email_invalid" };
+        console.log(!(await checkEmailExists(email)));
+        next();
+        
+        return;
+    }
+    
+    
 }
 
 export async function signOut() { // fully implement with server once option is available

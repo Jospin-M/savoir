@@ -13,7 +13,8 @@ function handleError(req, res) {
         case "email_exists":
             res.json({ error: "Email address already in use." });
             break;
-        case "email_address_invalid":
-            res.json({ error: "Invalid email." });
+        case "email_invalid":
+            res.json({ error: "No users found." });
+            break;
     }
 }

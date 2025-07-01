@@ -9,6 +9,7 @@ import { useForm } from "../../hooks/useForm";
 import { useNavigate } from "react-router-dom";
 
 import { validateEmail } from "../../../src/components/listeners/formValidators.ts";
+import { sendHTTPRequest } from "../../../../backend/src/routes/utils.ts";
 
 
 export default function ResetPassword() {
@@ -17,7 +18,16 @@ export default function ResetPassword() {
     const navigate = useNavigate();
 
     async function handleReset(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        event.preventDefault();
 
+        const response = await sendHTTPRequest("/auth/password/request-password-reset", "POST", form);
+        console.log(response);
+
+        if(response.error) {
+            setError(response.error);
+        } else {
+
+        }
     }
 
     return (
