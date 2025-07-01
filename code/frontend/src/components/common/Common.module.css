@@ -42,16 +42,16 @@
 }
 
 .login_page_background {
-  width: 70%;
-  height: 500px;
+  width: 300px;
+  height: 475px;
   
   background-color: #F2EFE9;
   border-radius: 16px;
 }
 
 .sign_up_page_background {
-  width: 70%;
-  height: 550px;
+  width: 300px;
+  height: 525px;
   
   background-color: #F2EFE9;
   border-radius: 16px;
@@ -66,8 +66,8 @@
 }
 
 .reset_password_page_background {
-  width: 380px;
-  height: 420px;
+  width: 350px;
+  height: 400px;
 
   background-color: #F2EFE9;
   border-radius: 16px;

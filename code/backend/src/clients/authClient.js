@@ -37,9 +37,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.logInUser = logInUser;
-exports.checkEmail = checkEmail;
+exports.checkEmailExists = checkEmailExists;
 exports.signUpNewUser = signUpNewUser;
 exports.verifyUser = verifyUser;
+exports.requestPasswordReset = requestPasswordReset;
 exports.signOut = signOut;
 exports.updateSession = updateSession;
 var supabaseClient_1 = require("./supabaseClient");
@@ -67,7 +68,7 @@ function logInUser(req, res, next) {
         });
     });
 }
-function checkEmail(providedEmail) {
+function checkEmailExists(providedEmail) {
     return __awaiter(this, void 0, void 0, function () {
         var _a, count, error;
         return __generator(this, function (_b) {
@@ -90,7 +91,7 @@ function signUpNewUser(req, res, next) {
             switch (_d.label) {
                 case 0:
                     _a = req.body, fullName = _a.fullName, email = _a.email, password = _a.password;
-                    return [4 /*yield*/, checkEmail(email)];
+                    return [4 /*yield*/, checkEmailExists(email)];
                 case 1:
                     if (_d.sent()) {
                         req.error = { code: "email_exists" };
@@ -147,6 +148,28 @@ function verifyUser(req, res, next) {
                         (0, supabaseClient_1.insertData)("users", { id: id, first_name: first_name, last_name: last_name, email: email });
                     }
                     return [2 /*return*/];
+            }
+        });
+    });
+}
+function requestPasswordReset(req, res, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var email, _a, _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    email = req.body.email;
+                    return [4 /*yield*/, checkEmailExists(email)];
+                case 1:
+                    if (!!(_c.sent())) return [3 /*break*/, 3];
+                    req.error = { code: "email_invalid" };
+                    _b = (_a = console).log;
+                    return [4 /*yield*/, checkEmailExists(email)];
+                case 2:
+                    _b.apply(_a, [!(_c.sent())]);
+                    next();
+                    return [2 /*return*/];
+                case 3: return [2 /*return*/];
             }
         });
     });
