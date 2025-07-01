@@ -101,8 +101,16 @@ export async function requestPasswordReset(req: any, res: any, next: Function) {
         
         return;
     }
-    
-    
+
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email,
+        { redirectTo: ""}
+    );
+
+    if(error) {
+        console.log(error);
+    } else {
+        console.log(data);
+    }
 }
 
 export async function signOut() { // fully implement with server once option is available

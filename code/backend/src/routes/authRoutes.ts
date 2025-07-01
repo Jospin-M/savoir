@@ -10,6 +10,6 @@ router.post("/register", signUpNewUser, handleError);
 
 router.post("/verify", verifyUser, handleError);
 
-router.post("/password/request-password-reset", requestPasswordReset, handleError);
+router.post("/password/request-reset", requestPasswordReset, handleError);
 
 export default router;
