@@ -50,12 +50,11 @@ export default function VerifyCode() {
                             {error && <p className={styles.error_message}>{error}</p>}
                         </div>
 
-                        <div className={styles.navigation_buttons_container}>
-                            <Button prompt="Back" buttonCSS="auth_button" isDisabled={false} handleClick={()=>navigate("/signup")}/>
+                        <div className={styles.verification__buttons_container}>
+                            <Button prompt="Back" buttonCSS="auth_button" isDisabled={false} handleClick={()=>navigate("/auth/signup")}/>
                             <Button prompt="Verify" buttonCSS="auth_button" isDisabled={!validateInputLength(code.code, 6)} handleClick={handleVerification}/>
                         </div>
                     </div>
-
                 </Rectangle>
             </div>
         </Background>

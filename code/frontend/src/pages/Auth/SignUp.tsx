@@ -31,7 +31,7 @@ export default function SignUp() {
             setError(response.error);
         } else {
             setError("");
-            navigate("/verify", { state: response }); 
+            navigate("/auth/verify", { state: response }); 
         }
     }
     
@@ -58,7 +58,7 @@ export default function SignUp() {
                     <div className={styles.sign_up_hyperlink_container}>
                         <div className={styles.text_hyperlink_container}>
                             Already have an account? 
-                            <Link className={styles.auth_hyperlink} to="/login">Log In</Link>
+                            <Link className={styles.auth_hyperlink} to="/auth/login">Log In</Link>
                         </div>
                     </div>
                 </Rectangle>
