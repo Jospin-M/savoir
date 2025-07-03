@@ -21,15 +21,16 @@ export default function VerifyCode() {
     async function handleVerification(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
         
-        const response = await sendHTTPRequest("/auth/verify", "POST", { verificationCode: code, verificationRequest: registrationResponse });
+        /*const response = await sendHTTPRequest("/auth/verifyExistingUser", "POST", { verificationCode: code, verificationRequest: registrationResponse });
         console.log(response);
 
         if(response.error) {
             setError(response.error);
         } else {
             setError("");
-            navigate("/");
-        }
+            navigate("/auth/password/reset");
+        }*/
+       navigate("/auth/password/reset");
     }
 
     return (
@@ -37,7 +38,7 @@ export default function VerifyCode() {
             <div className={styles.verfication_box_container}>
                 <Rectangle cssClass={"verification_page_background"}>
                     <div className={styles.box}>
-                        <h1 className={styles.box_header}>Verify Account</h1>
+                        <h1 className={styles.box_header}>Verify Code</h1>
                     </div>
 
                     <div className={styles.verification_input_container}>
@@ -51,7 +52,7 @@ export default function VerifyCode() {
                         </div>
 
                         <div className={styles.verification_navigation_buttons_container}>
-                            <Button prompt="Back" buttonCSS="auth_button" isDisabled={false} handleClick={()=>navigate("/auth/signup")}/>
+                            <Button prompt="Back" buttonCSS="auth_button" isDisabled={false} handleClick={()=>navigate("/auth/password/sendResetLink")}/>
                             <Button prompt="Verify" buttonCSS="auth_button" isDisabled={!validateInputLength(code.code, 6)} handleClick={handleVerification}/>
                         </div>
                     </div>

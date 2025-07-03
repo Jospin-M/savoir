@@ -31,7 +31,7 @@ export default function SignUp() {
             setError(response.error);
         } else {
             setError("");
-            navigate("/auth/verify", { state: response }); 
+            navigate("/auth/verifyRegistration", { state: response }); 
         }
     }
     
