@@ -68,7 +68,7 @@ export async function signUpNewUser(req: any, res: any, next: Function) {
     }
 }
 
-export async function verifyUser(req: any, res: any, next: Function) {
+export async function verifyNewUser(req: any, res: any, next: Function) {
     const { id, first_name, last_name, email } = req.body.verificationRequest.user; 
     const code = req.body.verificationCode.code;
     const { data, error } = await supabase.auth.verifyOtp({
@@ -110,7 +110,17 @@ export async function requestPasswordReset(req: any, res: any, next: Function) {
         console.log(error);
     } else {
         console.log(data);
+        res.status(201).json({
+            verifiedEmail: email
+        });
     }
+}
+
+export async function verifyExistingUser(req: any, res: any, next: Function) {
+    const code = req.body.verificationCode.code;
+    const { data, error } = await supabase.auth.verifyOtp({
+        
+    });
 }
 
 export async function signOut() { // fully implement with server once option is available
