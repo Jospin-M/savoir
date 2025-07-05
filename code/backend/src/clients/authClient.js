@@ -46,6 +46,13 @@ exports.signOut = signOut;
 exports.updateSession = updateSession;
 var supabaseClient_1 = require("./supabaseClient");
 var dotenv = require("dotenv");
+/**
+ * Attempts to log a user in using an email and a password.
+ *
+ * @param req - a request from the client containing their email and password.
+ * @param res - a response that holds the session of the user on a successful attempt.
+ * @param next - an error-handling function.
+ */
 function logInUser(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         var _a, email, password, _b, data, error;
@@ -70,6 +77,12 @@ function logInUser(req, res, next) {
         });
     });
 }
+/**
+ * Verifies that there is no other user that has the same email.
+ *
+ * @param providedEmail - the email provided during registration.
+ * @returns a boolean value representing representing whether such a user exists.
+ */
 function checkEmailExists(providedEmail) {
     return __awaiter(this, void 0, void 0, function () {
         var _a, count, error;
@@ -86,21 +99,23 @@ function checkEmailExists(providedEmail) {
         });
     });
 }
+/**
+ * Attempts to register a user in the system.
+ *
+ * @param req - a request from the client containing their full name, email, and password.
+ * @param res - a response that holds the user's information to be added in the database.
+ * @param next - an error handling function.
+ */
 function signUpNewUser(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, fullName, email, password, _b, _c, _d, _e, data, error, id, _f, first_name, last_name;
-        return __generator(this, function (_g) {
-            switch (_g.label) {
+        var _a, fullName, email, password, _b, data, error, id, _c, first_name, last_name;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
                 case 0:
                     _a = req.body, fullName = _a.fullName, email = _a.email, password = _a.password;
-                    _c = (_b = console).log;
-                    _d = [email];
                     return [4 /*yield*/, checkEmailExists(email)];
                 case 1:
-                    _c.apply(_b, _d.concat([_g.sent()]));
-                    return [4 /*yield*/, checkEmailExists(email)];
-                case 2:
-                    if (_g.sent()) {
+                    if (_d.sent()) {
                         req.error = { code: "email_exists" };
                         next();
                         return [2 /*return*/];
@@ -109,26 +124,30 @@ function signUpNewUser(req, res, next) {
                             email: email,
                             password: password
                         })];
-                case 3:
-                    _e = _g.sent(), data = _e.data, error = _e.error;
+                case 2:
+                    _b = _d.sent(), data = _b.data, error = _b.error;
                     if (error) {
                         req.error = error;
                         next();
                         return [2 /*return*/];
                     }
-                    else {
-                        id = data.user.id;
-                        _f = fullName.split(" "), first_name = _f[0], last_name = _f[1];
-                        res.status(201).json({
-                            message: "User account created. Verification needed.",
-                            user: { id: id, first_name: first_name, last_name: last_name, email: email }
-                        });
-                    }
+                    id = data.user.id;
+                    _c = fullName.split(" "), first_name = _c[0], last_name = _c[1];
+                    res.status(201).json({
+                        message: "User account created. Verification needed.",
+                        user: { id: id, first_name: first_name, last_name: last_name, email: email }
+                    });
                     return [2 /*return*/];
             }
         });
     });
 }
+/**
+ * Attempts to verify a user's account using an One Time Password (OTP).
+ *
+ * @param params - the parameters appropriate to the verification type being used.
+ * @returns a new session.
+ */
 function verifyUser(params) {
     return __awaiter(this, void 0, void 0, function () {
         var _a, data, error;
@@ -140,17 +159,21 @@ function verifyUser(params) {
                     if (error) {
                         return [2 /*return*/, { error: error }];
                     }
-                    else {
-                        return [2 /*return*/, {
-                                message: "Account verified",
-                                session: data.session
-                            }];
-                    }
-                    return [2 /*return*/];
+                    return [2 /*return*/, {
+                            message: "Account verified",
+                            session: data.session
+                        }];
             }
         });
     });
 }
+/**
+ * Attempts to verify a new user with the OTP received after registration.
+ *
+ * @param req - a request containing the information the user used on registration and the verification code they provided.
+ * @param res - a response that holds the user's session on a successful attempt.
+ * @param next - an error-handling function.
+ */
 function verifyNewUser(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         var _a, id, first_name, last_name, email, code, response;
@@ -179,6 +202,13 @@ function verifyNewUser(req, res, next) {
         });
     });
 }
+/**
+ * Sends an email to the user that will provide them with a link they can use to reset their password.
+ *
+ * @param req - a request containing the email that should receive the reset link.
+ * @param res - a response that holds information about the user's session.
+ * @param next - an error-handling function.
+ */
 function requestPasswordReset(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         var email, _a, data, error;
@@ -203,7 +233,6 @@ function requestPasswordReset(req, res, next) {
                         })];
                 case 2:
                     _a = _b.sent(), data = _a.data, error = _a.error;
-                    console.log(data);
                     if (error) {
                         console.log(error); // error is logged for now, handle appropriately on occurence since you'll have more information about it
                     }
@@ -217,6 +246,11 @@ function requestPasswordReset(req, res, next) {
         });
     });
 }
+/**
+ * Update the user's information.
+ *
+ * @param newAttributes - an object that indicates the attribute to be updated and its new value.
+ */
 function updateUser(newAttributes) {
     return __awaiter(this, void 0, void 0, function () {
         var _a, data, error;
@@ -233,11 +267,18 @@ function updateUser(newAttributes) {
         });
     });
 }
+/**
+ * Changes the user's password.
+ *
+ * @param req - a request containing the user's new password.
+ * @param res - a response with a new session.
+ * @param next - an error-handling function.
+ */
 function changePassword(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, form, session, _b, data, error, _c, authData, authError;
-        return __generator(this, function (_d) {
-            switch (_d.label) {
+        var _a, form, session, _b, authData, authError;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
                     _a = req.body, form = _a.form, session = _a.session;
                     return [4 /*yield*/, supabaseClient_1.supabase.auth.setSession({
@@ -245,10 +286,10 @@ function changePassword(req, res, next) {
                             refresh_token: session.refresh_token
                         })];
                 case 1:
-                    _b = _d.sent(), data = _b.data, error = _b.error;
+                    _c.sent();
                     return [4 /*yield*/, updateUser({ password: form.newPassword })];
                 case 2:
-                    _c = _d.sent(), authData = _c.authData, authError = _c.authError;
+                    _b = _c.sent(), authData = _b.authData, authError = _b.authError;
                     if (authError) {
                         req.error = authError;
                         next();

@@ -1,4 +1,4 @@
-import { supabase, insertData } from "./supabaseClient";
+import { supabase, insertRecord } from "./supabaseClient";
 import * as dotenv from "dotenv";
 import React from "react";
 
@@ -135,7 +135,7 @@ export async function verifyNewUser(req: any, res: any, next: Function) {
     } else {
         res.status(201).json(response);
 
-        insertData<UsersSchema>("users", { id, first_name, last_name, email });
+        insertRecord<UsersSchema>("users", { id, first_name, last_name, email });
     }
 }
 

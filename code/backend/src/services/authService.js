@@ -1,8 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleError = handleError;
-function handleError(req, res) {
-    // console.log(req.error);
+exports.handleAuthError = handleAuthError;
+/**
+ * Handles server-side errors that could occur during authentication.
+ *
+ * @param req - a request containing information about the error
+ * @param res - a response object with the appropriate error message.
+ */
+function handleAuthError(req, res) {
     switch (req.error.code) {
         case "invalid_credentials":
             res.json({ error: "Incorrect email or password." });

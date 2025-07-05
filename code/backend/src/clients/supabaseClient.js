@@ -52,6 +52,12 @@ var supabase = (0, supabase_js_1.createClient)(supabaseURL, supabaseKey, {
     }
 });
 exports.supabase = supabase;
+/**
+ * Inserts a new record into a table in the database.
+ *
+ * @param tableName - the name of the table to receive the new entry.
+ * @param data - an object with fields corresponding to the column names of the desired table.
+ */
 function insertData(tableName, data) {
     return __awaiter(this, void 0, void 0, function () {
         var response;

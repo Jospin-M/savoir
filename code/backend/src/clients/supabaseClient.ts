@@ -20,7 +20,7 @@ let supabase: SupabaseClient = createClient(supabaseURL, supabaseKey, {
  * @param tableName - the name of the table to receive the new entry. 
  * @param data - an object with fields corresponding to the column names of the desired table.
  */
-async function insertData<T>(tableName: string, data: T): Promise<any> {
+async function insertRecord<T>(tableName: string, data: T): Promise<any> {
     const response =  await supabase!
         .from(tableName)
         .insert(data);
@@ -28,4 +28,4 @@ async function insertData<T>(tableName: string, data: T): Promise<any> {
     return response;
 }
 
-export { supabase, insertData };
+export { supabase, insertRecord };
