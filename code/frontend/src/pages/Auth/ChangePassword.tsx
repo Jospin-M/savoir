@@ -18,7 +18,6 @@ export default function ChangePassword() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
     
-    // save cookies on submission from browser url
     async function handlePasswordChange(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
 
@@ -35,7 +34,6 @@ export default function ChangePassword() {
             setSuccess(response.message);
             navigate("/auth/login", { replace: true });
         }
-        // TODO: HANDLE PASSWORD CHANGE
     }
 
     return (

@@ -41,7 +41,7 @@ export async function checkEmailExists(providedEmail: string) {
 
 export async function signUpNewUser(req: any, res: any, next: Function) {
     const { fullName, email, password }: RegistrationForm = req.body;
-
+    
     if(await checkEmailExists(email)) {
         req.error = { code: "email_exists" };
 
@@ -126,7 +126,6 @@ export async function requestPasswordReset(req: any, res: any, next: Function) {
             emailRedirectTo: process.env.DOMAIN + "auth/password/reset"
         }
     });
-    console.log(data);
 
     if(error) {
         console.log(error); // error is logged for now, handle appropriately on occurence since you'll have more information about it
@@ -149,7 +148,8 @@ async function updateUser(newAttributes: UserAttributes) {
 
 export async function changePassword(req: any, res: any, next: Function) {
     const { form, session } = req.body;
-    const { data, error } = await supabase.auth.setSession({
+    
+    await supabase.auth.setSession({
         access_token: session.access_token!,
         refresh_token: session.refresh_token!
     });

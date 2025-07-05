@@ -88,14 +88,19 @@ function checkEmailExists(providedEmail) {
 }
 function signUpNewUser(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, fullName, email, password, _b, data, error, id, _c, first_name, last_name;
-        return __generator(this, function (_d) {
-            switch (_d.label) {
+        var _a, fullName, email, password, _b, _c, _d, _e, data, error, id, _f, first_name, last_name;
+        return __generator(this, function (_g) {
+            switch (_g.label) {
                 case 0:
                     _a = req.body, fullName = _a.fullName, email = _a.email, password = _a.password;
+                    _c = (_b = console).log;
+                    _d = [email];
                     return [4 /*yield*/, checkEmailExists(email)];
                 case 1:
-                    if (_d.sent()) {
+                    _c.apply(_b, _d.concat([_g.sent()]));
+                    return [4 /*yield*/, checkEmailExists(email)];
+                case 2:
+                    if (_g.sent()) {
                         req.error = { code: "email_exists" };
                         next();
                         return [2 /*return*/];
@@ -104,8 +109,8 @@ function signUpNewUser(req, res, next) {
                             email: email,
                             password: password
                         })];
-                case 2:
-                    _b = _d.sent(), data = _b.data, error = _b.error;
+                case 3:
+                    _e = _g.sent(), data = _e.data, error = _e.error;
                     if (error) {
                         req.error = error;
                         next();
@@ -113,7 +118,7 @@ function signUpNewUser(req, res, next) {
                     }
                     else {
                         id = data.user.id;
-                        _c = fullName.split(" "), first_name = _c[0], last_name = _c[1];
+                        _f = fullName.split(" "), first_name = _f[0], last_name = _f[1];
                         res.status(201).json({
                             message: "User account created. Verification needed.",
                             user: { id: id, first_name: first_name, last_name: last_name, email: email }

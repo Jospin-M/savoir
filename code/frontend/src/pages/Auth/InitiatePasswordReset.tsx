@@ -50,7 +50,7 @@ export default function InitiateReset() {
                             <div className={styles.email_response_container}>
                                 <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput} />
                                 
-                                <div className={styles.lift}>
+                                <div className={styles.password_reset_status_message}>
                                     {error && <p className={styles.error_message}>{error}</p>} 
                                     {success && <p className={styles.success_message}>{success}</p>}
                                 </div>
