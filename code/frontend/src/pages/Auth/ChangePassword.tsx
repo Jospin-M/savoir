@@ -25,7 +25,6 @@ export default function ChangePassword() {
             form: form,
             session: parseAuthFragment()
         });
-        console.log(response);
         
         if(response.error) {
             setError(response.error);

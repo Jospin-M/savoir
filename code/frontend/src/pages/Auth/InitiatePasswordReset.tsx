@@ -22,7 +22,6 @@ export default function InitiateReset() {
         event.preventDefault();
 
         const response = await sendHTTPRequest("/auth/password/request-reset", "POST", form);
-        console.log(response);
 
         if(response.error) {
             setError(response.error);

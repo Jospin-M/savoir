@@ -11,6 +11,13 @@ type AuthCredentials = {
     password: string,
 }
 
+/**
+ * Attempts to log a user in using an email and a password.
+ * 
+ * @param req - a request from the client containing their email and password.
+ * @param res - a response that holds the session of the user on a successful attempt.
+ * @param next - an error-handling function.
+ */
 export async function logInUser(req: any, res: any, next: Function) {
     const { email, password }: AuthCredentials = req.body;
     
@@ -30,7 +37,13 @@ export async function logInUser(req: any, res: any, next: Function) {
     res.send(data); 
 }
 
-export async function checkEmailExists(providedEmail: string) {
+/**
+ * Verifies that there is no other user that has the same email.
+ * 
+ * @param providedEmail - the email provided during registration.
+ * @returns a boolean value representing representing whether such a user exists.
+ */
+export async function checkEmailExists(providedEmail: string): Promise<boolean> {
     const { count, error } = await supabase
         .from("users")
         .select("*", { count: "exact", head: true })
@@ -39,6 +52,13 @@ export async function checkEmailExists(providedEmail: string) {
     return count == 1;
 }
 
+/**
+ * Attempts to register a user in the system.
+ * 
+ * @param req - a request from the client containing their full name, email, and password.
+ * @param res - a response that holds the user's information to be added in the database.
+ * @param next - an error handling function.
+ */
 export async function signUpNewUser(req: any, res: any, next: Function) {
     const { fullName, email, password }: RegistrationForm = req.body;
     
@@ -61,30 +81,43 @@ export async function signUpNewUser(req: any, res: any, next: Function) {
         next();
 
         return;
-    } else {
-        const id: string = data.user!.id;
-        const [ first_name, last_name ] = fullName.split(" ");
+    } 
+    
+    const id: string = data.user!.id;
+    const [ first_name, last_name ] = fullName.split(" ");
 
-        res.status(201).json({ 
-            message: "User account created. Verification needed.", 
-            user: { id, first_name, last_name, email }
-        });
-    }
+    res.status(201).json({ 
+        message: "User account created. Verification needed.", 
+        user: { id, first_name, last_name, email }
+    });
 }
 
+/**
+ * Attempts to verify a user's account using an One Time Password (OTP).
+ * 
+ * @param params - the parameters appropriate to the verification type being used.
+ * @returns a new session.
+ */
 async function verifyUser(params: VerifyOtpParams) {
     const { data, error } = await supabase.auth.verifyOtp(params);
 
     if(error) {
         return { error: error };
-    } else {
-        return {
-            message: "Account verified",
-            session: data.session
-        }
-    }
+    } 
+    
+    return {
+        message: "Account verified",
+        session: data.session
+    };
 }
 
+/**
+ * Attempts to verify a new user with the OTP received after registration.
+ * 
+ * @param req - a request containing the information the user used on registration and the verification code they provided.
+ * @param res - a response that holds the user's session on a successful attempt.
+ * @param next - an error-handling function.
+ */
 export async function verifyNewUser(req: any, res: any, next: Function) {
     const { id, first_name, last_name, email } = req.body.verificationRequest.user; 
     const code = req.body.verificationCode.code;
@@ -106,6 +139,13 @@ export async function verifyNewUser(req: any, res: any, next: Function) {
     }
 }
 
+/**
+ * Sends an email to the user that will provide them with a link they can use to reset their password.
+ * 
+ * @param req - a request containing the email that should receive the reset link.
+ * @param res - a response that holds information about the user's session.
+ * @param next - an error-handling function.
+ */
 export async function requestPasswordReset(req: any, res: any, next: Function) {
     const { email } = req.body;
     
@@ -136,6 +176,11 @@ export async function requestPasswordReset(req: any, res: any, next: Function) {
     }
 }
 
+/**
+ * Update the user's information.
+ * 
+ * @param newAttributes - an object that indicates the attribute to be updated and its new value.
+ */
 async function updateUser(newAttributes: UserAttributes) {
     const { data, error } = await supabase.auth.updateUser(newAttributes);
 
@@ -146,6 +191,13 @@ async function updateUser(newAttributes: UserAttributes) {
     return { authData: data, authError: error };
 }
 
+/**
+ * Changes the user's password.
+ * 
+ * @param req - a request containing the user's new password.
+ * @param res - a response with a new session.
+ * @param next - an error-handling function.
+ */
 export async function changePassword(req: any, res: any, next: Function) {
     const { form, session } = req.body;
     

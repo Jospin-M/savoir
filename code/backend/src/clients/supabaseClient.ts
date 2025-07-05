@@ -14,6 +14,12 @@ let supabase: SupabaseClient = createClient(supabaseURL, supabaseKey, {
     }
 });
 
+/**
+ * Inserts a new record into a table in the database.
+ * 
+ * @param tableName - the name of the table to receive the new entry. 
+ * @param data - an object with fields corresponding to the column names of the desired table.
+ */
 async function insertData<T>(tableName: string, data: T): Promise<any> {
     const response =  await supabase!
         .from(tableName)

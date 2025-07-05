@@ -1,15 +1,10 @@
 import { type ChangeEventHandler }   from "react";
 
 /**
- * Generalize handleMethod
- * Use React form
- */
-
-/**
  * Provides a custom hook that dynamically updates the variables managing a form's state.
  * 
  * @param useStateHook an instance of the useState hook
- * @returns Returns a stateful value, and a function to update it.
+ * @returns a stateful value, and a function to update it.
  */
 export function useForm<T>(useStateHook: [T, React.Dispatch<React.SetStateAction<T>>]) {
     const [form, setForm] = useStateHook;
