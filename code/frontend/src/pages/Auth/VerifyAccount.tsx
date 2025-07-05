@@ -28,7 +28,7 @@ export default function VerifyCode() {
             setError(response.error);
         } else {
             setError("");
-            navigate("/");
+            navigate("/", { replace: true });
         }
     }
 
@@ -47,7 +47,10 @@ export default function VerifyCode() {
 
                         <div className={styles.verification_input_box_container}>
                             <PasswordInputBox name="code" inputBoxName="Verification Code" handleChange={saveInput}/>
-                            {error && <p className={styles.error_message}>{error}</p>}
+                            
+                            <div className={styles.verification_error_message}>
+                                {error && <p className={styles.error_message}>{error}</p>}
+                            </div>
                         </div>
 
                         <div className={styles.verification_navigation_buttons_container}>
