@@ -1,8 +1,10 @@
 import { supabase, insertData } from "./supabaseClient";
+import * as dotenv from "dotenv";
 import React from "react";
 
 import type { RegistrationForm } from "../types/forms";
 import type { UsersSchema } from "../types/tableSchemas";
+import type { VerifyOtpParams, UserAttributes } from "@supabase/auth-js";
 
 type AuthCredentials = {
     email: string,
@@ -57,6 +59,8 @@ export async function signUpNewUser(req: any, res: any, next: Function) {
         req.error = error; 
         
         next();
+
+        return;
     } else {
         const id: string = data.user!.id;
         const [ first_name, last_name ] = fullName.split(" ");
@@ -68,24 +72,35 @@ export async function signUpNewUser(req: any, res: any, next: Function) {
     }
 }
 
+async function verifyUser(params: VerifyOtpParams) {
+    const { data, error } = await supabase.auth.verifyOtp(params);
+
+    if(error) {
+        return { error: error };
+    } else {
+        return {
+            message: "Account verified",
+            session: data.session
+        }
+    }
+}
+
 export async function verifyNewUser(req: any, res: any, next: Function) {
     const { id, first_name, last_name, email } = req.body.verificationRequest.user; 
     const code = req.body.verificationCode.code;
-    const { data, error } = await supabase.auth.verifyOtp({
+
+    const response = await verifyUser({
         email: email,
         token: code,
         type: "signup"
     });
 
-    if(error) {
-        req.error = error;
+    if(response.error) {
+        req.error = response.error;
 
         next();
     } else {
-        res.status(201).json({
-            message: "Account verified.",
-            session: data.session
-        });
+        res.status(201).json(response);
 
         insertData<UsersSchema>("users", { id, first_name, last_name, email });
     }
@@ -96,31 +111,63 @@ export async function requestPasswordReset(req: any, res: any, next: Function) {
     
     if(!(await checkEmailExists(email))) {
         req.error = { code: "email_invalid" };
-        console.log(!(await checkEmailExists(email)));
+
         next();
         
         return;
     }
 
-    const { data, error } = await supabase.auth.resetPasswordForEmail(email,
-        { redirectTo: ""}
-    );
+    dotenv.config();
+
+    const { data, error } = await supabase.auth.signInWithOtp({
+        email: email,
+        options: {
+            shouldCreateUser: false,
+            emailRedirectTo: process.env.DOMAIN + "auth/password/reset"
+        }
+    });
+    console.log(data);
 
     if(error) {
-        console.log(error);
+        console.log(error); // error is logged for now, handle appropriately on occurence since you'll have more information about it
     } else {
-        console.log(data);
         res.status(201).json({
-            verifiedEmail: email
+            data: data
         });
     }
 }
 
-export async function verifyExistingUser(req: any, res: any, next: Function) {
-    const code = req.body.verificationCode.code;
-    const { data, error } = await supabase.auth.verifyOtp({
-        
+async function updateUser(newAttributes: UserAttributes) {
+    const { data, error } = await supabase.auth.updateUser(newAttributes);
+
+    if(error) {
+        console.log(error); // error is logged for now, handle appropriately on occurence since you'll have more information about it
+    }
+
+    return { authData: data, authError: error };
+}
+
+export async function changePassword(req: any, res: any, next: Function) {
+    const { form, session } = req.body;
+    const { data, error } = await supabase.auth.setSession({
+        access_token: session.access_token!,
+        refresh_token: session.refresh_token!
     });
+
+    const { authData, authError } = await updateUser({ password: form.newPassword })
+    
+    if(authError) {
+        req.error = authError;
+        
+        next();
+
+        return;
+    } else {
+        res.status(201).json({
+            message: "Password updated successfully.",
+            session: authData
+        });
+    }
 }
 
 export async function signOut() { // fully implement with server once option is available

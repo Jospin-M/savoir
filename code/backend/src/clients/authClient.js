@@ -39,11 +39,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.logInUser = logInUser;
 exports.checkEmailExists = checkEmailExists;
 exports.signUpNewUser = signUpNewUser;
-exports.verifyUser = verifyUser;
+exports.verifyNewUser = verifyNewUser;
 exports.requestPasswordReset = requestPasswordReset;
+exports.changePassword = changePassword;
 exports.signOut = signOut;
 exports.updateSession = updateSession;
 var supabaseClient_1 = require("./supabaseClient");
+var dotenv = require("dotenv");
 function logInUser(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         var _a, email, password, _b, data, error;
@@ -107,6 +109,7 @@ function signUpNewUser(req, res, next) {
                     if (error) {
                         req.error = error;
                         next();
+                        return [2 /*return*/];
                     }
                     else {
                         id = data.user.id;
@@ -121,30 +124,49 @@ function signUpNewUser(req, res, next) {
         });
     });
 }
-function verifyUser(req, res, next) {
+function verifyUser(params) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, id, first_name, last_name, email, code, _b, data, error;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        var _a, data, error;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0: return [4 /*yield*/, supabaseClient_1.supabase.auth.verifyOtp(params)];
+                case 1:
+                    _a = _b.sent(), data = _a.data, error = _a.error;
+                    if (error) {
+                        return [2 /*return*/, { error: error }];
+                    }
+                    else {
+                        return [2 /*return*/, {
+                                message: "Account verified",
+                                session: data.session
+                            }];
+                    }
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+function verifyNewUser(req, res, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, id, first_name, last_name, email, code, response;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
                     _a = req.body.verificationRequest.user, id = _a.id, first_name = _a.first_name, last_name = _a.last_name, email = _a.email;
                     code = req.body.verificationCode.code;
-                    return [4 /*yield*/, supabaseClient_1.supabase.auth.verifyOtp({
+                    return [4 /*yield*/, verifyUser({
                             email: email,
                             token: code,
                             type: "signup"
                         })];
                 case 1:
-                    _b = _c.sent(), data = _b.data, error = _b.error;
-                    if (error) {
-                        req.error = error;
+                    response = _b.sent();
+                    if (response.error) {
+                        req.error = response.error;
                         next();
                     }
                     else {
-                        res.status(201).json({
-                            message: "Account verified.",
-                            session: data.session
-                        });
+                        res.status(201).json(response);
                         (0, supabaseClient_1.insertData)("users", { id: id, first_name: first_name, last_name: last_name, email: email });
                     }
                     return [2 /*return*/];
@@ -154,29 +176,84 @@ function verifyUser(req, res, next) {
 }
 function requestPasswordReset(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var email, _a, _b, _c, data, error;
-        return __generator(this, function (_d) {
-            switch (_d.label) {
+        var email, _a, data, error;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
                     email = req.body.email;
                     return [4 /*yield*/, checkEmailExists(email)];
                 case 1:
-                    if (!!(_d.sent())) return [3 /*break*/, 3];
-                    req.error = { code: "email_invalid" };
-                    _b = (_a = console).log;
-                    return [4 /*yield*/, checkEmailExists(email)];
+                    if (!(_b.sent())) {
+                        req.error = { code: "email_invalid" };
+                        next();
+                        return [2 /*return*/];
+                    }
+                    dotenv.config();
+                    return [4 /*yield*/, supabaseClient_1.supabase.auth.signInWithOtp({
+                            email: email,
+                            options: {
+                                shouldCreateUser: false,
+                                emailRedirectTo: process.env.DOMAIN + "auth/password/reset"
+                            }
+                        })];
                 case 2:
-                    _b.apply(_a, [!(_d.sent())]);
-                    next();
-                    return [2 /*return*/];
-                case 3: return [4 /*yield*/, supabaseClient_1.supabase.auth.resetPasswordForEmail(email, { redirectTo: "" })];
-                case 4:
-                    _c = _d.sent(), data = _c.data, error = _c.error;
+                    _a = _b.sent(), data = _a.data, error = _a.error;
+                    console.log(data);
                     if (error) {
-                        console.log(error);
+                        console.log(error); // error is logged for now, handle appropriately on occurence since you'll have more information about it
                     }
                     else {
-                        console.log(data);
+                        res.status(201).json({
+                            data: data
+                        });
+                    }
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+function updateUser(newAttributes) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, data, error;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0: return [4 /*yield*/, supabaseClient_1.supabase.auth.updateUser(newAttributes)];
+                case 1:
+                    _a = _b.sent(), data = _a.data, error = _a.error;
+                    if (error) {
+                        console.log(error); // error is logged for now, handle appropriately on occurence since you'll have more information about it
+                    }
+                    return [2 /*return*/, { authData: data, authError: error }];
+            }
+        });
+    });
+}
+function changePassword(req, res, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, form, session, _b, data, error, _c, authData, authError;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
+                case 0:
+                    _a = req.body, form = _a.form, session = _a.session;
+                    return [4 /*yield*/, supabaseClient_1.supabase.auth.setSession({
+                            access_token: session.access_token,
+                            refresh_token: session.refresh_token
+                        })];
+                case 1:
+                    _b = _d.sent(), data = _b.data, error = _b.error;
+                    return [4 /*yield*/, updateUser({ password: form.newPassword })];
+                case 2:
+                    _c = _d.sent(), authData = _c.authData, authError = _c.authError;
+                    if (authError) {
+                        req.error = authError;
+                        next();
+                        return [2 /*return*/];
+                    }
+                    else {
+                        res.status(201).json({
+                            message: "Password updated successfully.",
+                            session: authData
+                        });
                     }
                     return [2 /*return*/];
             }

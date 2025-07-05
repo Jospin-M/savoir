@@ -14,7 +14,10 @@ function handleError(req, res) {
             res.json({ error: "Email address already in use." });
             break;
         case "email_invalid":
-            res.json({ error: "No users found." });
+            res.json({ error: "Email address not found." });
+            break;
+        case "same_password":
+            res.json({ error: "New password should be different from previous one." });
             break;
     }
 }
