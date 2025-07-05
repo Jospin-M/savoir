@@ -141,6 +141,10 @@
     gap: 15px;;
 }
 
+.login_button_container {
+    padding-bottom: 20px;
+}
+
 .sign_up_input_container {
     display: flex;
     flex-direction: column;
@@ -152,7 +156,7 @@
 }
 
 .div_container {
-    margin-top: 40px;
+    margin-top: 30px;
 }
 
 .auth_hyperlink_container {
@@ -161,7 +165,7 @@
     justify-content: center;
     align-items: center;
 
-    margin-top: 30px;
+    margin-top: 10px;
     gap: 5px;
 }
 
@@ -203,7 +207,6 @@
     color: #EC9A29;
 }
 
-
 .verification_input_container {
     display: flex;
     flex-direction: column;
@@ -218,13 +221,17 @@
 }
 
 .verification_prompt_text {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
     font-family: "Roboto Slab", sans-serif;
     font-size: 15px;
     color: #403F4C;
+}
+
+.password_verification_prompt_text {
+    font-family: "Roboto Slab", sans-serif;
+    font-size: 15px;
+    color: #403F4C;
+
+    padding-right: 20px;
 }
 
 .verification_input_box_container {
@@ -243,6 +250,17 @@
 
 .error_message {
     color: red; 
+    margin-top: -10px;
+    margin-bottom: -10px;
+
+    font-family: "Roboto Slab", serif;
+    font-size: 14px;
+
+    padding: 0px;
+}
+
+.success_message {
+    color: green;
     margin-bottom: -10px;
 
     font-family: "Roboto Slab", serif;
@@ -257,7 +275,7 @@
 
     width: 95%;
 
-    margin-top: 35px;
+    margin-top: 15px;
     padding-left: 5px;
     
     gap: 20px;
@@ -272,6 +290,36 @@
     margin-top: 30px;
 }
 
+.lift {
+    padding-top: 0px;
+}
+
+.verification_email_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.email_response_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: -30px;
+    padding-bottom: 20px;
+}
+
+.reset_password_input_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding-bottom: 0px;
+}
+
 .password_verification_prompt_text {
     display: flex;
     justify-content: center;
@@ -283,4 +331,11 @@
 
     text-align: center;
     padding-left: 3px;
+    margin-bottom: px;
+}
+
+.password_update_response {
+    width: 300px;
+
+    margin-left: 30px;
 }

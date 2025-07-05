@@ -6,21 +6,37 @@ import styles from "../../components/auth/Auth.module.css";
 
 import { useState } from "react";
 import { useForm } from "../../hooks/useForm.ts";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import { validateInputLength } from "../../components/listeners/formValidators.ts";
+import { sendHTTPRequest } from "../../../../backend/src/routes/utils.ts";
+import { parseAuthFragment } from "../../../lib/supabaseClient.ts";
 
 export default function ChangePassword() {
-    const [form, saveInput] = useForm(useState({ password: "" }));
+    const [form, saveInput] = useForm(useState({ newPassword: "" }));
+    const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
-    const location = useLocation();
+    
+    // save cookies on submission from browser url
     async function handlePasswordChange(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
 
-
+        const response = await sendHTTPRequest("/auth/password/reset", "POST", { 
+            form: form,
+            session: parseAuthFragment()
+        });
+        console.log(response);
+        
+        if(response.error) {
+            setError(response.error);
+        } else {
+            setError("");
+            setSuccess(response.message);
+            navigate("/auth/login", { replace: true });
+        }
+        // TODO: HANDLE PASSWORD CHANGE
     }
-    console.log(form.password);
-    console.log(validateInputLength(form.password, 8));
 
     return (
         <Background>
@@ -35,13 +51,19 @@ export default function ChangePassword() {
                         </p>
 
                         <div className={styles.verfication_input_box_container}>
-                            <PasswordInputBox name="password" inputBoxName="New Password" handleChange={saveInput} />
-                            {error && <p className={styles.error_message}>{error}</p>}
+                            <div className={styles.email_response_container}>
+                                <PasswordInputBox name="newPassword" inputBoxName="New Password" handleChange={saveInput} />
+                                
+                                <div className={styles.password_update_response}>
+                                    {error && <p className={styles.error_message}>{error}</p>}
+                                    {success && <p className={styles.success_message}>{success}</p>}
+                                </div>
+                            </div>
                         </div>
 
                         <div className={styles.reset_navigation_buttons_container}>
-                            <Button prompt="Back" buttonCSS="auth_button" isDisabled={false} handleClick={()=>navigate("/auth/login")}/>
-                            <Button prompt="Submit" buttonCSS="auth_button" isDisabled={!validateInputLength(form.password, 8)} handleClick={handlePasswordChange}/>
+                            <Button prompt="Back" buttonCSS="auth_button" isDisabled={false} handleClick={()=>navigate("/auth/password/sendResetLink")}/>
+                            <Button prompt="Submit" buttonCSS="auth_button" isDisabled={!validateInputLength(form.newPassword, 8)} handleClick={handlePasswordChange}/>
                         </div>
                     </div>
                 </Rectangle>

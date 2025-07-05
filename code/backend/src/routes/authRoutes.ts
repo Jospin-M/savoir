@@ -1,4 +1,4 @@
-import { logInUser, requestPasswordReset, signUpNewUser, verifyNewUser } from "../clients/authClient"
+import { logInUser, requestPasswordReset, signUpNewUser, verifyNewUser, changePassword } from "../clients/authClient"
 import { handleError } from "../services/authService";
 
 const express = require("express");
@@ -12,6 +12,6 @@ router.post("/verifyNewUser", verifyNewUser, handleError);
 
 router.post("/password/request-reset", requestPasswordReset, handleError);
 
-router.post("/verifyExistingUser");
+router.post("/password/reset", changePassword, handleError);
 
 export default router;

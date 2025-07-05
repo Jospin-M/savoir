@@ -15,23 +15,22 @@ import { sendHTTPRequest } from "../../../../backend/src/routes/utils.ts";
 export default function InitiateReset() {
     const [form, saveInput] = useForm(useState({ email: "" }));
     const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
     const navigate = useNavigate();
 
     async function handleEmailVerification(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
 
-        /*const response = await sendHTTPRequest("/auth/password/request-password-reset", "POST", form);
-       
+        const response = await sendHTTPRequest("/auth/password/request-reset", "POST", form);
         console.log(response);
 
         if(response.error) {
             setError(response.error);
+            setSuccess("");
         } else {
             setError("");
-            navigate("/auth/verify");
-        }*/
-        setError("");
-        navigate("/auth/verifyAccount");
+            setSuccess("We've sent you a link to reset your password.");
+        }
     }
 
     return (
@@ -44,12 +43,18 @@ export default function InitiateReset() {
 
                     <div className={styles.reset_input_container}>
                         <p className={styles.password_verification_prompt_text}>
-                            Enter your email address and we'll send you a code that you can use to reset your password.
+                            Enter your email address and we'll send you a link that you can use to reset your password.
                         </p>
 
                         <div className={styles.verfication_input_box_container}>
-                            <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput} />
-                            {error && <p className={styles.error_message}>{error}</p>}
+                            <div className={styles.email_response_container}>
+                                <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput} />
+                                
+                                <div className={styles.lift}>
+                                    {error && <p className={styles.error_message}>{error}</p>} 
+                                    {success && <p className={styles.success_message}>{success}</p>}
+                                </div>
+                            </div>
                         </div>
 
                         <div className={styles.reset_navigation_buttons_container}>
