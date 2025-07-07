@@ -54,8 +54,8 @@ export default function VerifyCode() {
                         </div>
 
                         <div className={styles.verification_navigation_buttons_container}>
-                            <Button prompt="Back" buttonCSS="auth_button" isDisabled={false} handleClick={()=>navigate("/auth/signup")}/>
-                            <Button prompt="Verify" buttonCSS="auth_button" isDisabled={!validateInputLength(code.code, 6)} handleClick={handleVerification}/>
+                            <Button prompt="Back" cssClass="auth_button" isDisabled={false} handleClick={()=>navigate("/auth/signup")}/>
+                            <Button prompt="Verify" cssClass="auth_button" isDisabled={!validateInputLength(code.code, 6)} handleClick={handleVerification}/>
                         </div>
                     </div>
                 </Rectangle>

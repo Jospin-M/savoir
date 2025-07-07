@@ -55,7 +55,7 @@ export default function Login() {
                         <PasswordInputBox name="password" inputBoxName="Password" handleChange={saveInput}/>
                         
                         <div className={styles.login_button_container}>
-                            <Button prompt="Log In"  buttonCSS="auth_button" isDisabled={validateAuthForm(form)} handleClick={handleLogin}/>
+                            <Button prompt="Log In"  cssClass="auth_button" isDisabled={validateAuthForm(form)} handleClick={handleLogin}/>
                         </div>
                         {error && <p className={styles.login_error_message}>{error}</p>}
                     </div> 
