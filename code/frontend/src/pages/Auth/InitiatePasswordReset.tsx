@@ -24,7 +24,7 @@ export default function InitiateReset() {
     async function handleEmailVerification(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
 
-        if(count < 1) { // rate limiting
+        if(count < 1) { // basic rate limiting, reinforce later
             const response = await sendHTTPRequest("/auth/password/request-reset", "POST", form);
 
             if(response.error) {
@@ -63,8 +63,8 @@ export default function InitiateReset() {
                         </div>
 
                         <div className={styles.reset_navigation_buttons_container}>
-                            <Button prompt="Back" buttonCSS="auth_button" isDisabled={false} handleClick={()=>navigate("/auth/login")}/>
-                            <Button prompt="Submit" buttonCSS="auth_button" isDisabled={!validateEmail(form.email)} handleClick={handleEmailVerification}/>
+                            <Button prompt="Back" cssClass="auth_button" isDisabled={false} handleClick={()=>navigate("/auth/login")}/>
+                            <Button prompt="Submit" cssClass="auth_button" isDisabled={!validateEmail(form.email)} handleClick={handleEmailVerification}/>
                         </div>
                     </div>
                 </Rectangle>

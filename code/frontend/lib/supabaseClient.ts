@@ -11,7 +11,7 @@ const supabase = createBrowserClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
 });
 
 /**
- * Parses the fragment identifier that appears when the user is changing their password
+ * Parses the fragment identifier that appears in the browser URL when the user is changing their password
  * to obtain their current session.
  * 
  * @returns an object containing access and refresh tokens.
@@ -24,6 +24,13 @@ export function parseAuthFragment() {
         access_token: params.get("access_token"),
         refresh_token: params.get("refresh_token")
     }
+}
+
+export async function getAuthenticatedUserId() {
+    const { data: { user } } = await supabase.auth.getUser();
+    const { id } = user!;
+
+    return id;
 }
 
 export default supabase;
