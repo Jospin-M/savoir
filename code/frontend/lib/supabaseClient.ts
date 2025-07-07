@@ -2,7 +2,13 @@ import { createBrowserClient } from "@supabase/ssr";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
-const supabase = createBrowserClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabase = createBrowserClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    auth: {
+        persistSession: false,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+    }
+});
 
 /**
  * Parses the fragment identifier that appears when the user is changing their password

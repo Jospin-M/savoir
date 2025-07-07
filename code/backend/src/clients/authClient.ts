@@ -20,7 +20,7 @@ type AuthCredentials = {
  */
 export async function logInUser(req: any, res: any, next: Function) {
     const { email, password }: AuthCredentials = req.body;
-    
+
     const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
         password: password
@@ -34,7 +34,10 @@ export async function logInUser(req: any, res: any, next: Function) {
         return;
     } 
     
-    res.send(data); 
+    const { id } = data.user;
+    const { session } = data;
+
+    res.send({ user_id: id, session }); 
 }
 
 /**
@@ -216,7 +219,7 @@ export async function changePassword(req: any, res: any, next: Function) {
         return;
     } else {
         res.status(201).json({
-            message: "Password updated successfully.",
+            message: "Your password has been updated successfully.",
             session: authData
         });
     }

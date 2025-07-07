@@ -1,4 +1,3 @@
-/* Import fonts */
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab: wght@400;700&display=swap');
 
 .login_box_container {
@@ -159,8 +158,12 @@
     padding-bottom: 27px;
 }
 
-.div_container {
+.login_div_container {
     margin-top: 30px;
+}
+
+.sign_up_div_container {
+    margin-top: 55px;
 }
 
 .auth_hyperlink_container {
@@ -169,7 +172,7 @@
     justify-content: center;
     align-items: center;
 
-    margin-top: 10px;
+    margin-top: 20px;
     gap: 5px;
 }
 
@@ -179,7 +182,7 @@
     justify-content: center;
     align-items: center;
 
-    margin-top: 30px;
+    margin-top: 20px;
     gap: 5px;
 }
 
@@ -196,7 +199,7 @@
     color: #403F4C;
 }
 
-.auth_hyperlink {
+a.auth_hyperlink {
     font-family: "Roboto Slab", sans-serif;
     font-size: 15px;
     color: #403f4c;
@@ -207,7 +210,7 @@
     text-decoration: none;
 }
 
-.auth_hyperlink:hover {
+a.auth_hyperlink:hover {
     color: #EC9A29;
 }
 
@@ -221,16 +224,27 @@
 
     margin-top: 50px;
     padding-left: 20px;
-    gap: 7px;
+}
+
+.verification_input_box_container {
+    padding-top: 5px;
+    
+}
+
+.verification_status_container {
+    position: absolute;
+    margin-top: 110px;
 }
 
 .verification_prompt_text {
     font-family: "Roboto Slab", sans-serif;
     font-size: 15px;
     color: #403F4C;
+
+    padding-right: 15px;
 }
 
-.verification_input_box_container {
+.verification_input_container {
     margin-top: 20px;
     margin-right: 30px;
 }
@@ -244,10 +258,6 @@
     margin-right: 30px;
 }
 
-.verification_error_message {
-    padding-top: 10px;
-}
-
 .password_verification_prompt_text {
     font-family: "Roboto Slab", sans-serif;
     font-size: 15px;
@@ -256,22 +266,69 @@
     padding-right: 20px;
 }
 
-.error_message {
+.sign_up_error_message_container {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 330px;
+    width: 320px;
+    position: absolute;
+
     color: red; 
-    margin-top: -10px;
-    margin-bottom: -10px;
 
-    font-family: "Roboto Slab", serif;
+    font-family: "Roboto Slab", sans-serif;
     font-size: 14px;
-
-    padding: 0px;
 }
 
-.success_message {
+.login_error_message {
+    display: flex;
+    justify-content: center;
+    margin-top: 260px;
+    
+    width: 320px;
+    position: absolute;
+
+    color: red; 
+
+    font-family: "Roboto Slab", sans-serif;
+    font-size: 14px;
+}
+
+.email_verification_success_message {
     color: green;
     margin-bottom: -10px;
 
-    font-family: "Roboto Slab", serif;
+    font-family: "Roboto Slab", sans-serif;
+    font-size: 14px;
+}
+
+.email_verification_error_message {
+    color: red;
+    margin-bottom: -10px;
+
+    font-family: "Roboto Slab", snas-serif;
+    font-size: 14px;
+}
+
+.password_error_message {
+    margin-top: 25px;
+    margin-left: 50px;
+    position: absolute;
+    width: 320px;
+
+    color: red; 
+
+    font-family: "Roboto Slab", sans-serif;
+    font-size: 14px;
+}
+
+.password_success_message {
+    margin-top: 25px;
+    position: absolute;
+
+    color: green; 
+
+    font-family: "Roboto Slab", sans-serif;
     font-size: 14px;
 }
 
@@ -292,21 +349,19 @@
 .reset_navigation_buttons_container {
     display: flex;
     flex-direction: row;
+    position: absolute;
 
     gap: 80px;
 
-    margin-top: 30px;
-}
-
-.password_reset_status_message {
-    padding-top: 0px;
+    margin-top: 350px;
 }
 
 .verification_email_container {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    position: absolute;
+    
     margin-bottom: 20px;
 }
 
@@ -315,9 +370,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    margin-bottom: -30px;
-    padding-bottom: 20px;
 }
 
 .reset_password_input_container {
@@ -343,7 +395,7 @@
 }
 
 .password_update_response {
-    width: 300px;
-
-    margin-left: 30px;
+    display: flex;
+    justify-content: center;
+    width: 175px;
 }

@@ -48,14 +48,14 @@ export default function SignUp() {
                         <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput}/> 
                         <PasswordInputBox name="password" inputBoxName="Password" handleChange={saveInput}/>
                         
-                        <div className={styles.sign_up_button_container}>
-                            <Button prompt="Register" buttonCSS="auth_button" isDisabled={validateSignUpForm(form)} handleClick={handleSignUp}/>
-                        </div>
+                        <Button prompt="Register" buttonCSS="auth_button" isDisabled={validateSignUpForm(form)} handleClick={handleSignUp}/>
                         
-                        {error && <p className={styles.error_message}>{error}</p>}
+                        <div className={styles.sign_up_error_message_container}>
+                            {error && <p className={styles.sign_up_error_message}>{error}</p>}
+                        </div>
                     </div> 
 
-                    <div className={styles.div_container}>
+                    <div className={styles.sign_up_div_container}>
                         <Divider length={60} />
                     </div>
 
