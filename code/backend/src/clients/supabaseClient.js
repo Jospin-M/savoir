@@ -37,20 +37,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.supabase = void 0;
-exports.insertData = insertData;
+exports.insertRecord = insertRecord;
 var supabase_js_1 = require("@supabase/supabase-js");
 var dotenv = require("dotenv");
 dotenv.config();
 // move from keys to cloud storage
 var supabaseURL = process.env.SUPABASE_URL;
 var supabaseKey = process.env.SUPABASE_ANON_KEY;
-var supabase = (0, supabase_js_1.createClient)(supabaseURL, supabaseKey, {
-    auth: {
-        autoRefreshToken: true,
-        persistSession: true,
-        detectSessionInUrl: true
-    }
-});
+var supabase = (0, supabase_js_1.createClient)(supabaseURL, supabaseKey);
 exports.supabase = supabase;
 /**
  * Inserts a new record into a table in the database.
@@ -58,7 +52,7 @@ exports.supabase = supabase;
  * @param tableName - the name of the table to receive the new entry.
  * @param data - an object with fields corresponding to the column names of the desired table.
  */
-function insertData(tableName, data) {
+function insertRecord(tableName, data) {
     return __awaiter(this, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {

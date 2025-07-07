@@ -55,7 +55,7 @@ var dotenv = require("dotenv");
  */
 function logInUser(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, email, password, _b, data, error;
+        var _a, email, password, _b, data, error, id, session;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
@@ -71,7 +71,9 @@ function logInUser(req, res, next) {
                         next();
                         return [2 /*return*/];
                     }
-                    res.send(data);
+                    id = data.user.id;
+                    session = data.session;
+                    res.send({ user_id: id, session: session });
                     return [2 /*return*/];
             }
         });
@@ -195,7 +197,7 @@ function verifyNewUser(req, res, next) {
                     }
                     else {
                         res.status(201).json(response);
-                        (0, supabaseClient_1.insertData)("users", { id: id, first_name: first_name, last_name: last_name, email: email });
+                        (0, supabaseClient_1.insertRecord)("users", { id: id, first_name: first_name, last_name: last_name, email: email });
                     }
                     return [2 /*return*/];
             }
@@ -297,7 +299,7 @@ function changePassword(req, res, next) {
                     }
                     else {
                         res.status(201).json({
-                            message: "Password updated successfully.",
+                            message: "Your password has been updated successfully.",
                             session: authData
                         });
                     }

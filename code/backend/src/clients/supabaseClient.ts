@@ -6,13 +6,7 @@ dotenv.config();
 // move from keys to cloud storage
 const supabaseURL: string = process.env.SUPABASE_URL!;
 const supabaseKey: string = process.env.SUPABASE_ANON_KEY!;
-let supabase: SupabaseClient = createClient(supabaseURL, supabaseKey, {
-    auth: {
-        autoRefreshToken: true,
-        persistSession: true,
-        detectSessionInUrl: true
-    }
-});
+const supabase: SupabaseClient = createClient(supabaseURL, supabaseKey);
 
 /**
  * Inserts a new record into a table in the database.

@@ -12,8 +12,8 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { validateAuthForm } from "../../../src/components/listeners/formValidators.ts";
-
-import { sendHTTPRequest } from "../../../../backend/src/routes/utils.ts"
+import { sendHTTPRequest } from "../../../../backend/src/routes/utils.ts";
+import supabase from "../../../lib/supabaseClient.ts";
 
 export default function Login() {
     // explore other ways to use box shadow
@@ -21,17 +21,24 @@ export default function Login() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
     
-    async function handleLogin(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) { // generalize method
+    async function handleLogin(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
         
         const response = await sendHTTPRequest("/auth/login", "POST", form);
-        console.log(response);
-
+        
         if(response.error) {
             setError(response.error);
         } else {
+            const { user_id, session } = response;
+            const { access_token, refresh_token } = session;
+
+            supabase.auth.setSession({ 
+                access_token: access_token, 
+                refresh_token: refresh_token 
+            });
+            
             setError("");
-            navigate("/"); // navigate to profile page once created
+            navigate("/" + user_id); // navigate to profile page once created
         }
     }
 
@@ -50,10 +57,10 @@ export default function Login() {
                         <div className={styles.login_button_container}>
                             <Button prompt="Log In"  buttonCSS="auth_button" isDisabled={validateAuthForm(form)} handleClick={handleLogin}/>
                         </div>
-                        {error && <p className={styles.error_message}>{error}</p>}
+                        {error && <p className={styles.login_error_message}>{error}</p>}
                     </div> 
 
-                    <div className={styles.div_container}>
+                    <div className={styles.login_div_container}>
                         <Divider length={60} />
                     </div>
 

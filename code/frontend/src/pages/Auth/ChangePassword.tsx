@@ -16,22 +16,32 @@ export default function ChangePassword() {
     const [form, saveInput] = useForm(useState({ newPassword: "" }));
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
+    let [count, setCount] = useState(0);
     const navigate = useNavigate();
+
+    const messageToDisplay = success ? success : error;
+    const styleToUse = success ? "password_success_message" : "password_error_message";
     
     async function handlePasswordChange(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
 
-        const response = await sendHTTPRequest("/auth/password/reset", "POST", { 
-            form: form,
-            session: parseAuthFragment()
-        });
+        if(count < 1) { // rate limiting
+            const response = await sendHTTPRequest("/auth/password/reset", "POST", { 
+                form: form,
+                session: parseAuthFragment()
+            });
         
-        if(response.error) {
-            setError(response.error);
-        } else {
-            setError("");
-            setSuccess(response.message);
-            navigate("/auth/login", { replace: true });
+            if(response.error) {
+                setError(response.error);
+            } else {
+                setError("");
+                setSuccess(response.message);
+                setTimeout(() => {
+                    navigate("/auth/login", { replace: true });
+                }, 1500);
+            }
+
+            setCount(count+1);
         }
     }
 
@@ -52,8 +62,7 @@ export default function ChangePassword() {
                                 <PasswordInputBox name="newPassword" inputBoxName="New Password" handleChange={saveInput} />
                                 
                                 <div className={styles.password_update_response}>
-                                    {error && <p className={styles.error_message}>{error}</p>}
-                                    {success && <p className={styles.success_message}>{success}</p>}
+                                    {messageToDisplay && <p className={styles[styleToUse]}>{messageToDisplay}</p>}
                                 </div>
                             </div>
                         </div>
