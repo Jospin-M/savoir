@@ -1,16 +1,20 @@
 import Background from "../../components/profile/Background";
 import NavBar from "../../components/common/NavBar.tsx";
+import styles from "../../components/profile/Profile.module.css";
 
-import supabase from "../../../lib/supabaseClient.ts";
+import { useLoaderData } from "react-router-dom";
 
 export default function Authenticated() {
-    supabase.auth.getSession().then((session) => {
-        console.log(session);
-    })
-    // use placeholder values for fields not yet stored in the database (e.g. bio)
+    const { fullName, bio, profileImageUrl } = useLoaderData();
+    console.log({ fullName, bio });
+    
     return (
         <Background>
             <NavBar />
+
+            <div className={styles.profile_header}>
+                <img className={styles.profile_pic} src={profileImageUrl}/>
+            </div>
         </Background>
     );
 }
