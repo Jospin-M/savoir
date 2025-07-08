@@ -1,5 +1,4 @@
 import { createBrowserClient } from "@supabase/ssr";
-import { domainToASCII } from "url";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -87,8 +86,6 @@ async function createAuthenticatedHTTPRequest(method: string, body: object) {
  */
 export async function sendAuthenticatedHTTPRequest(endpoint: string, method: string, payload: Object) {
     const DOMAIN = import.meta.env.VITE_DOMAIN;
-
-    console.log(DOMAIN);
     const result = await fetch(DOMAIN + "api" + endpoint, await createAuthenticatedHTTPRequest(method, payload));
     const response = await result.json();
 
@@ -116,4 +113,38 @@ export async function getAuthenticatedUserId() {
     const { id } = user!;
 
     return id;
+}
+
+/**
+ * Retrieves a cookie from localStorage.
+ * 
+ * @param name - the name of the cookie
+ */
+function getCookie(name: string) {
+    const cookies = document.cookie.split(";");
+
+    for(let cookie of cookies) {
+        const [key, value] = cookie.split("=");
+
+        if(key.trim() === name) {
+            return decodeURIComponent(value);
+        }
+    }
+
+    return null;
+}
+
+/**
+ * Save the user's uid to localStorage so that calls to the API are reduced.
+ * 
+ * @param userID - the user's uid obtained after authentication
+ */
+export function saveUserID(userID: string) {
+    const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString();
+
+    document.cookie = `user_id=${encodeURIComponent(userID)}; expires=${expires}; path=/`;
+}
+
+export function getUserID() {
+    return getCookie("user_id");
 }

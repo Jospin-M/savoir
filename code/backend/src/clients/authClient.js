@@ -42,8 +42,8 @@ exports.signUpNewUser = signUpNewUser;
 exports.verifyNewUser = verifyNewUser;
 exports.requestPasswordReset = requestPasswordReset;
 exports.changePassword = changePassword;
+exports.getProfile = getProfile;
 exports.signOut = signOut;
-exports.updateSession = updateSession;
 var supabaseClient_1 = require("./supabaseClient");
 var dotenv = require("dotenv");
 /**
@@ -308,6 +308,42 @@ function changePassword(req, res, next) {
         });
     });
 }
+/**
+ * Retrieves the profile of a user.
+ *
+ * @param req - a request containing the id of the user whose profile will be retrieved
+ * @param res - a response with the user's profile information
+ */
+function getProfile(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var userID, supabaseClient, _a, data, error, _b, first_name, last_name, bio, profile_image_url;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    userID = req.params.id;
+                    supabaseClient = (0, supabaseClient_1.createAuthenticatedClient)(req.headers);
+                    return [4 /*yield*/, supabaseClient
+                            .from("users")
+                            .select("first_name,last_name,bio,profile_image_url")
+                            .eq("id", userID)
+                            .maybeSingle()];
+                case 1:
+                    _a = _c.sent(), data = _a.data, error = _a.error;
+                    if (error) {
+                        console.error("Supabase error:", error);
+                        return [2 /*return*/, res.status(500).json({ error: "Failed to fetch user profile" })];
+                    }
+                    _b = data, first_name = _b.first_name, last_name = _b.last_name, bio = _b.bio, profile_image_url = _b.profile_image_url;
+                    res.status(201).json({
+                        fullName: first_name + " " + last_name,
+                        bio: bio,
+                        profileImageUrl: profile_image_url
+                    });
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
 function signOut() {
     return __awaiter(this, void 0, void 0, function () {
         var error;
@@ -322,16 +358,5 @@ function signOut() {
                     return [2 /*return*/];
             }
         });
-    });
-}
-function updateSession(setSession) {
-    supabaseClient_1.supabase.auth.getSession().then(function (_a) {
-        var session = _a.data.session;
-        setSession(session); // might not be necessary, wait until more features have been implemented to decide
-    });
-    supabaseClient_1.supabase.auth.onAuthStateChange(function (_event, session) {
-        if (session) {
-            setSession(session);
-        } // maybe default to no session if no valid one is found
     });
 }

@@ -1,5 +1,5 @@
 import helmet from "helmet";
-import router from "./routes/authRoutes";
+import authRouter from "./routes/authRoutes";
 
 const cors = require("cors");
 const morgan = require("morgan");
@@ -11,7 +11,7 @@ app.use(helmet());
 app.use(morgan("tiny"));
 app.use(express.json());
 
-app.use("/api/auth/", router);
+app.use("/api/auth/", authRouter);
 
 const PORT = 3000;
 

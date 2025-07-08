@@ -5,14 +5,13 @@ import styles from "../../components/profile/Profile.module.css";
 import { useLoaderData } from "react-router-dom";
 
 export default function Authenticated() {
-    const { fullName, bio, profileImageUrl } = useLoaderData();
-    console.log({ fullName, bio });
+    const { profileData: { fullName, bio, profileImageUrl } } = useLoaderData();
     
     return (
         <Background>
-            <NavBar />
+            <NavBar profileImageUrl={profileImageUrl}/>
 
-            <div className={styles.profile_header}>
+            <div className={styles.profile_header}> 
                 <img className={styles.profile_pic} src={profileImageUrl}/>
             </div>
         </Background>

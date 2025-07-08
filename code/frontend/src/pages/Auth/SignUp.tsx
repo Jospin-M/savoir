@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { validateSignUpForm } from "../../../src/components/listeners/formValidators.ts";
-import { sendHTTPRequest } from "../../../../backend/src/routes/utils.ts";
+import { sendHTTPRequest } from "../../../lib/utils.ts";
 
 export default function SignUp() {
     const [form, saveInput] = useForm(useState({ fullName: "", email: "", password: "" }));
@@ -25,7 +25,6 @@ export default function SignUp() {
         event.preventDefault();
 
         const response = await sendHTTPRequest("/auth/register", "POST", form);
-        console.log(response);
 
         if(response.error) {
             setError(response.error);
