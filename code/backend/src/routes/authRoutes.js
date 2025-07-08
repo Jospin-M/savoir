@@ -9,4 +9,5 @@ router.post("/register", authClient_1.signUpNewUser, authService_1.handleAuthErr
 router.post("/verifyNewUser", authClient_1.verifyNewUser, authService_1.handleAuthError);
 router.post("/password/request-reset", authClient_1.requestPasswordReset, authService_1.handleAuthError);
 router.post("/password/reset", authClient_1.changePassword, authService_1.handleAuthError);
+router.get("/profile/:id", authClient_1.getProfile);
 exports.default = router;

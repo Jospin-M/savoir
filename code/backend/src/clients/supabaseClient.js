@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.supabase = void 0;
+exports.createAuthenticatedClient = createAuthenticatedClient;
 exports.insertRecord = insertRecord;
 var supabase_js_1 = require("@supabase/supabase-js");
 var dotenv = require("dotenv");
@@ -46,6 +47,22 @@ var supabaseURL = process.env.SUPABASE_URL;
 var supabaseKey = process.env.SUPABASE_ANON_KEY;
 var supabase = (0, supabase_js_1.createClient)(supabaseURL, supabaseKey);
 exports.supabase = supabase;
+/**
+ * Creates a Supabase client using the access token of an authenticated user.
+ *
+ * @param headers - the headers provided in the browser's HTTP request
+ * @param accessToken - the access token received from Supabase
+ */
+function createAuthenticatedClient(headers) {
+    var accessToken = headers.authorization;
+    return (0, supabase_js_1.createClient)(supabaseURL, supabaseKey, {
+        global: {
+            headers: {
+                Authorization: accessToken
+            }
+        }
+    });
+}
 /**
  * Inserts a new record into a table in the database.
  *

@@ -1,32 +1,37 @@
-import { createContext, useEffect, useState, useContext, type ReactNode } from "react";
-//import { supabase } from "../../../backend/src/clients/supabaseClient.ts";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import supabase from "../../lib/utils";
 
 type AuthContextType = {
-    session: any
+    session: any;
+    setSession: React.Dispatch<React.SetStateAction<{}>>;
 }
 
 const AuthContext = createContext<AuthContextType>({
-    session: undefined
+    session: undefined,
+    setSession: ({}) => {}
 });
 
 export function AuthContextProvider({ children }: { children: ReactNode }) {
-    const [ session, setSession ] = useState({})!;
-
-    /**
-     * 1. set session to log in 
-     */
+    const [ session, setSession ] = useState({})!; // using context may not be necessary
 
     useEffect(() => {
-       // updateSession(setSession);
+        // handle token refresh 
+        const { data } = supabase.auth.onAuthStateChange((session) => {
+            console.log(session);
+
+            if(session === "SIGNED_OUT") {
+                
+            }
+        });
     }, []);
 
     return (
-        <AuthContext.Provider value={{ session }}>
+        <AuthContext.Provider value={{ session, setSession }}>
             {children}
         </AuthContext.Provider>
     );
 }
 
-export function UserAuth() {
+export function getContext() {
     return useContext(AuthContext);
 }

@@ -9,7 +9,7 @@ import { useForm } from "../../hooks/useForm";
 
 import { validateInputLength } from "../../components/listeners/formValidators";
 import { useNavigate, useLocation } from "react-router-dom";
-import { sendHTTPRequest } from "../../../../backend/src/routes/utils";
+import { sendHTTPRequest } from "../../../lib/utils.ts";
 
 export default function VerifyCode() {
     const [code, saveInput] = useForm(useState({ code: "" }));
@@ -28,7 +28,7 @@ export default function VerifyCode() {
             setError(response.error);
         } else {
             setError("");
-            navigate("/", { replace: true });
+            navigate("/profile/", { replace: true }); //id should be attached
         }
     }
 

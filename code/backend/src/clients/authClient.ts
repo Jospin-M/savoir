@@ -1,6 +1,5 @@
-import { supabase, insertRecord } from "./supabaseClient";
+import { supabase, createAuthenticatedClient, insertRecord } from "./supabaseClient";
 import * as dotenv from "dotenv";
-import React from "react";
 
 import type { RegistrationForm } from "../types/forms";
 import type { UsersSchema } from "../types/tableSchemas";
@@ -20,7 +19,6 @@ type AuthCredentials = {
  */
 export async function logInUser(req: any, res: any, next: Function) {
     const { email, password }: AuthCredentials = req.body;
-
     const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
         password: password
@@ -124,7 +122,6 @@ async function verifyUser(params: VerifyOtpParams) {
 export async function verifyNewUser(req: any, res: any, next: Function) {
     const { id, first_name, last_name, email } = req.body.verificationRequest.user; 
     const code = req.body.verificationCode.code;
-
     const response = await verifyUser({
         email: email,
         token: code,
@@ -225,22 +222,39 @@ export async function changePassword(req: any, res: any, next: Function) {
     }
 }
 
+/**
+ * Retrieves the profile of a user.
+ * 
+ * @param req - a request containing the id of the user whose profile will be retrieved
+ * @param res - a response with the user's profile information
+ */
+export async function getProfile(req: any, res: any) {
+    const userID = req.params.id;
+    const supabaseClient = createAuthenticatedClient(req.headers);
+    const { data, error } = await supabaseClient
+        .from("users")
+        .select("first_name,last_name,bio,profile_image_url")
+        .eq("id", userID)
+        .maybeSingle();
+        
+    if(error) {
+        console.error("Supabase error:", error);
+        return res.status(500).json({ error: "Failed to fetch user profile" });
+    }
+    
+    const { first_name, last_name, bio, profile_image_url } = data!;
+
+    res.status(201).json({
+        fullName: first_name + " " + last_name,
+        bio: bio,
+        profileImageUrl: profile_image_url
+    });
+}
+
 export async function signOut() { // fully implement with server once option is available
     const { error } = await supabase.auth.signOut();
 
     if(error) {
         console.error("There was an error signing out: ", error);
     }
-}
-
-export function updateSession(setSession: React.Dispatch<React.SetStateAction<{}>>) {
-    supabase.auth.getSession().then(({ data: { session }} ) => {
-        setSession(session!); // might not be necessary, wait until more features have been implemented to decide
-    });
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-        if(session) {
-            setSession(session);
-        } // maybe default to no session if no valid one is found
-    });
 }

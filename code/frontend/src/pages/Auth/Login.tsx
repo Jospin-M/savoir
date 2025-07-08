@@ -12,11 +12,12 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { validateAuthForm } from "../../../src/components/listeners/formValidators.ts";
-import { sendHTTPRequest } from "../../../../backend/src/routes/utils.ts";
-import supabase from "../../../lib/supabaseClient.ts";
+import { saveUserID, sendHTTPRequest } from "../../../lib/utils.ts";
+import supabase from "../../../lib/utils.ts";
 
 export default function Login() {
     // explore other ways to use box shadow
+    // handle loading state
     const [form, saveInput] = useForm(useState({ email: "", password: "" }))
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -31,14 +32,15 @@ export default function Login() {
         } else {
             const { user_id, session } = response;
             const { access_token, refresh_token } = session;
-
+            
             supabase.auth.setSession({ 
                 access_token: access_token, 
                 refresh_token: refresh_token 
             });
-            
+
+            saveUserID(user_id);
             setError("");
-            navigate("/" + user_id); // navigate to profile page once created
+            navigate("/profile/" + user_id); // navigate to profile page once created
         }
     }
 

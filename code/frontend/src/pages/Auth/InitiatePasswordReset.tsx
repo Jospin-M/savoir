@@ -9,7 +9,7 @@ import { useForm } from "../../hooks/useForm.ts";
 import { useNavigate } from "react-router-dom";
 
 import { validateEmail } from "../../components/listeners/formValidators.ts";
-import { sendHTTPRequest } from "../../../../backend/src/routes/utils.ts";
+import { sendHTTPRequest } from "../../../lib/utils.ts";
 
 export default function InitiateReset() {
     const [form, saveInput] = useForm(useState({ email: "" }));

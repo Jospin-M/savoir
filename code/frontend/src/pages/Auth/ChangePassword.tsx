@@ -9,8 +9,7 @@ import { useForm } from "../../hooks/useForm.ts";
 import { useNavigate } from "react-router-dom";
 
 import { validateInputLength } from "../../components/listeners/formValidators.ts";
-import { sendHTTPRequest } from "../../../../backend/src/routes/utils.ts";
-import { parseAuthFragment } from "../../../lib/supabaseClient.ts";
+import { sendHTTPRequest, parseAuthFragment } from "../../../lib/utils.ts";
 
 export default function ChangePassword() {
     const [form, saveInput] = useForm(useState({ newPassword: "" }));
