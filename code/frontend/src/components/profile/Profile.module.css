@@ -1,0 +1,17 @@
+.profile_header {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+
+    width: 1302px;
+    height: 176px;
+
+    background-color: aliceblue;
+
+    margin-bottom: 200px
+}
+
+.profile_pic {
+    width: 100px;
+    height: 100px;
+}
