@@ -4,15 +4,16 @@ import styles from "./Common.module.css";
 type ButtonProps = {
     prompt: string,
     isDisabled: boolean,
-    cssClass: string,
+    buttonCSSClass: string,
+    buttonTitleCSSClass: string,
     handleClick: MouseEventHandler<HTMLButtonElement>
 }
 
-export default function Button({ prompt, cssClass, isDisabled, handleClick } : ButtonProps) {
+export default function Button({ prompt, buttonCSSClass, buttonTitleCSSClass, isDisabled, handleClick } : ButtonProps) {
     return (
         <div className={styles.button_container}>
-            <button className={styles[cssClass]} onClick={handleClick} disabled={isDisabled}>
-                <div className={styles.button_title}>
+            <button className={styles[buttonCSSClass]} onClick={handleClick} disabled={isDisabled}>
+                <div className={styles[buttonTitleCSSClass]}>
                     {prompt}
                 </div>
             </button>

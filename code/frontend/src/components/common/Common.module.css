@@ -28,11 +28,37 @@
   box-shadow: none;
 }
 
-.button_title {
+.auth_button_title {
   max-width: 200px;
-  font-family:"Roboto Slab", sans-serif;
+  font-family:"Roboto", sans-serif;
   font-size: 15px;
   color: #FFFFFF;
+}
+
+.edit_profile_button {
+  background-color: #EC9A29;
+  border: none;
+  border-radius: 8px;
+
+  width: 223px;
+  height: 54px;
+  margin-top: 10px;
+  margin-left: 715px;
+  
+  cursor: pointer;
+}
+
+.roboto-edit_profile {
+
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 450;
+    font-size: 30px;
+    font-style: normal;
+    font-variation-settings:
+    "wdth" 100;
+
+    color: #FFFFFF;
 }
 
 .button_container {
@@ -68,7 +94,7 @@
 
 .verification_password_page_background {
   width: 350px;
-  height: 380px;
+  height: 400px;
 
   background-color: #F2EFE9;
   border-radius: 16px;

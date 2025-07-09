@@ -67,8 +67,8 @@ export default function ChangePassword() {
                         </div>
 
                         <div className={styles.reset_navigation_buttons_container}>
-                            <Button prompt="Back" cssClass="auth_button" isDisabled={false} handleClick={()=>navigate("/auth/password/sendResetLink")}/>
-                            <Button prompt="Submit" cssClass="auth_button" isDisabled={!validateInputLength(form.newPassword, 8)} handleClick={handlePasswordChange}/>
+                            <Button prompt="Back" buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={false} handleClick={()=>navigate("/auth/password/sendResetLink")}/>
+                            <Button prompt="Submit" buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={!validateInputLength(form.newPassword, 8)} handleClick={handlePasswordChange}/>
                         </div>
                     </div>
                 </Rectangle>
