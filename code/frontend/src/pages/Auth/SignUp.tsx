@@ -47,7 +47,7 @@ export default function SignUp() {
                         <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput}/> 
                         <PasswordInputBox name="password" inputBoxName="Password" handleChange={saveInput}/>
                         
-                        <Button prompt="Register" cssClass="auth_button" isDisabled={validateSignUpForm(form)} handleClick={handleSignUp}/>
+                        <Button prompt="Register" buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={validateSignUpForm(form)} handleClick={handleSignUp}/>
                         
                         <div className={styles.sign_up_error_message_container}>
                             {error && <p className={styles.sign_up_error_message}>{error}</p>}

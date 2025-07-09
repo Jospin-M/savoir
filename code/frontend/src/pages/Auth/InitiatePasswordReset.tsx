@@ -63,8 +63,8 @@ export default function InitiateReset() {
                         </div>
 
                         <div className={styles.reset_navigation_buttons_container}>
-                            <Button prompt="Back" cssClass="auth_button" isDisabled={false} handleClick={()=>navigate("/auth/login")}/>
-                            <Button prompt="Submit" cssClass="auth_button" isDisabled={!validateEmail(form.email)} handleClick={handleEmailVerification}/>
+                            <Button prompt="Back" buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={false} handleClick={()=>navigate("/auth/login")}/>
+                            <Button prompt="Submit" buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={!validateEmail(form.email)} handleClick={handleEmailVerification}/>
                         </div>
                     </div>
                 </Rectangle>
