@@ -157,6 +157,7 @@ a.active, a:hover {
 img {
   border-radius: 50%;
   object-fit: cover;
+  image-rendering: smooth;
 }
 
 .nav_bar_profile_pic_container {

@@ -40,7 +40,7 @@ export default function Login() {
 
             saveUserID(user_id);
             setError("");
-            navigate("/profile/" + user_id); // navigate to profile page once created
+            navigate(`/profile/${user_id}/`); // if username is added, it should be used here instead of id
         }
     }
 

@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { validateSignUpForm } from "../../../src/components/listeners/formValidators.ts";
-import { sendHTTPRequest } from "../../../lib/utils.ts";
+import supabase, { sendHTTPRequest } from "../../../lib/utils.ts";
 
 export default function SignUp() {
     const [form, saveInput] = useForm(useState({ fullName: "", email: "", password: "" }));

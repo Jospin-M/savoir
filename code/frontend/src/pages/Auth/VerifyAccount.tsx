@@ -9,7 +9,7 @@ import { useForm } from "../../hooks/useForm";
 
 import { validateInputLength } from "../../components/listeners/formValidators";
 import { useNavigate, useLocation } from "react-router-dom";
-import { sendHTTPRequest } from "../../../lib/utils.ts";
+import supabase, { saveUserID, sendHTTPRequest } from "../../../lib/utils.ts";
 
 export default function VerifyCode() {
     const [code, saveInput] = useForm(useState({ code: "" }));
@@ -27,8 +27,16 @@ export default function VerifyCode() {
         if(response.error) {
             setError(response.error);
         } else {
+            const { session: { access_token, refresh_token, user } } = response;
+
+            supabase.auth.setSession({ 
+                access_token: access_token,
+                refresh_token: refresh_token
+            });
+
             setError("");
-            navigate("/profile/", { replace: true }); //id should be attached
+            saveUserID(user.id);
+            navigate(`/profile/${user.id}`, { replace: true });
         }
     }
 

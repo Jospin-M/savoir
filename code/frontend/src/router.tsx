@@ -10,7 +10,7 @@ import Browse from "./pages/Browse/Browse.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Messages from "./pages/Messages/Messages.tsx";
 
-import { getUserID } from "../lib/utils.ts";
+import supabase, { getUserID } from "../lib/utils.ts";
 import { sendAuthenticatedHTTPRequest } from "../lib/utils.ts";
 
 export const router = createBrowserRouter([
@@ -44,7 +44,14 @@ export const router = createBrowserRouter([
     },
 ]);
 
-const { profileImageUrl } = await sendAuthenticatedHTTPRequest(`/auth/profile/${getUserID()}`, "GET", {});
+let profileImage: string;
+
+if(null != (await supabase.auth.getSession()).data.session) {
+    const { profileImageUrl } = await sendAuthenticatedHTTPRequest(`/auth/profile/${getUserID()}`, "GET", {});
+    profileImage = profileImageUrl;
+} else {
+    console.log(false)
+}
 
 // each loader will contain the necessary data required for that page, so that requests to the API 
 // are minimized. also consider seperating the function calls within each function into their own
@@ -52,19 +59,19 @@ const { profileImageUrl } = await sendAuthenticatedHTTPRequest(`/auth/profile/${
 
 async function browserLoader({ params }: { params: any }) {
     return {
-        profileImageUrl
+        profileImage
     };
 }
 
 async function dashboardLoader({ params }: { params: any }) {
     return {
-        profileImageUrl
+        profileImage
     };
 }
 
 async function inboxLoader({ params }: { params: any }) {
     return {
-        profileImageUrl
+        profileImage
     };
 }
 
