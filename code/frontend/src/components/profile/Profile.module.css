@@ -1,35 +1,51 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 .profile_header {
+    width: 1450px;
+    height: 176px;
+
+    margin-bottom: 350px;
+}
+
+.profile_header_top_layer {
     display: flex;
     flex-direction: row;
     margin: auto;
-
-    width: 1450px;
-    
-    height: 176px;
-
-    background-color: aliceblue;
-
-    margin-bottom: 350px
 }
 
 .profile_pic {
-    width: 110px;
-    height: 110px;
+    width: 105px;
+    height: 105px;
 }
 
 .roboto-name {
     margin-left: 30px;
-    margin-top: 35px;
+    margin-top: 30px;
 
     font-family: "Roboto", sans-serif;
     font-optical-sizing: auto;
     font-weight: 450;
-    font-size: 45px;
+    font-size: 42px;
     font-style: normal;
-    font-variation-settings:
-    "wdth" 100;
+    font-variation-settings: "wdth" 100;
+
+    color: #403F4C;
+}
+
+.bio_container {
+    width: 1450px;
+    height: 50px;
+
+    margin-top: 15px;
+}
+
+.roboto-bio {
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-size: 20px;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
 
     color: #403F4C;
 }
