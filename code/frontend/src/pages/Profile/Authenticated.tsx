@@ -13,11 +13,17 @@ export default function Authenticated() {
             <NavBar profileImageUrl={profileImageUrl}/>
 
             <div className={styles.profile_header}> 
-                <img className={styles.profile_pic} src={profileImageUrl}/>
+                <div className={styles.profile_header_top_layer}>
+                    <img className={styles.profile_pic} src={profileImageUrl}/>
             
-                <div className={styles["roboto-name"]}>{fullName}</div>
+                    <div className={styles["roboto-name"]}>{fullName}</div>
 
-                <Button prompt="Edit Profile" buttonCSSClass="edit_profile_button" buttonTitleCSSClass="roboto-edit_profile" isDisabled={false} handleClick={() => {}}/>
+                    <Button prompt="Edit Profile" buttonCSSClass="edit_profile_button" buttonTitleCSSClass="roboto-edit_profile" isDisabled={false} handleClick={() => {}}/>
+                </div>  
+
+                <div className={styles.bio_container}>
+                    <p className={styles["roboto-bio"]}>{bio}</p>
+                </div>  
             </div>
         </Background>
     );
