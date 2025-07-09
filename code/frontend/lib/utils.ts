@@ -36,6 +36,7 @@ function createHTTPRequest(method: string, body: Object) {
  * @param endpoint - the location of the requested resource.
  * @param method - the HTTP method to be used.
  * @param payload - the data to be sent
+ * 
  * @returns the server's response
  */
 export async function sendHTTPRequest(endpoint: string, method: string, payload: Object) {
@@ -82,6 +83,7 @@ async function createAuthenticatedHTTPRequest(method: string, body: object) {
  * @param endpoint - the location of the requested resource.
  * @param method - the HTTP method to be used.
  * @param payload - the data to be sent
+ * 
  * @returns the server's response
  */
 export async function sendAuthenticatedHTTPRequest(endpoint: string, method: string, payload: Object) {

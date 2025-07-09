@@ -16,6 +16,8 @@
 .profile_pic {
     width: 105px;
     height: 105px;
+
+    image-rendering: smooth;
 }
 
 .roboto-name {
