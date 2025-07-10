@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 import { getUserID } from "../../../lib/utils";
 
 function changeColor({ isActive }: { isActive: boolean }) {
-    return isActive ? styles["active"]: "";  
+    return isActive ? "nav-link active": "nav-link";  
 }
 
 export default function NavBar({ profileImageUrl }: { profileImageUrl: string }) {
@@ -20,7 +20,7 @@ export default function NavBar({ profileImageUrl }: { profileImageUrl: string })
     return (
         <Rectangle cssClass={"nav_bar_background"}>
             <div className={styles.nav_options}>
-                <NavLink to="/browse" className={changeColor}>Browse</NavLink>
+                <NavLink to="/browse/" className={changeColor}>Browse</NavLink>
                 <NavLink to="/dashboard/" className={changeColor}>Dashboard</NavLink>
                 <NavLink to="/inbox/" className={changeColor}>Messages</NavLink>
             </div>

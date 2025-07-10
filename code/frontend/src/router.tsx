@@ -1,5 +1,3 @@
-import { createBrowserRouter } from "react-router-dom";
-
 import SignUp from "./pages/Auth/SignUp.tsx";
 import Login from "./pages/Auth/Login.tsx";
 import VerifyAccount from "./pages/Auth/VerifyAccount.tsx";
@@ -10,16 +8,12 @@ import Browse from "./pages/Browse/Browse.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Messages from "./pages/Messages/Messages.tsx";
 
-import supabase, { getUserID } from "../lib/utils.ts";
+import { createBrowserRouter } from "react-router-dom";
+
+import { getUserID } from "../lib/utils.ts";
 import { sendAuthenticatedHTTPRequest } from "../lib/utils.ts";
 
-let profileImage: any;
-
-// this check is done because loaders are executed even when user is not on page
-if(null != (await supabase.auth.getSession()).data.session) { 
-    const { profileImageUrl } = await sendAuthenticatedHTTPRequest(`/auth/profile/${getUserID()}`, "GET", {});
-    profileImage = profileImageUrl;
-} 
+let globalProfileImageURL = "";
 
 export const router = createBrowserRouter([
     { path: "/", element: <Login /> }, // will be replaced with home page
@@ -29,22 +23,10 @@ export const router = createBrowserRouter([
     { path: "/auth/password/sendResetLink", element: <InitiateReset /> },
     { path: "/auth/password/reset", element: <ChangePassword /> },
 
-    // these two will be replaced by their actual pages on implementation, this is just a quick fix to the bug
-    { 
-        path: "/browse/",
-        element: <Browse />,
-        loader: browserLoader
-    },
-    { 
-        path: "/dashboard/",
-        element: <Dashboard />,
-        loader: dashboardLoader
-    },
-    { 
-        path: "/inbox/",
-        element: <Messages />,
-        loader: inboxLoader
-    },
+    { path: "/browse/", element: <Browse />, loader: browserLoader },
+    { path: "/dashboard/", element: <Dashboard />, loader: dashboardLoader },
+    { path: "/inbox/", element: <Messages />, loader: inboxLoader },
+    
     { 
         path: "/profile/:id", // combination of user fullname and id for unique identifier
         element: <Authenticated />, // handle backend logic for which type of profile page is shown after frontend has been created
@@ -58,24 +40,26 @@ export const router = createBrowserRouter([
 
 async function browserLoader({ params }: { params: any }) {
     return {
-        profileImage: profileImage
+        globalProfileImageURL
     };
 }
 
 async function dashboardLoader({ params }: { params: any }) {
     return {
-        profileImage: profileImage
+        globalProfileImageURL
     };
 }
 
 async function inboxLoader({ params }: { params: any }) {
     return {
-        profileImage: profileImage
+        globalProfileImageURL
     };
 }
 
 async function profileLoader({ params }: { params: any }) {
     const profileData = await sendAuthenticatedHTTPRequest(`/auth/profile/${getUserID()}`, "GET", {});
+    const { profileImageUrl } = profileData;
+    globalProfileImageURL = profileImageUrl;
 
     return {
         profileData

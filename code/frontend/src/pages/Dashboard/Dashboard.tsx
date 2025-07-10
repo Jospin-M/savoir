@@ -4,11 +4,11 @@ import NavBar from "../../components/common/NavBar.tsx";
 import { useLoaderData } from "react-router-dom";
 
 export default function Dashboard() {
-    const { profileImage } = useLoaderData();
+    const { globalProfileImageURL } = useLoaderData();
     
     return (
         <Background>
-            <NavBar profileImageUrl={profileImage}/>
+            <NavBar profileImageUrl={globalProfileImageURL}/>
         </Background>
     );
 }
