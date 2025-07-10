@@ -4,8 +4,8 @@
     width: 1450px;
     height: 176px;
     
-    margin-left: 30px;
-    margin-bottom: 375px;
+    margin-left: 16px;
+    margin-bottom: 30px;
 }
 
 .profile_header_top_layer {
@@ -14,6 +14,10 @@
     margin: auto;
 
     width: 1450px;
+}
+
+.profile_container {
+    padding-bottom: 200px;
 }
 
 .profile_pic {
@@ -58,7 +62,7 @@
 }
 
 .profile_sections_container {
-    margin-top: 30px;
+    padding-left: 32px;
 }
 
 .profile_sections {
@@ -106,7 +110,9 @@
     border-bottom: 2px solid transparent;
 }
 
-.roboto-sections {
+.sections {
+    outline: none;
+
     width: 352px;
     height: 35px;
 }
