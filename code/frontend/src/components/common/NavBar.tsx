@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 import { getUserID } from "../../../lib/utils";
 
 function changeColor({ isActive }: { isActive: boolean }) {
-    return isActive ? "nav-link active": "nav-link";  
+    return isActive ? styles["active"]: "";  
 }
 
 export default function NavBar({ profileImageUrl }: { profileImageUrl: string }) {
