@@ -13,6 +13,14 @@ import Messages from "./pages/Messages/Messages.tsx";
 import supabase, { getUserID } from "../lib/utils.ts";
 import { sendAuthenticatedHTTPRequest } from "../lib/utils.ts";
 
+let profileImage: any;
+
+// this check is done because loaders are executed even when user is not on page
+if(null != (await supabase.auth.getSession()).data.session) { 
+    const { profileImageUrl } = await sendAuthenticatedHTTPRequest(`/auth/profile/${getUserID()}`, "GET", {});
+    profileImage = profileImageUrl;
+} 
+
 export const router = createBrowserRouter([
     { path: "/", element: <Login /> }, // will be replaced with home page
     { path: "/auth/signup", element: <SignUp /> },
@@ -44,34 +52,25 @@ export const router = createBrowserRouter([
     },
 ]);
 
-let profileImage: string;
-
-if(null != (await supabase.auth.getSession()).data.session) {
-    const { profileImageUrl } = await sendAuthenticatedHTTPRequest(`/auth/profile/${getUserID()}`, "GET", {});
-    profileImage = profileImageUrl;
-} else {
-    console.log(false)
-}
-
 // each loader will contain the necessary data required for that page, so that requests to the API 
 // are minimized. also consider seperating the function calls within each function into their own
 // own files depending on complexity
 
 async function browserLoader({ params }: { params: any }) {
     return {
-        profileImage
+        profileImage: profileImage
     };
 }
 
 async function dashboardLoader({ params }: { params: any }) {
     return {
-        profileImage
+        profileImage: profileImage
     };
 }
 
 async function inboxLoader({ params }: { params: any }) {
     return {
-        profileImage
+        profileImage: profileImage
     };
 }
 

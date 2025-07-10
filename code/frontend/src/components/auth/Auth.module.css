@@ -384,7 +384,8 @@ a.auth_hyperlink:hover {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+
+    margin-left: 20px;
 }
 
 .reset_password_input_container {
@@ -397,16 +398,13 @@ a.auth_hyperlink:hover {
 
 .password_verification_prompt_text {
     display: flex;
-    justify-content: center;
-    align-items: center;
+
+    width: 312px;
+    margin-left: 48px;
 
     font-family: "Roboto Slab", sans-serif;
     font-size: 15px;
     color: #403F4C;
-
-    text-align: center;
-    padding-left: 3px;
-    margin-bottom: px;
 }
 
 .password_update_response {

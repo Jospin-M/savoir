@@ -22,7 +22,6 @@ export default function VerifyCode() {
         event.preventDefault();
         
         const response = await sendHTTPRequest("/auth/verifyNewUser", "POST", { verificationCode: code, verificationRequest: registrationResponse });
-        console.log(response);
 
         if(response.error) {
             setError(response.error);
