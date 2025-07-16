@@ -5,12 +5,19 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body { /*you'll want to change this when it comes to move input down for logo*/
+html {
+  font-size: 62.5%;
+}
+
+body { 
   margin: 0;
   display: flex;
   place-items: center;
+
   min-width: 320px;
   min-height: 100vh;
+
+  font-size: 1.6rem;
 }
 
 h1 {
