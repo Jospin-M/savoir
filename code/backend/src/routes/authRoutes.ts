@@ -1,7 +1,7 @@
 import { logInUser, requestPasswordReset, signUpNewUser, verifyNewUser, changePassword, getProfile } from "../clients/authClient"
 import { handleAuthError } from "../services/authService";
+import * as express from "express";
 
-const express = require("express");
 const router = express.Router();
 
 router.post("/login", logInUser, handleAuthError);
