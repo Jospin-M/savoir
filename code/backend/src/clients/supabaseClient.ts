@@ -14,12 +14,9 @@ export { supabase };
 /**
  * Creates a Supabase client using the access token of an authenticated user.
  * 
- * @param headers - the headers provided in the browser's HTTP request
- * @param accessToken - the access token received from Supabase 
+ * @param accessToken - an access token received from Supabase 
  */
-export function createAuthenticatedClient(headers: any) {
-    const accessToken = headers.authorization;
-    
+export function createAuthenticatedClient(accessToken: string) {
     return createClient(supabaseURL, supabaseKey, {
         global: {
             headers: { 
