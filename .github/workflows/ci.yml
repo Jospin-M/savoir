@@ -54,7 +54,7 @@ jobs:
         run: npm test
 
   test-frontend:
-    if: github.event_name = 'pull_request'
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     defaults:
       run:
