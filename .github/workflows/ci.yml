@@ -18,9 +18,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Install dependencies
-        run: |
-          cd your-subdirectory-name
-          npm install
+        run: npm install
       - name: Run linter
         run: npm run lint
 
