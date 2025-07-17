@@ -18,7 +18,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Install dependencies
-        run: npm install lint
+        run: npm install
       - name: Run linter
         run: npm run lint
 
@@ -32,7 +32,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Install dependencies
-        run: npm install lint
+        run: npm install
       - name: Run linter
         run: npm run lint
           
