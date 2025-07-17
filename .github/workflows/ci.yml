@@ -7,10 +7,29 @@ on:
     branches: [ main ]
 # 2) Define the jobs the workflow will perform
 jobs:
-  lint: 
+  lint-backend: 
     # Only run this job on a push event
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./code/backend
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: |
+          cd your-subdirectory-name
+          npm install
+      - name: Run linter
+        run: npm run lint
+
+  lint-frontend:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./code/frontend
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -18,11 +37,28 @@ jobs:
         run: npm install
       - name: Run linter
         run: npm run lint
-        
-  test: 
+          
+  test-backend: 
     # Only run this job on a pull_request event
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./code/backend
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test
+
+  test-frontend:
+    if: github.event_name = 'pull_request'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./code/frontend
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
