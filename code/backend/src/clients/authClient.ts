@@ -1,4 +1,5 @@
 import { supabase, createAuthenticatedClient, insertRecord } from "./supabaseClient";
+import { Request, Response, NextFunction } from "express";
 import * as dotenv from "dotenv";
 
 import type { RegistrationForm } from "../types/forms";
@@ -17,7 +18,7 @@ type AuthCredentials = {
  * @param res - a response that holds the session of the user on a successful attempt.
  * @param next - an error-handling function.
  */
-export async function logInUser(req: any, res: any, next: Function) {
+export async function logInUser(req: Request, res: Response, next: NextFunction) {
     const { email, password }: AuthCredentials = req.body;
     const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
@@ -25,7 +26,7 @@ export async function logInUser(req: any, res: any, next: Function) {
     });
 
     if(error) {
-        req.error = error;
+        req.body.error = error;
         
         next();
 
@@ -60,11 +61,11 @@ export async function checkEmailExists(providedEmail: string): Promise<boolean> 
  * @param res - a response that holds the user's information to be added in the database.
  * @param next - an error handling function.
  */
-export async function signUpNewUser(req: any, res: any, next: Function) {
+export async function signUpNewUser(req: Request, res: Response, next: NextFunction) {
     const { fullName, email, password }: RegistrationForm = req.body;
     
     if(await checkEmailExists(email)) {
-        req.error = { code: "email_exists" };
+        req.body.error = { code: "email_exists" };
 
         next();
         
@@ -77,7 +78,7 @@ export async function signUpNewUser(req: any, res: any, next: Function) {
     });
 
     if(error) {
-        req.error = error; 
+        req.body.error = error; 
         
         next();
 
@@ -119,7 +120,7 @@ async function verifyUser(params: VerifyOtpParams) {
  * @param res - a response that holds the user's session on a successful attempt.
  * @param next - an error-handling function.
  */
-export async function verifyNewUser(req: any, res: any, next: Function) {
+export async function verifyNewUser(req: Request, res: Response, next: NextFunction) {
     const { id, first_name, last_name, email } = req.body.verificationRequest.user; 
     const code = req.body.verificationCode.code;
     const response = await verifyUser({
@@ -129,7 +130,7 @@ export async function verifyNewUser(req: any, res: any, next: Function) {
     });
 
     if(response.error) {
-        req.error = response.error;
+        req.body.error = response.error;
 
         next();
     } else {
@@ -146,11 +147,11 @@ export async function verifyNewUser(req: any, res: any, next: Function) {
  * @param res - a response that holds information about the user's session.
  * @param next - an error-handling function.
  */
-export async function requestPasswordReset(req: any, res: any, next: Function) {
+export async function requestPasswordReset(req: Request, res: Response, next: NextFunction) {
     const { email } = req.body;
     
     if(!(await checkEmailExists(email))) {
-        req.error = { code: "email_invalid" };
+        req.body.error = { code: "email_invalid" };
 
         next();
         
@@ -198,7 +199,7 @@ async function updateUser(newAttributes: UserAttributes) {
  * @param res - a response with a new session.
  * @param next - an error-handling function.
  */
-export async function changePassword(req: any, res: any, next: Function) {
+export async function changePassword(req: Request, res: Response, next: NextFunction) {
     const { form, session } = req.body;
     
     await supabase.auth.setSession({
@@ -209,7 +210,7 @@ export async function changePassword(req: any, res: any, next: Function) {
     const { authData, authError } = await updateUser({ password: form.newPassword })
     
     if(authError) {
-        req.error = authError;
+        req.body.error = authError;
         
         next();
 
@@ -228,9 +229,10 @@ export async function changePassword(req: any, res: any, next: Function) {
  * @param req - a request containing the id of the user whose profile will be retrieved
  * @param res - a response with the user's profile information
  */
-export async function getProfile(req: any, res: any) {
+export async function getProfile(req: Request, res: Response) {
     const userID = req.params.id;
-    const supabaseClient = createAuthenticatedClient(req.headers);
+    const accessToken = req.headers.authorization!;
+    const supabaseClient = createAuthenticatedClient(accessToken);
     const { data, error } = await supabaseClient
         .from("users")
         .select("first_name,last_name,bio,profile_image_url")

@@ -1,11 +1,13 @@
+import { Request, Response } from "express";
+
 /**
  * Handles server-side errors that could occur during authentication.
  * 
  * @param req - a request containing information about the error
  * @param res - a response object with the appropriate error message.
  */
-export function handleAuthError(req: any, res: any) {
-    switch(req.error.code) {
+export function handleAuthError(req: Request, res: Response) {
+    switch(req.body.error.code) {
         case "invalid_credentials":
             res.json({ error: "Incorrect email or password." });
 
