@@ -17,8 +17,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Install dependencies
-        run: npm install
+      - name: Clean install
+        run: npm ci
       - name: Run linter
         run: npm run lint
 
@@ -32,9 +32,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Run linter
-        run: npm run lint
+        run: npx eslint src
           
   test-backend: 
     # Only run this job on a pull_request event
@@ -47,7 +47,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Install dependencies
-        run: npm install test
+        run: npm ci
       - name: Run tests
         run: npm test
 
@@ -61,6 +61,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Install dependencies
-        run: npm install test
+        run: npm ci
       - name: Run tests
         run: npm test
