@@ -1,7 +1,8 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { resolve } from "path";
 
 import * as dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ path: resolve(__dirname, "../../src/.env") });
 
 // move from keys to cloud storage
 const supabaseURL: string = process.env.SUPABASE_URL!;
