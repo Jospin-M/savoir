@@ -1,0 +1,36 @@
+name: CI
+
+# 1) Define when the workflow should urn
+on:
+  push: 
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# 2) Define the jobs the workflow will perform
+jobs:
+  lint: 
+    # Only run this job on a push event
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Run linter
+        run: npm run lint
+
+    test: 
+      # Only run this job on a pull_event event
+      if: github.event_name == 'pull_request'
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+        - name: Install dependencies
+          run: npm install
+        - name: Run tests
+          run: npm test
+          
+      
