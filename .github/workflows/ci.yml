@@ -20,7 +20,7 @@ jobs:
         run: npm install
       - name: Run linter
         run: npm run lint
-
+        
     test: 
       # Only run this job on a pull_event event
       if: github.event_name == 'pull_request'
@@ -32,5 +32,3 @@ jobs:
           run: npm install
         - name: Run tests
           run: npm test
-          
-      
