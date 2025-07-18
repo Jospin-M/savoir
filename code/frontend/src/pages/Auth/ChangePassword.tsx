@@ -15,7 +15,7 @@ export default function ChangePassword() {
     const [form, saveInput] = useForm(useState({ newPassword: "" }));
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
-    let [count, setCount] = useState(0);
+    const [count, setCount] = useState(0);
     const navigate = useNavigate();
 
     const messageToDisplay = success ? success : error;

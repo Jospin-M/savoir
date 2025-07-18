@@ -17,7 +17,7 @@ import { sendHTTPRequest } from "../../../lib/utils.ts";
 export default function SignUp() {
     const [form, saveInput] = useForm(useState({ fullName: "", email: "", password: "" }));
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false); // handle loading state
+    // const [loading, setLoading] = useState(false); handle loading state
     const navigate = useNavigate();
     
     // move this code to server middleware
