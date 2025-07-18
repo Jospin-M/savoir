@@ -1,4 +1,4 @@
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { createClient, PostgrestSingleResponse, type SupabaseClient } from "@supabase/supabase-js";
 import { resolve } from "path";
 
 import * as dotenv from "dotenv";
@@ -32,7 +32,7 @@ export function createAuthenticatedClient(accessToken: string) {
  * @param tableName - the name of the table to receive the new entry. 
  * @param data - an object with fields corresponding to the column names of the desired table.
  */
-export async function insertRecord<T>(tableName: string, data: T): Promise<any> {
+export async function insertRecord<T>(tableName: string, data: T): Promise<PostgrestSingleResponse<null>> {
     const response =  await supabase!
         .from(tableName)
         .insert(data);

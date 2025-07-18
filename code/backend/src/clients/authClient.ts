@@ -46,7 +46,7 @@ export async function logInUser(req: Request, res: Response, next: NextFunction)
  * @returns a boolean value representing representing whether such a user exists.
  */
 export async function checkEmailExists(providedEmail: string): Promise<boolean> {
-    const { count, error } = await supabase
+    const { count } = await supabase
         .from("users")
         .select("*", { count: "exact", head: true })
         .eq("email", providedEmail);

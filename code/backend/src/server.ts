@@ -1,9 +1,9 @@
 import helmet from "helmet";
 import authRouter from "./routes/authRoutes";
+import cors from "cors";
+import morgan from "morgan";
+import express from "express";
 
-const cors = require("cors");
-const morgan = require("morgan");
-const express = require("express");
 const app = express();
 
 app.use(cors());
