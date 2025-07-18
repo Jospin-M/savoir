@@ -219,7 +219,7 @@ export async function changePassword(req: Request, res: Response, next: NextFunc
  * @param req - a request containing the id of the user whose profile will be retrieved
  * @param res - a response with the user's profile information
  */
-export async function getProfile(req: Request, res: Response, next: NextFunction) {
+export async function getProfile(req: Request, res: Response) {
     const userID = req.params.id;
     const accessToken: string = req.headers.authorization!;
     const supabaseClient = createAuthenticatedClient(accessToken);

@@ -9,6 +9,7 @@ type AuthError = {
  * 
  * @param _req - a request containing information about the error
  * @param res - a response object with the appropriate error message.
+ * @param _next - a middleware function that does nothing 
  */
 export function handleAuthError(err: AuthError, _req: Request, res: Response, _next: NextFunction) {
     switch(err.code) {
