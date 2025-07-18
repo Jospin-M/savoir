@@ -1,13 +1,17 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
+
+type AuthError = {
+    code: string
+}
 
 /**
  * Handles server-side errors that could occur during authentication.
  * 
- * @param req - a request containing information about the error
+ * @param _req - a request containing information about the error
  * @param res - a response object with the appropriate error message.
  */
-export function handleAuthError(req: Request, res: Response) {
-    switch(req.body.error.code) {
+export function handleAuthError(err: AuthError, _req: Request, res: Response, _next: NextFunction) {
+    switch(err.code) {
         case "invalid_credentials":
             res.json({ error: "Incorrect email or password." });
 

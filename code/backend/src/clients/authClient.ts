@@ -26,9 +26,7 @@ export async function logInUser(req: Request, res: Response, next: NextFunction)
     });
 
     if(error) {
-        req.body.error = error;
-        
-        next();
+        next(error);
 
         return;
     } 
@@ -65,9 +63,7 @@ export async function signUpNewUser(req: Request, res: Response, next: NextFunct
     const { fullName, email, password }: RegistrationForm = req.body;
     
     if(await checkEmailExists(email)) {
-        req.body.error = { code: "email_exists" };
-
-        next();
+        next({ code: "email_exists" });
         
         return;
     }
@@ -130,9 +126,7 @@ export async function verifyNewUser(req: Request, res: Response, next: NextFunct
     });
 
     if(response.error) {
-        req.body.error = response.error;
-
-        next();
+        next(response.error);
     } else {
         res.status(201).json(response);
 
@@ -151,9 +145,7 @@ export async function requestPasswordReset(req: Request, res: Response, next: Ne
     const { email } = req.body;
     
     if(!(await checkEmailExists(email))) {
-        req.body.error = { code: "email_invalid" };
-
-        next();
+        next({ code: "email_invalid" });
         
         return;
     }
@@ -210,9 +202,7 @@ export async function changePassword(req: Request, res: Response, next: NextFunc
     const { authData, authError } = await updateUser({ password: form.newPassword })
     
     if(authError) {
-        req.body.error = authError;
-        
-        next();
+        next(authError);
 
         return;
     } else {
@@ -229,9 +219,9 @@ export async function changePassword(req: Request, res: Response, next: NextFunc
  * @param req - a request containing the id of the user whose profile will be retrieved
  * @param res - a response with the user's profile information
  */
-export async function getProfile(req: Request, res: Response) {
+export async function getProfile(req: Request, res: Response, next: NextFunction) {
     const userID = req.params.id;
-    const accessToken = req.headers.authorization!;
+    const accessToken: string = req.headers.authorization!;
     const supabaseClient = createAuthenticatedClient(accessToken);
     const { data, error } = await supabaseClient
         .from("users")
