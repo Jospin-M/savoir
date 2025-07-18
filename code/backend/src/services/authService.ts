@@ -3,13 +3,13 @@ import { Request, Response, NextFunction } from "express";
 type AuthError = {
     code: string
 }
-
+// the function header is disabled since _next is not being detected the argsignorepattern in the eslintConfig
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 /**
  * Handles server-side errors that could occur during authentication.
  * 
  * @param _req - a request containing information about the error
  * @param res - a response object with the appropriate error message.
- * @param _next - a middleware function that does nothing 
  */
 export function handleAuthError(err: AuthError, _req: Request, res: Response, _next: NextFunction) {
     switch(err.code) {
