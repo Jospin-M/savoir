@@ -38,25 +38,25 @@ export const router = createBrowserRouter([
 // are minimized. also consider seperating the function calls within each function into their own
 // own files depending on complexity
 
-async function browserLoader({ params }: { params: any }) {
+async function browserLoader() {
     return {
         globalProfileImageURL
     };
 }
 
-async function dashboardLoader({ params }: { params: any }) {
+async function dashboardLoader() {
     return {
         globalProfileImageURL
     };
 }
 
-async function inboxLoader({ params }: { params: any }) {
+async function inboxLoader() {
     return {
         globalProfileImageURL
     };
 }
 
-async function profileLoader({ params }: { params: any }) {
+async function profileLoader() {
     const profileData = await sendAuthenticatedHTTPRequest(`/auth/profile/${getUserID()}`, "GET", {});
     const { profileImageUrl } = profileData;
     globalProfileImageURL = profileImageUrl;
