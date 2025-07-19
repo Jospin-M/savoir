@@ -22,7 +22,7 @@ export default supabase;
  * @param method - the HTTP method of the request.
  * @param body - the payload sent from the browser.
  */
-function createHTTPRequest(method: string, body: Object) {
+function createHTTPRequest(method: string, body: object) {
     return {
         method: method,
         headers: { "Content-Type": "application/json" },
@@ -39,7 +39,7 @@ function createHTTPRequest(method: string, body: Object) {
  * 
  * @returns the server's response
  */
-export async function sendHTTPRequest(endpoint: string, method: string, payload: Object) {
+export async function sendHTTPRequest(endpoint: string, method: string, payload: object) {
     const DOMAIN = import.meta.env.VITE_DOMAIN;
     const result = await fetch(DOMAIN + "api" + endpoint, createHTTPRequest(method, payload));
     const response = await result.json();
@@ -86,7 +86,7 @@ async function createAuthenticatedHTTPRequest(method: string, body: object) {
  * 
  * @returns the server's response
  */
-export async function sendAuthenticatedHTTPRequest(endpoint: string, method: string, payload: Object) {
+export async function sendAuthenticatedHTTPRequest(endpoint: string, method: string, payload: object) {
     const DOMAIN = import.meta.env.VITE_DOMAIN;
     const result = await fetch(DOMAIN + "api" + endpoint, await createAuthenticatedHTTPRequest(method, payload));
     const response = await result.json();
@@ -125,7 +125,7 @@ export async function getAuthenticatedUserId() {
 function getCookie(name: string) {
     const cookies = document.cookie.split(";");
 
-    for(let cookie of cookies) {
+    for(const cookie of cookies) {
         const [key, value] = cookie.split("=");
 
         if(key.trim() === name) {

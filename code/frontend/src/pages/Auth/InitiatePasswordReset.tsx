@@ -15,7 +15,7 @@ export default function InitiateReset() {
     const [form, saveInput] = useForm(useState({ email: "" }));
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
-    let [count, setCount] = useState(0);
+    const [count, setCount] = useState(0);
     const navigate = useNavigate();
     
     const messageToDisplay = success ? success : error;
