@@ -9,22 +9,26 @@ import styles from "../../components/Auth/Auth.module.css";
 import { useState } from "react";
 import { useForm } from "../../hooks/useForm.ts";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "../../stores/useUserStore.ts";
 import { Link } from "react-router-dom";
 
 import { validateAuthForm } from "../../../src/components/listeners/formValidators.ts";
-import { saveUserID, sendHTTPRequest } from "../../../lib/utils.ts";
+import { getUserProfileImageURL, sendHTTPRequest } from "../../../lib/utils.ts";
 import supabase from "../../../lib/utils.ts";
 
 export default function Login() {
     // explore other ways to use box shadow
     // handle loading state
-    const [form, saveInput] = useForm(useState({ email: "", password: "" }))
+    const [form, saveInput] = useForm(useState({ email: "", password: "" }));
     const [error, setError] = useState("");
     const navigate = useNavigate();
+
+    const setUserID = useUserStore((state) => state.setUserID);
+    const setProfileImageURL = useUserStore((state) => state.setProfileImageURL);
     
     async function handleLogin(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
-        
+       
         const response = await sendHTTPRequest("/auth/login", "POST", form);
         
         if(response.error) {
@@ -38,7 +42,10 @@ export default function Login() {
                 refresh_token: refresh_token 
             });
 
-            saveUserID(user_id);
+            // update the user store
+            setUserID(user_id);
+            setProfileImageURL(await getUserProfileImageURL(user_id));
+
             setError("");
             navigate(`/profile/${user_id}/`); // if username is added, it should be used here instead of id
         }

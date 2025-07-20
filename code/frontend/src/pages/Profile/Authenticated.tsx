@@ -11,7 +11,7 @@ export default function Authenticated() {
     
     return (
         <Background>
-            <NavBar profileImageUrl={profileImageUrl}/>
+            <NavBar />
 
             <div className={styles.profile_container}>
                 <div className={styles.profile_header}> 

@@ -10,10 +10,7 @@ import Messages from "./pages/Messages/Messages.tsx";
 
 import { createBrowserRouter } from "react-router-dom";
 
-import { getUserID } from "../lib/utils.ts";
-import { sendAuthenticatedHTTPRequest } from "../lib/utils.ts";
-
-let globalProfileImageURL = "";
+import supabase, { sendAuthenticatedHTTPRequest } from "../lib/utils.ts";
 
 export const router = createBrowserRouter([
     { path: "/", element: <Login /> }, // will be replaced with home page
@@ -23,9 +20,9 @@ export const router = createBrowserRouter([
     { path: "/auth/password/sendResetLink", element: <InitiateReset /> },
     { path: "/auth/password/reset", element: <ChangePassword /> },
 
-    { path: "/browse/", element: <Browse />, loader: browserLoader },
-    { path: "/dashboard/", element: <Dashboard />, loader: dashboardLoader },
-    { path: "/inbox/", element: <Messages />, loader: inboxLoader },
+    { path: "/browse/", element: <Browse /> },
+    { path: "/dashboard/", element: <Dashboard /> },
+    { path: "/inbox/", element: <Messages /> },
     
     { 
         path: "/profile/:id", // combination of user fullname and id for unique identifier
@@ -38,28 +35,9 @@ export const router = createBrowserRouter([
 // are minimized. also consider seperating the function calls within each function into their own
 // own files depending on complexity
 
-async function browserLoader() {
-    return {
-        globalProfileImageURL
-    };
-}
-
-async function dashboardLoader() {
-    return {
-        globalProfileImageURL
-    };
-}
-
-async function inboxLoader() {
-    return {
-        globalProfileImageURL
-    };
-}
-
 async function profileLoader() {
-    const profileData = await sendAuthenticatedHTTPRequest(`/auth/profile/${getUserID()}`, "GET", {});
-    const { profileImageUrl } = profileData;
-    globalProfileImageURL = profileImageUrl;
+    const userID = (await supabase.auth.getSession()).data.session?.user.id;
+    const profileData = await sendAuthenticatedHTTPRequest(`/auth/profile/${userID}`, "GET", {});
 
     return {
         profileData

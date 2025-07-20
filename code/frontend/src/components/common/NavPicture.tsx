@@ -1,21 +1,26 @@
-import { NavLink } from "react-router-dom";
-
 import styles from "./Common.module.css";
 
-type ImageProps = {
-    imageUrl: string;
-    cssClass: string;
-    destination: string;
-    isActiveStyle: object;
-}
+import { NavLink } from "react-router-dom";
 
-export default function NavPicture({ imageUrl, cssClass, destination, isActiveStyle }: ImageProps) {
+import { useUserStore } from "../../stores/useUserStore";
+
+
+export default function NavPicture() {
+    const profileImageURL = useUserStore((state) => state.profileImageURL)!;
+    const userID = useUserStore((state) => state.userID);
+    const isActiveStyle = {
+        display: "flex",
+        outline: "2px solid #FFFFFF",
+        borderRadius: "50%",
+        objectFit: "cover"
+    };
+
     return (
         <NavLink 
-            to={destination} 
+            to={"/profile/" + userID} 
             style={({ isActive }) => isActive ? isActiveStyle: {}}
         >
-            <img className={styles[cssClass]} src={imageUrl}/>
+            <img className={styles.nav_bar_profile_pic} src={profileImageURL}/>
         </NavLink>
     );
 }
