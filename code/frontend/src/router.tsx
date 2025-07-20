@@ -10,7 +10,7 @@ import Messages from "./pages/Messages/Messages.tsx";
 
 import { createBrowserRouter } from "react-router-dom";
 
-import supabase, { sendAuthenticatedHTTPRequest } from "../lib/utils.ts";
+import { sendAuthenticatedHTTPRequest } from "../lib/utils.ts";
 
 export const router = createBrowserRouter([
     { path: "/", element: <Login /> }, // will be replaced with home page
@@ -36,7 +36,8 @@ export const router = createBrowserRouter([
 // own files depending on complexity
 
 async function profileLoader() {
-    const userID = (await supabase.auth.getSession()).data.session?.user.id;
+    // retrieve the user ID that was stored in localStorage by Zustand
+    const userID = JSON.parse(localStorage.getItem("user-storage")!).state.userID;
     const profileData = await sendAuthenticatedHTTPRequest(`/auth/profile/${userID}`, "GET", {});
 
     return {
