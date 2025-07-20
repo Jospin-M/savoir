@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 
 import { useUserStore } from "../../stores/useUserStore";
 
-
 export default function NavPicture() {
     const profileImageURL = useUserStore((state) => state.profileImageURL)!;
     const userID = useUserStore((state) => state.userID);
