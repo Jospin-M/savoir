@@ -110,43 +110,8 @@ export function parseAuthFragment() {
     }
 }
 
-export async function getAuthenticatedUserId() {
-    const { data: { user } } = await supabase.auth.getUser();
-    const { id } = user!;
+export async function getUserProfileImageURL(userID: string) {
+    const { profileImageUrl } = await sendAuthenticatedHTTPRequest(`/auth/profile/${userID}`, "GET", {});
 
-    return id;
-}
-
-/**
- * Retrieves a cookie from localStorage.
- * 
- * @param name - the name of the cookie
- */
-function getCookie(name: string) {
-    const cookies = document.cookie.split(";");
-
-    for(const cookie of cookies) {
-        const [key, value] = cookie.split("=");
-
-        if(key.trim() === name) {
-            return decodeURIComponent(value);
-        }
-    }
-
-    return null;
-}
-
-/**
- * Save the user's uid to localStorage so that calls to the API are reduced.
- * 
- * @param userID - the user's uid obtained after authentication
- */
-export function saveUserID(userID: string) {
-    const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString();
-
-    document.cookie = `user_id=${encodeURIComponent(userID)}; expires=${expires}; path=/`;
-}
-
-export function getUserID() {
-    return getCookie("user_id");
+    return profileImageUrl;
 }
