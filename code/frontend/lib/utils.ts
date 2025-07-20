@@ -1,0 +1,108 @@
+import { createBrowserClient } from "@supabase/ssr";
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+/**
+ * A browser client for Supabase that manages the user's session.
+ */
+const supabase = createBrowserClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+    }
+});
+
+export default supabase;
+
+/**
+ * Creates an HTTP request object.
+ * 
+ * @param method - the HTTP method of the request.
+ * @param body - the payload sent from the browser.
+ */
+function createHTTPRequest(method: string, body: object) {
+    return {
+        method: method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+    }
+}
+
+/**
+ * Sends a request to the server and receives the response.
+ * 
+ * @param endpoint - the location of the requested resource.
+ * @param method - the HTTP method to be used.
+ * @param payload - the data to be sent
+ * 
+ * @returns the server's response
+ */
+export async function sendHTTPRequest(endpoint: string, method: string, payload: object) {
+    const DOMAIN = import.meta.env.VITE_DOMAIN;
+    const result = await fetch(DOMAIN + "api" + endpoint, createHTTPRequest(method, payload));
+    const response = await result.json();
+
+    return response;
+}
+
+/**
+ * Create a request to the server that is authenticated by the access token provided with the user's session.
+ * 
+ * @param method - the HTTP method to use
+ * @param body - the payload sent from the browser.
+ */
+async function createAuthenticatedHTTPRequest(method: string, body: object) {
+    const { data: { session } } = await supabase.auth.getSession();
+    const { access_token } = session!;
+
+    if(method === "GET") {
+        return {
+            method: method,
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${access_token}`
+            }
+        };
+    }
+
+    return {
+        method: method,
+        headers: { 
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${access_token}`
+        },
+        body: JSON.stringify(body)
+    };
+}
+
+/**
+ * Sends an authenticated request to the server and receives the response.
+ * 
+ * @param endpoint - the location of the requested resource.
+ * @param method - the HTTP method to be used.
+ * @param payload - the data to be sent
+ * 
+ * @returns the server's response
+ */
+export async function sendAuthenticatedHTTPRequest(endpoint: string, method: string, payload: object) {
+    const DOMAIN = import.meta.env.VITE_DOMAIN;
+    const result = await fetch(DOMAIN + "api" + endpoint, await createAuthenticatedHTTPRequest(method, payload));
+    const response = await result.json();
+
+    return response;
+}
+
+/**
+ * Retrieve the profile image URL of the authenticated user. This URL is stored in local storage to reduce
+ * calls to the server.
+ * 
+ * @param userID - the user id of the authenticated user
+ * @returns the URL of the authenticated user's profile picture
+ */
+export async function getUserProfileImageURL(userID: string): Promise<string> {
+    const { profileImageUrl } = await sendAuthenticatedHTTPRequest(`/auth/profile/${userID}`, "GET", {});
+
+    return profileImageUrl;
+}

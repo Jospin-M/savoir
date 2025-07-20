@@ -11,13 +11,13 @@ import { useForm } from "../../hooks/useForm.ts";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-import { validateSignUpForm } from "../../../src/components/listeners/formValidators.ts";
-import { sendHTTPRequest } from "../../../../backend/src/routes/utils.ts";
+import { validateSignUpForm } from "../../components/listeners/formValidators.ts";
+import { sendHTTPRequest } from "../../../lib/utils.ts";
 
 export default function SignUp() {
     const [form, saveInput] = useForm(useState({ fullName: "", email: "", password: "" }));
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false); // handle loading state
+    // const [loading, setLoading] = useState(false); handle loading state
     const navigate = useNavigate();
     
     // move this code to server middleware
@@ -25,7 +25,6 @@ export default function SignUp() {
         event.preventDefault();
 
         const response = await sendHTTPRequest("/auth/register", "POST", form);
-        console.log(response);
 
         if(response.error) {
             setError(response.error);
@@ -48,14 +47,14 @@ export default function SignUp() {
                         <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput}/> 
                         <PasswordInputBox name="password" inputBoxName="Password" handleChange={saveInput}/>
                         
-                        <div className={styles.sign_up_button_container}>
-                            <Button prompt="Register" buttonCSS="auth_button" isDisabled={validateSignUpForm(form)} handleClick={handleSignUp}/>
-                        </div>
+                        <Button prompt="Register" buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={validateSignUpForm(form)} handleClick={handleSignUp}/>
                         
-                        {error && <p className={styles.error_message}>{error}</p>}
+                        <div className={styles.sign_up_error_message_container}>
+                            {error && <p className={styles.sign_up_error_message}>{error}</p>}
+                        </div>
                     </div> 
 
-                    <div className={styles.div_container}>
+                    <div className={styles.sign_up_div_container}>
                         <Divider length={60} />
                     </div>
 

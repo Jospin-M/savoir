@@ -10,7 +10,8 @@ export function validateInputLength(input: string, minLength: number): boolean {
 }
 
 /**
- * Determines whether the fields on the authentication page meet the minimum length.
+ * Determines whether the fields on the authentication page meet the minimum length
+ * and have the expected format.
  * 
  * @param form - the username and password input fields
  */
@@ -22,7 +23,7 @@ export function validateAuthForm(form: { email: string, password: string }): boo
 }
 
 /**
- * Determine whether an email matches the expected format.
+ * Determines whether an email matches the expected format.
  * 
  * @param email  - the email entered by the user
  */
@@ -38,7 +39,7 @@ export function validateEmail(email: string): boolean {
 /**
  * Determine whether the fields on the sign up page match the expected format.
  * 
- * @param form - the values full name, email, and password input fields
+ * @param form - the values of the 'full name', 'email', and 'password' input fields
  */
 export function validateSignUpForm(form: { fullName: string, email: string, password: string }): boolean {
     const validName = validateInputLength(form.fullName, 1);

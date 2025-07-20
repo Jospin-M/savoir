@@ -1,17 +1,19 @@
-import { logInUser, requestPasswordReset, signUpNewUser, verifyNewUser, changePassword } from "../clients/authClient"
-import { handleError } from "../services/authService";
+import { logInUser, requestPasswordReset, signUpNewUser, verifyNewUser, changePassword, getProfile } from "../clients/authClient"
+import { handleAuthError } from "../services/authService";
+import * as express from "express";
 
-const express = require("express");
 const router = express.Router();
 
-router.post("/login", logInUser, handleError);
+router.post("/login", logInUser, handleAuthError);
 
-router.post("/register", signUpNewUser, handleError);
+router.post("/register", signUpNewUser, handleAuthError);
 
-router.post("/verifyNewUser", verifyNewUser, handleError);
+router.post("/verifyNewUser", verifyNewUser, handleAuthError);
 
-router.post("/password/request-reset", requestPasswordReset, handleError);
+router.post("/password/request-reset", requestPasswordReset, handleAuthError);
 
-router.post("/password/reset", changePassword, handleError);
+router.post("/password/reset", changePassword, handleAuthError);
+
+router.get("/profile/:id", getProfile);
 
 export default router;

@@ -9,14 +9,33 @@ import { useForm } from "../../hooks/useForm.ts";
 import { useNavigate } from "react-router-dom";
 
 import { validateInputLength } from "../../components/listeners/formValidators.ts";
-import { sendHTTPRequest } from "../../../../backend/src/routes/utils.ts";
-import { parseAuthFragment } from "../../../lib/supabaseClient.ts";
+import { sendHTTPRequest } from "../../../lib/utils.ts";
+
+/**
+ * Parses the fragment identifier that appears in the browser URL when the user is changing their password
+ * to obtain their current session.
+ * 
+ * @returns an object containing access and refresh tokens.
+ */
+function parseAuthFragment() {
+    const fragment = window.location.hash.substring(1);
+    const params = new URLSearchParams(fragment);
+    
+    return {
+        access_token: params.get("access_token"),
+        refresh_token: params.get("refresh_token")
+    }
+}
 
 export default function ChangePassword() {
     const [form, saveInput] = useForm(useState({ newPassword: "" }));
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
+    const [count, setCount] = useState(0);
     const navigate = useNavigate();
+
+    const messageToDisplay = success ? success : error;
+    const styleToUse = success ? "password_success_message" : "password_error_message";
     
     async function handlePasswordChange(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
@@ -25,15 +44,18 @@ export default function ChangePassword() {
             form: form,
             session: parseAuthFragment()
         });
-        console.log(response);
-        
+    
         if(response.error) {
             setError(response.error);
         } else {
             setError("");
             setSuccess(response.message);
-            navigate("/auth/login", { replace: true });
+            setTimeout(() => {
+                navigate("/auth/login", { replace: true });
+            }, 1000);
         }
+
+        setCount(count+1);
     }
 
     return (
@@ -53,15 +75,14 @@ export default function ChangePassword() {
                                 <PasswordInputBox name="newPassword" inputBoxName="New Password" handleChange={saveInput} />
                                 
                                 <div className={styles.password_update_response}>
-                                    {error && <p className={styles.error_message}>{error}</p>}
-                                    {success && <p className={styles.success_message}>{success}</p>}
+                                    {messageToDisplay && <p className={styles[styleToUse]}>{messageToDisplay}</p>}
                                 </div>
                             </div>
                         </div>
 
                         <div className={styles.reset_navigation_buttons_container}>
-                            <Button prompt="Back" buttonCSS="auth_button" isDisabled={false} handleClick={()=>navigate("/auth/password/sendResetLink")}/>
-                            <Button prompt="Submit" buttonCSS="auth_button" isDisabled={!validateInputLength(form.newPassword, 8)} handleClick={handlePasswordChange}/>
+                            <Button prompt="Back" buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={false} handleClick={()=>navigate("/auth/password/sendResetLink")}/>
+                            <Button prompt="Submit" buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={!validateInputLength(form.newPassword, 8)} handleClick={handlePasswordChange}/>
                         </div>
                     </div>
                 </Rectangle>

@@ -6,10 +6,10 @@ import styles from "../../components/auth/Auth.module.css"
 
 import { useState } from "react";
 import { useForm } from "../../hooks/useForm";
-
-import { validateInputLength } from "../../components/listeners/formValidators";
 import { useNavigate, useLocation } from "react-router-dom";
-import { sendHTTPRequest } from "../../../../backend/src/routes/utils";
+import { useUserStore } from "../../stores/useUserStore.ts";
+import { validateInputLength } from "../../components/listeners/formValidators.ts";
+import supabase, { getUserProfileImageURL, sendHTTPRequest } from "../../../lib/utils.ts";
 
 export default function VerifyCode() {
     const [code, saveInput] = useForm(useState({ code: "" }));
@@ -17,18 +17,31 @@ export default function VerifyCode() {
     const navigate = useNavigate();
     const location = useLocation();
     const registrationResponse = location.state;
+
+    const setUserID = useUserStore((state) => state.setUserID);
+    const setProfileImageURL = useUserStore((state) => state.setProfileImageURL);
     
     async function handleVerification(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
         
         const response = await sendHTTPRequest("/auth/verifyNewUser", "POST", { verificationCode: code, verificationRequest: registrationResponse });
-        console.log(response);
 
         if(response.error) {
             setError(response.error);
         } else {
+            const { session: { access_token, refresh_token, user } } = response;
+
+            supabase.auth.setSession({ 
+                access_token: access_token,
+                refresh_token: refresh_token
+            });
+
+            // update user store
+            setProfileImageURL(await getUserProfileImageURL(user.id))
+
             setError("");
-            navigate("/", { replace: true });
+            setUserID(user.id);
+            navigate(`/profile/${user.id}`, { replace: true });
         }
     }
 
@@ -54,8 +67,8 @@ export default function VerifyCode() {
                         </div>
 
                         <div className={styles.verification_navigation_buttons_container}>
-                            <Button prompt="Back" buttonCSS="auth_button" isDisabled={false} handleClick={()=>navigate("/auth/signup")}/>
-                            <Button prompt="Verify" buttonCSS="auth_button" isDisabled={!validateInputLength(code.code, 6)} handleClick={handleVerification}/>
+                            <Button prompt="Back" buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={false} handleClick={()=>navigate("/auth/signup")}/>
+                            <Button prompt="Verify" buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={!validateInputLength(code.code, 6)} handleClick={handleVerification}/>
                         </div>
                     </div>
                 </Rectangle>
