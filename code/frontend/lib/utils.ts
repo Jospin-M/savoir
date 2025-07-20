@@ -95,21 +95,11 @@ export async function sendAuthenticatedHTTPRequest(endpoint: string, method: str
 }
 
 /**
- * Parses the fragment identifier that appears in the browser URL when the user is changing their password
- * to obtain their current session.
+ * Retrieve the URL of the authenticated user's profile image.
  * 
- * @returns an object containing access and refresh tokens.
+ * @param userID - the user's id 
+ * @returns - the image's url
  */
-export function parseAuthFragment() {
-    const fragment = window.location.hash.substring(1);
-    const params = new URLSearchParams(fragment);
-    
-    return {
-        access_token: params.get("access_token"),
-        refresh_token: params.get("refresh_token")
-    }
-}
-
 export async function getUserProfileImageURL(userID: string) {
     const { profileImageUrl } = await sendAuthenticatedHTTPRequest(`/auth/profile/${userID}`, "GET", {});
 

@@ -9,7 +9,23 @@ import { useForm } from "../../hooks/useForm.ts";
 import { useNavigate } from "react-router-dom";
 
 import { validateInputLength } from "../../components/listeners/formValidators.ts";
-import { sendHTTPRequest, parseAuthFragment } from "../../../lib/utils.ts";
+import { sendHTTPRequest } from "../../../lib/utils.ts";
+
+/**
+ * Parses the fragment identifier that appears in the browser URL when the user is changing their password
+ * to obtain their current session.
+ * 
+ * @returns an object containing access and refresh tokens.
+ */
+function parseAuthFragment() {
+    const fragment = window.location.hash.substring(1);
+    const params = new URLSearchParams(fragment);
+    
+    return {
+        access_token: params.get("access_token"),
+        refresh_token: params.get("refresh_token")
+    }
+}
 
 export default function ChangePassword() {
     const [form, saveInput] = useForm(useState({ newPassword: "" }));
