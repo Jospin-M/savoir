@@ -10,10 +10,7 @@ import Messages from "./pages/Messages/Messages.tsx";
 
 import { createBrowserRouter } from "react-router-dom";
 
-import { getUserID } from "../lib/utils.ts";
 import { sendAuthenticatedHTTPRequest } from "../lib/utils.ts";
-
-let globalProfileImageURL = "";
 
 export const router = createBrowserRouter([
     { path: "/", element: <Login /> }, // will be replaced with home page
@@ -23,9 +20,9 @@ export const router = createBrowserRouter([
     { path: "/auth/password/sendResetLink", element: <InitiateReset /> },
     { path: "/auth/password/reset", element: <ChangePassword /> },
 
-    { path: "/browse/", element: <Browse />, loader: browserLoader },
-    { path: "/dashboard/", element: <Dashboard />, loader: dashboardLoader },
-    { path: "/inbox/", element: <Messages />, loader: inboxLoader },
+    { path: "/browse/", element: <Browse /> },
+    { path: "/dashboard/", element: <Dashboard /> },
+    { path: "/inbox/", element: <Messages /> },
     
     { 
         path: "/profile/:id", // combination of user fullname and id for unique identifier
@@ -38,28 +35,10 @@ export const router = createBrowserRouter([
 // are minimized. also consider seperating the function calls within each function into their own
 // own files depending on complexity
 
-async function browserLoader({ params }: { params: any }) {
-    return {
-        globalProfileImageURL
-    };
-}
-
-async function dashboardLoader({ params }: { params: any }) {
-    return {
-        globalProfileImageURL
-    };
-}
-
-async function inboxLoader({ params }: { params: any }) {
-    return {
-        globalProfileImageURL
-    };
-}
-
-async function profileLoader({ params }: { params: any }) {
-    const profileData = await sendAuthenticatedHTTPRequest(`/auth/profile/${getUserID()}`, "GET", {});
-    const { profileImageUrl } = profileData;
-    globalProfileImageURL = profileImageUrl;
+async function profileLoader() {
+    // retrieve the user ID that was stored in localStorage by Zustand
+    const userID = JSON.parse(localStorage.getItem("user-storage")!).state.userID;
+    const profileData = await sendAuthenticatedHTTPRequest(`/auth/profile/${userID}`, "GET", {});
 
     return {
         profileData

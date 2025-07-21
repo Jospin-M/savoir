@@ -1,7 +1,8 @@
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { createClient, PostgrestSingleResponse, type SupabaseClient } from "@supabase/supabase-js";
+import { resolve } from "path";
 
 import * as dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ path: resolve(__dirname, "../../src/.env") });
 
 // move from keys to cloud storage
 const supabaseURL: string = process.env.SUPABASE_URL!;
@@ -13,12 +14,9 @@ export { supabase };
 /**
  * Creates a Supabase client using the access token of an authenticated user.
  * 
- * @param headers - the headers provided in the browser's HTTP request
- * @param accessToken - the access token received from Supabase 
+ * @param accessToken - an access token received from Supabase 
  */
-export function createAuthenticatedClient(headers: any) {
-    const accessToken = headers.authorization;
-    
+export function createAuthenticatedClient(accessToken: string) {
     return createClient(supabaseURL, supabaseKey, {
         global: {
             headers: { 
@@ -34,7 +32,7 @@ export function createAuthenticatedClient(headers: any) {
  * @param tableName - the name of the table to receive the new entry. 
  * @param data - an object with fields corresponding to the column names of the desired table.
  */
-export async function insertRecord<T>(tableName: string, data: T): Promise<any> {
+export async function insertRecord<T>(tableName: string, data: T): Promise<PostgrestSingleResponse<null>> {
     const response =  await supabase!
         .from(tableName)
         .insert(data);

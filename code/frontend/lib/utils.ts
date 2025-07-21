@@ -22,7 +22,7 @@ export default supabase;
  * @param method - the HTTP method of the request.
  * @param body - the payload sent from the browser.
  */
-function createHTTPRequest(method: string, body: Object) {
+function createHTTPRequest(method: string, body: object) {
     return {
         method: method,
         headers: { "Content-Type": "application/json" },
@@ -39,7 +39,7 @@ function createHTTPRequest(method: string, body: Object) {
  * 
  * @returns the server's response
  */
-export async function sendHTTPRequest(endpoint: string, method: string, payload: Object) {
+export async function sendHTTPRequest(endpoint: string, method: string, payload: object) {
     const DOMAIN = import.meta.env.VITE_DOMAIN;
     const result = await fetch(DOMAIN + "api" + endpoint, createHTTPRequest(method, payload));
     const response = await result.json();
@@ -86,7 +86,7 @@ async function createAuthenticatedHTTPRequest(method: string, body: object) {
  * 
  * @returns the server's response
  */
-export async function sendAuthenticatedHTTPRequest(endpoint: string, method: string, payload: Object) {
+export async function sendAuthenticatedHTTPRequest(endpoint: string, method: string, payload: object) {
     const DOMAIN = import.meta.env.VITE_DOMAIN;
     const result = await fetch(DOMAIN + "api" + endpoint, await createAuthenticatedHTTPRequest(method, payload));
     const response = await result.json();
@@ -95,58 +95,13 @@ export async function sendAuthenticatedHTTPRequest(endpoint: string, method: str
 }
 
 /**
- * Parses the fragment identifier that appears in the browser URL when the user is changing their password
- * to obtain their current session.
+ * Retrieve the URL of the authenticated user's profile image.
  * 
- * @returns an object containing access and refresh tokens.
+ * @param userID - the user's id 
+ * @returns - the image's url
  */
-export function parseAuthFragment() {
-    const fragment = window.location.hash.substring(1);
-    const params = new URLSearchParams(fragment);
-    
-    return {
-        access_token: params.get("access_token"),
-        refresh_token: params.get("refresh_token")
-    }
-}
+export async function getUserProfileImageURL(userID: string) {
+    const { profileImageUrl } = await sendAuthenticatedHTTPRequest(`/auth/profile/${userID}`, "GET", {});
 
-export async function getAuthenticatedUserId() {
-    const { data: { user } } = await supabase.auth.getUser();
-    const { id } = user!;
-
-    return id;
-}
-
-/**
- * Retrieves a cookie from localStorage.
- * 
- * @param name - the name of the cookie
- */
-function getCookie(name: string) {
-    const cookies = document.cookie.split(";");
-
-    for(let cookie of cookies) {
-        const [key, value] = cookie.split("=");
-
-        if(key.trim() === name) {
-            return decodeURIComponent(value);
-        }
-    }
-
-    return null;
-}
-
-/**
- * Save the user's uid to localStorage so that calls to the API are reduced.
- * 
- * @param userID - the user's uid obtained after authentication
- */
-export function saveUserID(userID: string) {
-    const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString();
-
-    document.cookie = `user_id=${encodeURIComponent(userID)}; expires=${expires}; path=/`;
-}
-
-export function getUserID() {
-    return getCookie("user_id");
+    return profileImageUrl;
 }
