@@ -53,11 +53,9 @@ export default function Login() {
 
     return (
         <Background>
-            <div className={styles.login_box_container}>
+            <div className={styles.login_container}>
                 <Rectangle cssClass={"login_page_background"}>
-                    <div className={styles.box}>
-                        <h1 className={styles.box_header}>Log In</h1>
-                    </div>
+                    <h1 className={styles.box_header}>Log In</h1>
 
                     <div className={styles.login_input_container}> 
                         <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput}/> 
@@ -66,7 +64,10 @@ export default function Login() {
                         <div className={styles.login_button_container}>
                             <Button prompt="Log In"  buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={validateAuthForm(form)} handleClick={handleLogin}/>
                         </div>
-                        {error && <p className={styles.login_error_message}>{error}</p>}
+                        
+                        <div className={styles.login_error_message_container}>
+                            {error && <p className={styles.login_error_message}>{error}</p>}
+                        </div>
                     </div> 
 
                     <div className={styles.login_div_container}>
@@ -77,9 +78,8 @@ export default function Login() {
                         <Link className={styles.auth_hyperlink} to="/auth/password/sendResetLink">Forgot Password?</Link>
 
                         <div className={styles.text_hyperlink_container}>
-                            <div className={styles.text_hyperlink_container}>
-                                Don't have an account?
-                            </div>
+                            Don't have an account?
+                            
                             <Link className={styles.auth_hyperlink} to="/auth/signup"> Sign Up</Link>
                         </div>
                     </div>
