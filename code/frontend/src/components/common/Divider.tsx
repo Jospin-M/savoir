@@ -1,4 +1,4 @@
-export default function Divider({ length } : { length:number, padding?:number }) {
+export default function Divider({ length } : { length:number }) {
     return (
         <hr style={{ width: `${length}%`}} />
     );

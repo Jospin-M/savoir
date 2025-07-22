@@ -6,11 +6,11 @@
     min-height: 100vh;
 }
 
-.login_box_container {
+.login_container {
     display: flex;
     justify-content: center;
     align-items: center;
-
+ 
     width: 100%;
 }
 
@@ -38,14 +38,14 @@
 .box_header {
     font-family: "Roboto Slab", sans-serif;
     font-size: 30px;
-    font-weight: 0; /*debug this*/
+    
     color: #403f4c;
     text-align: center;
 }
 
 .input_box {
-    width: 100%;
-    height: 2.95rem;
+    width: 97%;
+    height: 3rem;
     border-radius: 0.5rem;
     
     outline: none;
@@ -76,17 +76,19 @@
 
 .password_box_title {
     font-family: "Roboto Slab", sans-serif;
-    font-size: 1.3rem;
+    font-size: 1.32rem;
     color: #403F4C;
 }
 
 .password_input_box {
     width: 100%;
-    height: 2.95rem;
+    height: 2.85rem;
     
+    padding-left: 0.45rem;
     border-radius: 0.5rem;
     background-color: #D9D9D9;
     outline: none;
+
     font-family: "Roboto Slab", sans-serif;
     font-size: 1.5rem;
     color: #403F4C;
@@ -119,14 +121,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 
-    margin-top: 35px;
-    gap: 15px;;
+    margin-top: 3rem;
+    margin-left: 0.7rem;
+    gap: 1rem;;
 }
 
 .login_button_container {
-    padding-bottom: 20px;
+    padding-bottom: 3rem;
 }
 
 .sign_up_input_container {
@@ -144,7 +146,7 @@
 }
 
 .login_div_container {
-    margin-top: 30px;
+    margin-top: 3rem;
 }
 
 .sign_up_div_container {
@@ -157,8 +159,8 @@
     justify-content: center;
     align-items: center;
 
-    margin-top: 20px;
-    gap: 5px;
+    margin-top: 2rem;
+    gap: 0.5rem;
 }
 
 .sign_up_hyperlink_container {
@@ -177,22 +179,26 @@
     justify-content: center;
     align-items: center;
 
-    gap: 5px;
+    gap: 0.5rem;
 
     font-family: "Roboto Slab", sans-serif;
-    font-size: 15px;
+    font-size: 1.5rem;
     color: #403F4C;
 }
 
 a.auth_hyperlink {
     font-family: "Roboto Slab", sans-serif;
-    font-size: 15px;
+    font-size: 1.5rem;
     color: #403f4c;
     text-align: center;
 
     cursor: pointer;
 
     text-decoration: none;
+}
+
+a.auth_hyperlink:visited {
+    color: #403f4c;
 }
 
 a.auth_hyperlink:hover {
@@ -270,18 +276,23 @@ a.auth_hyperlink:hover {
     font-size: 14px;
 }
 
+.login_error_message_container {
+    margin-right: 19rem;
+    
+}
+
 .login_error_message {
     display: flex;
     justify-content: center;
-    margin-top: 260px;
     
-    width: 320px;
     position: absolute;
 
     color: red; 
 
     font-family: "Roboto Slab", sans-serif;
-    font-size: 14px;
+    font-size: 1.4rem;
+
+    margin-top: -1.5rem;
 }
 
 .verification_error_message {
@@ -405,7 +416,7 @@ a.auth_hyperlink:hover {
     }
 
     .input_box {
-        width: 90%;
+        width: 92%;
         height: 3rem;
 
         padding-left: 0.45rem;
@@ -415,32 +426,33 @@ a.auth_hyperlink:hover {
 
     .input_box_container {
         width: 231.2px;
-        margin-right: 0rem;
+        margin-right: 0.6rem;
+    }
+
+    .password_input_box {
+        height: 3rem;
+    }
+
+    .password_component{
+        width: 72%;
+        margin-right: 0.5rem;
     }
 
     .password_icon_container {
-        margin-left: 91%;
+        margin-left: 93%;
     }
 }
 
 /* Regular sized tablets and up */
 @media (min-width: 1024px) {
-    .input_box_title {
-        font-size: 1.25rem;
-    }
-
     .input_box {
-        width: 93%;
-        height: 2.95rem;
-        
-        padding-left: 0.45rem;
+        width: 91%;
 
         font-size: 1.5rem;
     }
 
     .input_box_container {
-        width: 231.2px;
-        margin-right: 0rem;
+        margin-right: 0.5rem;
     }
 }
 
@@ -462,7 +474,8 @@ a.auth_hyperlink:hover {
         margin-right: 0rem;
     }
 
-    .password_icon_container {
-        margin-left: 91%;
+    .password_component{
+        width: 70.5%;
+        margin-right: 0.5rem;
     }
 }
