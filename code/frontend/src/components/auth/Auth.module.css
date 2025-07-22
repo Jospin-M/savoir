@@ -1,13 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+.auth_background {
+    display: flex;
+
+    min-height: 100vh;
+}
+
 .login_box_container {
     display: flex;
     justify-content: center;
     align-items: center;
 
-    width: 95%;
-    padding-right: 200px;
-    padding-top: 0px;
+    width: 100%;
 }
 
 .sign_up_box_container {
@@ -16,8 +20,6 @@
     align-items: center;
 
     width: 95%;
-    padding-right: 200px;
-    padding-top: 0px;
 }
 
 .verfication_box_container {
@@ -27,8 +29,6 @@
     
     width: 95%;
     min-width: 900;
-    padding-right: 200px;
-    padding-top: 0px;
 }
 
 .box_shadow {
@@ -49,6 +49,7 @@
     border-radius: 0.5rem;
     
     outline: none;
+    padding-left: 0.45rem;
 
     font-family: "Roboto Slab", sans-serif;
     font-size: 1.5rem;
@@ -456,7 +457,7 @@ a.auth_hyperlink:hover {
     }
 }
 
-/* Regular sized tablets and up */
+/* Average size laptop screens and up */
 @media (min-width: 1400px) {
     .input_box_title {
         font-size: 1.15rem;
