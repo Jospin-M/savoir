@@ -43,9 +43,7 @@ export default function InitiateReset() {
         <Background>
             <div className={styles.sign_up_box_container}>
                 <Rectangle cssClass="verification_password_page_background">
-                    <div className={styles.box}>
-                        <h1 className={styles.box_header}>Verify Email</h1>
-                    </div>
+                    <h1 className={styles.box_header}>Verify Email</h1>
 
                     <div className={styles.reset_input_container}>
                         <p className={styles.password_verification_prompt_text}>
@@ -53,7 +51,7 @@ export default function InitiateReset() {
                         </p>
 
                         <div className={styles.email_response_container}>
-                            <div className={styles.verification_input_box_container}>
+                            <div className={styles.password_verification_input_box_container}>
                                 <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput} />
                             </div>
                             

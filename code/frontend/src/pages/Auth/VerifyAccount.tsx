@@ -49,10 +49,8 @@ export default function VerifyCode() {
         <Background>
             <div className={styles.verfication_box_container}>
                 <Rectangle cssClass={"verification_page_background"}>
-                    <div className={styles.box}>
-                        <h1 className={styles.box_header}>Verify Code</h1>
-                    </div>
-
+                    <h1 className={styles.box_header}>Verify Code</h1>
+                    
                     <div className={styles.verification_input_container}>
                         <p className={styles.verification_prompt_text}>
                             We've sent a 6-digit code to your email. Please enter the code below to verify your account.

@@ -38,14 +38,15 @@ export default function SignUp() {
         <Background>
             <div className={styles.sign_up_box_container}>
                 <Rectangle cssClass="sign_up_page_background">
-                    <div className={styles.box}>
-                        <h1 className={styles.box_header}>Sign Up</h1>
-                    </div>
+                    <h1 className={styles.box_header}>Sign Up</h1>
 
                     <div className={styles.sign_up_input_container}> 
                         <InputBox input_box_title="Full Name" type="text" name="fullName" handleChange={saveInput}/> 
                         <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput}/> 
-                        <PasswordInputBox name="password" inputBoxName="Password" handleChange={saveInput}/>
+                        
+                        <div className={styles.sign_up_password_component}>
+                            <PasswordInputBox name="password" inputBoxName="Password" handleChange={saveInput}/>
+                        </div>
                         
                         <Button prompt="Register" buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={validateSignUpForm(form)} handleClick={handleSignUp}/>
                         
