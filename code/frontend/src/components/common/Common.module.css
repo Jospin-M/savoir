@@ -36,19 +36,18 @@
   border: none;
   border-radius: 8px;
 
-  width: 185px;
-  height: 50px;
-  margin-top: 10px;
+  width: 8rem;
+  height: 2.5rem;
   
+  margin-bottom: 2rem;
   cursor: pointer;
 }
 
 .roboto-edit_profile {
-
     font-family: "Roboto", sans-serif;
     font-optical-sizing: auto;
     font-weight: 450;
-    font-size: 30px;
+    font-size: 1.2rem;
     font-style: normal;
     font-variation-settings:
     "wdth" 100;
@@ -124,16 +123,16 @@
   align-items: center;
 
   margin: auto;
+  margin-left: 9rem;
   position: relative;
 
-  gap: 75px;
-  padding-left: 85px;
+  gap: 2rem;
 }
 
 a, a:visited {
   font-family:"Roboto Flex", sans-serif;
   font-weight: 25;
-  font-size: 22px;
+  font-size: 1.7rem;
 
   color: #FFFFFF;
 
@@ -157,15 +156,29 @@ img {
 }
 
 .nav_bar_profile_pic_container {
-  margin-right: 20px;
-  margin-top: 6px;
+  margin-right: 1rem;
+  margin-top: 1.2rem;
 }
 
 .nav_bar_profile_pic {
-  width: 47px;
-  height: 47px;
+  width: 3.5rem;
 }
 
 .nav_bar_profile_pic:hover {
   outline: 2px solid #FFFFFF;
+}
+
+@media (max-width: 896px) and (orientation: landscape) {
+  .edit_profile_button {
+    width: 15rem;
+    height: 4rem;
+  }
+
+  .roboto-edit_profile {
+    font-size: 2rem;
+  }
+
+  .nav_options {
+    margin-left: 30rem;
+  }
 }

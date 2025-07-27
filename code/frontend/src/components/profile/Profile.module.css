@@ -1,84 +1,109 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* Mobile First Base Styles */
 .profile_header {
-    width: 1450px;
-    height: 176px;
+    width: 100%;
+    max-width: 100vw;
+    height: auto;
+    min-height: 120px;
     
-    margin-left: 16px;
-    margin-bottom: 30px;
+    margin: 0 clamp(8px, 2vw, 16px);
+    margin-bottom: 20px;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .profile_header_top_layer {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     margin: auto;
-
-    width: 1450px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .profile_container {
-    padding-bottom: 200px;
+    padding-bottom: clamp(80px, 15vh, 200px);
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    box-sizing: border-box;
+
+    padding-bottom: 27.5rem;
 }
 
 .profile_pic {
-    width: 105px;
-    height: 105px;
+    width: clamp(70px, 12vw, 105px);
+    height: clamp(70px, 12vw, 105px);
+    margin-bottom: 15px;
+    flex-shrink: 0;
 }
 
 .name_container {
-    width: 1090px;
+    width: 100%;
 
-    margin-left: 30px;
-    margin-top: 30px;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 0 10px;
 }
 
 .roboto-name {
     font-family: "Roboto", sans-serif;
     font-optical-sizing: auto;
     font-weight: 450;
-    font-size: 38px;
+    font-size: clamp(20px, 4.5vw, 38px);
     font-style: normal;
     font-variation-settings: "wdth" 100;
 
     color: #403F4C;
+
+    margin: 0;
+    word-wrap: break-word;
+    hyphens: auto;
 }
 
 .bio_container {
-    width: 1450px;
-    height: 50px;
-
-    margin-top: 15px;
+    width: 90%;
+    margin: auto;
+    
+    box-sizing: border-box;
 }
 
 .roboto-bio {
     font-family: "Roboto", sans-serif;
     font-optical-sizing: auto;
     font-weight: 200;
-    font-size: 20px;
+    font-size: 2.5vw;
     font-style: normal;
     font-variation-settings: "wdth" 0;
 
-    color: #403F4C;
+    color: #403f4c;
+    text-align: center;
+    line-height: 1.5;
+
+    margin-left: -3.5rem;
 }
 
 .profile_sections_container {
-    padding-left: 32px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .profile_sections {
     display: flex;
     flex-direction: row;
-
-    width: 1410px;
-
-    margin: 0px;
+    justify-content: space-between;
+    
+    width: 100%;
     padding: 0px;
-
     border-left: 1px solid transparent;
     border-bottom: 1px solid transparent;
     border-top: 1px solid transparent;
     border-color: #403F4C;
-    
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
 }
 
 .profile_sections_selected {
@@ -86,33 +111,123 @@
 }
 
 .profile_sections li {
-    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: clamp(6px, 1.5vh, 10px) clamp(2px, 1vw, 12px);
+    min-width: clamp(60px, 15vw, 120px);
+    flex: 1;
 
     text-align: center;
     font-family: "Roboto", sans-serif;
     font-optical-sizing: auto;
     font-weight: 375;
-    font-size: 20px;
+    font-size: clamp(12px, 3vw, 20px);
     font-style: normal;
 
     border-right: 1px solid transparent;
     border-color: #403F4C;
-
     color: #403F4C;
-
     cursor: pointer;
 
     list-style: none;
+    white-space: nowrap;
+    box-sizing: border-box;
+    min-height: 44px; /* Minimum touch target */
 }
 
 .outline {
     stroke: #403F4C;
     border-bottom: 2px solid transparent;
+    width: 100%;
 }
 
 .sections {
     outline: none;
+    width: 100%;
+    height: auto;
+    min-height: clamp(1.2rem, 3vh, 2rem);
+    box-sizing: border-box;
+}
 
-    width: 352px;
-    height: 35px;
+/* Landscape Phone Orientation */
+@media (max-width: 896px) and (orientation: landscape) {
+    .profile_header {
+        padding-right: 2rem;
+    }
+    
+    .profile_header_top_layer {
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .profile_container {
+        margin-top: 8rem;
+    }
+
+    .profile_pic {
+        margin-bottom: 0;
+    }
+
+    .name_container {
+        text-align: left;
+        padding: 0 5px;
+    }
+
+    .bio_container {
+        margin-top: 1rem;
+    }
+
+    .roboto-bio {
+        text-align: left;
+
+        font-size: 2vw;
+    }
+
+    .profile_sections li {
+        min-height: 40px;
+    }
+}
+
+/* Small Tablets and Large Phones */
+@media (min-width: 568px) {
+    .profile_header_top_layer {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .profile_pic {
+        margin-bottom: 0;
+    }
+
+    .name_container {
+        flex: 1;
+        text-align: left;
+        padding: 0;
+        margin-top: 10px;
+    }
+
+    .bio_container {
+        text-align: left;
+    }
+
+    .roboto-bio {
+        text-align: left;
+    }
+}
+
+/* Tablet Portrait */
+@media (min-width: 768px) {
+    .profile_header {
+        max-width: 750px;
+        min-height: 140px;
+        margin-bottom: 25px;
+    }
+
+    .name_container {
+        margin-top: 20px;
+    }
 }
