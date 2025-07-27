@@ -45,7 +45,7 @@ export default function InitiateReset() {
                 <Rectangle cssClass="verification_password_page_background">
                     <h1 className={styles.box_header}>Verify Email</h1>
 
-                    <div className={styles.reset_input_container}>
+                    <div className={styles.email_verification_input_container}>
                         <p className={styles.password_verification_prompt_text}>
                             Enter your email address and we'll send you a link that you can use to reset your password.
                         </p>
