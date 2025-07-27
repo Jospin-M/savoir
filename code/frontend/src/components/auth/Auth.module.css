@@ -490,7 +490,11 @@ a.auth_hyperlink:hover {
     }
 
     .verification_status_container {
-        padding-left: 7rem;
+        padding-left: 0.75rem;
+    }
+
+    .email_verification_error_message {
+        margin-left: 6rem;
     }
 
     .password_error_message {
