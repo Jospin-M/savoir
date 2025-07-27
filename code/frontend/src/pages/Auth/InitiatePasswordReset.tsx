@@ -24,18 +24,16 @@ export default function InitiateReset() {
     async function handleEmailVerification(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
 
-        if(count < 1) { // basic rate limiting, reinforce later
+        if(count < 1) {
             const response = await sendHTTPRequest("/auth/password/request-reset", "POST", form);
 
             if(response.error) {
                 setError(response.error);
-                setSuccess("");
             } else {
                 setError("");
+                setCount(count+1);
                 setSuccess("We've sent you a link to reset your password.");
             }
-
-            setCount(count+1);
         }
     }
 

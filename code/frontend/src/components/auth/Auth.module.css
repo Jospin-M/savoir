@@ -245,7 +245,7 @@ a.auth_hyperlink:hover {
 .verification_status_container {
     position: absolute;
     padding-left: 4rem;
-    padding-top: 12rem;
+    margin-top: 12rem;
 }
 
 .verification_prompt_text {
@@ -337,20 +337,19 @@ a.auth_hyperlink:hover {
 }
 
 .password_error_message {
-    margin-top: 25px;
-    margin-left: 50px;
     position: absolute;
-    width: 320px;
+    width: 32rem;
 
     color: red; 
 
     font-family: "Roboto Slab", sans-serif;
-    font-size: 14px;
+    font-size: 1.4rem;
 }
 
 .password_success_message {
-    margin-top: 25px;
     position: absolute;
+    width: 25rem;
+    margin-right: 3rem;
 
     color: green; 
 
@@ -411,7 +410,14 @@ a.auth_hyperlink:hover {
 .password_update_response {
     display: flex;
     justify-content: center;
-    width: 175px;
+    
+    width: 10.75rem;
+
+    padding-left: 7.2rem;
+}
+
+.password_update_input_box_container {
+    width: 125%;
 }
 
 .reset_password_input_container {
@@ -423,7 +429,7 @@ a.auth_hyperlink:hover {
     width: 95%;
 
     margin-top: 4rem;
-    padding-left: 0.75rem;
+    padding-left: .95rem;
     
     gap: 2rem;
 }
@@ -432,8 +438,6 @@ a.auth_hyperlink:hover {
     font-family: "Roboto Slab", sans-serif;
     font-size: 1.5rem;
     color: #403F4C;
-
-    padding-right: 2rem;
 }
 
 /* Small sized tablets */
@@ -468,7 +472,11 @@ a.auth_hyperlink:hover {
     }
 
     .login_input_container {
-        padding-left: 0.85rem;
+        padding-left: 0.85rem
+    }
+
+    .login_button_container {
+        padding-right: 1rem;
     }
 
     .sign_up_input_container {
@@ -483,6 +491,14 @@ a.auth_hyperlink:hover {
 
     .verification_status_container {
         padding-left: 7rem;
+    }
+
+    .password_error_message {
+        margin-left: 1.75rem;
+    }
+
+    .password_success_message {
+        margin-left: 1.5rem;
     }
 }
 
@@ -521,11 +537,23 @@ a.auth_hyperlink:hover {
     }
 
     .verification_status_container {
-        padding-left: 7rem;
+        padding-left: 0.5rem;
     }
 
     .reset_navigation_buttons_container {
         margin-top: 3.15rem;
+    }
+
+    .email_verification_success_message {
+        margin-left: 0.25rem;
+    }
+
+    .email_verification_error_message {
+        margin-left: 7rem;
+    }
+
+    .password_error_message {
+        margin-left: 1rem;
     }
 }
 
@@ -558,15 +586,27 @@ a.auth_hyperlink:hover {
         padding-left: 5.7rem;
     }
 
-    .verification_input_box_container {
-        width: 130%;
-    }
-
     .verification_status_container {
-        padding-left: 6.5rem;
+        padding-left: 0.5rem;
     }
 
     .reset_navigation_buttons_container {
         margin-top: 4rem;
+    }
+
+    .email_verification_success_message {
+        margin-right: -50rem;
+    }
+
+    .email_verification_error_message {
+        margin-left: 6rem;
+    }
+
+    .password_error_message {
+        margin-left: 1.75rem;
+    }
+
+    .password_success_message {
+        margin-left: 1.5rem;
     }
 }

@@ -40,24 +40,23 @@ export default function ChangePassword() {
     async function handlePasswordChange(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
 
-        if(count < 1) { // basic rate limiting, reinforce later on
-            const response = await sendHTTPRequest("/auth/password/reset", "POST", { 
-                form: form,
-                session: parseAuthFragment()
-            });
+        const response = await sendHTTPRequest("/auth/password/reset", "POST", { 
+            form: form,
+            session: parseAuthFragment()
+        });
         
-            if(response.error) {
-                setError(response.error);
-            } else {
-                setError("");
-                setSuccess(response.message);
-                /*setTimeout(() => {
-                    navigate("/auth/login", { replace: true });
-                }, 1500);*/
-            }
-
-            setCount(count+1);
+        if(response.error) {
+            setSuccess("");
+            setError(response.error);
+        } else {
+            setError("");
+            setSuccess(response.message);
+            /*setTimeout(() => {
+                navigate("/auth/login", { replace: true });
+            }, 1500);*/
         }
+
+        setCount(count+1);
     }
 
     return (
@@ -72,13 +71,13 @@ export default function ChangePassword() {
                             Please enter your new password.
                         </p>
 
-                        <div className={styles.verfication_input_box_container}>
-                            <div className={styles.email_response_container}>
+                        <div>
+                            <div className={styles.password_update_input_box_container}>
                                 <PasswordInputBox name="newPassword" inputBoxName="New Password" handleChange={saveInput} />
-                                
-                                <div className={styles.password_update_response}>
-                                    {messageToDisplay && <p className={styles[styleToUse]}>{messageToDisplay}</p>}
-                                </div>
+                            </div>
+                            
+                            <div className={styles.password_update_response}>
+                                {messageToDisplay && <p className={styles[styleToUse]}>{messageToDisplay}</p>}
                             </div>
                         </div>
 
