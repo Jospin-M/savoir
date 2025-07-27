@@ -51,9 +51,9 @@ export default function ChangePassword() {
             } else {
                 setError("");
                 setSuccess(response.message);
-                setTimeout(() => {
+                /*setTimeout(() => {
                     navigate("/auth/login", { replace: true });
-                }, 1500);
+                }, 1500);*/
             }
 
             setCount(count+1);
@@ -67,8 +67,8 @@ export default function ChangePassword() {
                         <h1 className={styles.box_header}>Reset Password</h1>
                     </div>
 
-                    <div className={styles.reset_input_container}>
-                        <p className={styles.password_verification_prompt_text}>
+                    <div className={styles.reset_password_input_container}>
+                        <p className={styles.reset_password_prompt_text}>
                             Please enter your new password.
                         </p>
 
