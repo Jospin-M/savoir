@@ -62,9 +62,11 @@ export default function Login() {
                         
                         <Button prompt="Log In" isDisabled={validateAuthForm(form)} handleClick={handleLogin}/>
                     </form> 
+
                     <div className={styles.login_error_message_container}>
-                            {error && <p className={styles.login_error_message}>{error}</p>}
-                        </div>
+                        {error && <p className={styles.login_error_message}>{error}</p>}
+                    </div>
+
                     <div className={styles.login_div_container}>
                         <Divider length={60} />
                     </div>

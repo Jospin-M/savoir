@@ -23,7 +23,7 @@ export default function SignUp() {
     // move this code to server middleware
     async function handleSignUp(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
-
+        console.log(error)
         const response = await sendHTTPRequest("/auth/register", "POST", form);
 
         if(response.error) {
@@ -35,25 +35,22 @@ export default function SignUp() {
     }
     
     return (
-        <Background>
-            <div className={styles.sign_up_box_container}>
-                <Rectangle cssClass="sign_up_page_background">
-                    <h1 className={styles.box_header}>Sign Up</h1>
+        <div className={styles.auth_background}>
+            <Rectangle cssClass="sign_up_page_background">
+                <div className={styles.sign_up_container}>
+                    <h1 className={styles.box_header}>Savoir</h1>
 
-                    <div className={styles.sign_up_input_container}> 
+                    <form>
                         <InputBox input_box_title="Full Name" type="text" name="fullName" handleChange={saveInput}/> 
                         <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput}/> 
+                        <PasswordInputBox name="password" handleChange={saveInput}/>
                         
-                        <div className={styles.sign_up_password_component}>
-                            <PasswordInputBox name="password" inputBoxName="Password" handleChange={saveInput}/>
-                        </div>
-                        
-                        <Button prompt="Register" buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={validateSignUpForm(form)} handleClick={handleSignUp}/>
-                        
-                        <div className={styles.sign_up_error_message_container}>
-                            {error && <p className={styles.sign_up_error_message}>{error}</p>}
-                        </div>
-                    </div> 
+                        <Button prompt="Register" isDisabled={validateSignUpForm(form)} handleClick={handleSignUp}/>
+                    </form>
+
+                    <div className={styles.sign_up_error_message_container}>
+                        {error && <p className={styles.sign_up_error_message}>{error}</p>}
+                    </div>
 
                     <div className={styles.sign_up_div_container}>
                         <Divider length={60} />
@@ -65,8 +62,8 @@ export default function SignUp() {
                             <Link className={styles.auth_hyperlink} to="/auth/login">Log In</Link>
                         </div>
                     </div>
-                </Rectangle>
-            </div>
-        </Background>
+                </div>
+            </Rectangle>
+        </div>
     );
 }

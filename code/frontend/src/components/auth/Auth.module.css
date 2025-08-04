@@ -23,15 +23,17 @@
     position: relative;
     overflow: hidden;
 
-    width: 400px;
+    width: 300px;
 }
 
-.sign_up_box_container {
+.sign_up_container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
 
-    width: 95%;
+    width: 300px;
+    height: 575px;
 }
 
 .verfication_box_container {
@@ -79,7 +81,7 @@ input, select, textarea {
     position: relative;
     z-index: 1;
 
-    width: 91.6%;
+    width: 88.9%;
     padding: 1.4rem 1.6rem;
 
     border: 0.1rem solid #E0E0E0;
@@ -277,14 +279,19 @@ a.auth_hyperlink:hover {
     display: flex;
     justify-content: center;
 
-    margin-top: 330px;
-    width: 320px;
+    margin-top: 4rem;
+    margin-bottom: -3rem;
+}
+
+.sign_up_error_message {
+    display: flex;
+    justify-content: center;
+    
     position: absolute;
+    margin-top: -1.3rem;
 
     color: red; 
-
-    font-family: "Roboto Slab", sans-serif;
-    font-size: 14px;
+    font-size: 1.5rem;
 }
 
 .login_error_message_container {
@@ -300,13 +307,10 @@ a.auth_hyperlink:hover {
     justify-content: center;
     
     position: absolute;
+    margin-top: -1.5rem;
 
     color: red; 
-
-    font-family: "Roboto Slab", sans-serif;
-    font-size: 1.4rem;
-
-    margin-top: -1.5rem;
+    font-size: 1.5rem;
 }
 
 .verification_error_message {
