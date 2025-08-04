@@ -1,4 +1,3 @@
-import Background from "../../components/auth/Background";
 import Rectangle from "../../components/common/Rectangle";
 import PasswordInputBox from "../../components/auth/PasswordInputBox";
 import Button from "../../components/common/Button";
@@ -46,31 +45,34 @@ export default function VerifyCode() {
     }
 
     return (
-        <Background>
-            <div className={styles.verfication_box_container}>
-                <Rectangle cssClass={"verification_page_background"}>
-                    <h1 className={styles.box_header}>Verify Code</h1>
-                    
-                    <div className={styles.verification_input_container}>
-                        <p className={styles.verification_prompt_text}>
-                            We've sent a 6-digit code to your email. Please enter the code below to verify your account.
-                        </p>
+        <div className={styles.auth_background}>
+            <Rectangle cssClass={"verification_page_background"}>
+                <h1 className={styles.box_header}>Verify Code</h1>
+                
+                <div className={styles.verification_input_container}>
+                    <p className={styles.verification_prompt_text}>
+                        We've sent a 6-digit code to your email. Please enter the code below to verify your account.
+                    </p>
 
-                        <div className={styles.verification_input_box_container}>
-                            <PasswordInputBox name="code" inputBoxName="Verification Code" handleChange={saveInput}/>
-                            
-                            <div className={styles.verification_error_message}>
-                                {error && <p className={styles.error_message}>{error}</p>}
-                            </div>
-                        </div>
-
-                        <div className={styles.verification_navigation_buttons_container}>
-                            <Button prompt="Back" buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={false} handleClick={()=>navigate("/auth/signup")}/>
-                            <Button prompt="Verify" buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={!validateInputLength(code.code, 6)} handleClick={handleVerification}/>
+                    <div className={styles.verification_input_box_container}>
+                        <PasswordInputBox name="code" inputBoxName="Verification Code" handleChange={saveInput}/>
+                        
+                        <div className={styles.verification_error_message}>
+                            {error && <p className={styles.error_message}>{error}</p>}
                         </div>
                     </div>
-                </Rectangle>
-            </div>
-        </Background>
+
+                    <div className={styles.verification_navigation_buttons_container}>
+                        <div>
+                            <Button prompt="Back" isDisabled={false} handleClick={()=>navigate("/auth/signup")}/>     
+                        </div>  
+
+                        <div>
+                            <Button prompt="Verify" isDisabled={!validateInputLength(code.code, 6)} handleClick={handleVerification}/>
+                        </div>
+                    </div>
+                </div>
+            </Rectangle>
+        </div>
     );
 }

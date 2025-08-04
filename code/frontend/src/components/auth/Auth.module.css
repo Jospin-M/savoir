@@ -226,22 +226,17 @@ a.auth_hyperlink:hover {
 
     width: 130%;
 
+    margin-top: 4rem;
     margin-bottom: 5rem;
     margin-left: -3rem;
 }
 
-.password_verification_input_box_container {
+.verification_status_container {
     display: flex;
     justify-content: center;
+    align-items: center;
 
-    width: 130%;
-    padding-right: 1rem;
-}
-
-.verification_status_container {
-    position: absolute;
-    padding-left: 4rem;
-    margin-top: 12rem;
+    padding-top: 2rem;
 }
 
 .verification_prompt_text {
@@ -255,16 +250,36 @@ a.auth_hyperlink:hover {
 
 .verification_input_container {
     margin-top: 20px;
-    margin-right: 500px;
 }
 
 .verification_navigation_buttons_container {
     display: flex;
     flex-direction: row;
 
-    gap: 80px;
-    margin-top: 80px;
-    margin-right: 30px;
+    height: 4rem;
+
+    gap: 10rem;
+    margin-top: 4.75rem;
+    margin-right: 3rem;
+}
+
+.nav_button_container {
+    display: flex;
+    justify-self: center;
+    width: 9.6rem;
+}
+
+.initiate_reset_container {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+
+    padding-top: 0.5rem;
+}
+
+.reset_input_container {
+    margin-top: 3rem;
 }
 
 .password_verification_prompt_text {
@@ -324,6 +339,8 @@ a.auth_hyperlink:hover {
 }
 
 .email_verification_success_message {
+    position: absolute;
+
     color: green;
 
     font-family: "Roboto Slab", sans-serif;
@@ -331,6 +348,8 @@ a.auth_hyperlink:hover {
 }
 
 .email_verification_error_message {
+    position: absolute;
+
     color: red;
 
     font-family: "Roboto Slab", sans-serif;
@@ -375,9 +394,10 @@ a.auth_hyperlink:hover {
 .reset_navigation_buttons_container {
     display: flex;
     flex-direction: row;
+    justify-content: center;
 
-    margin-top: 3.5rem;
-    gap: 8rem;
+    gap: 10rem;
+    margin-top: 7rem;
 }
 
 .verification_email_container {
@@ -389,18 +409,10 @@ a.auth_hyperlink:hover {
     margin-bottom: 20px;
 }
 
-.email_response_container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    margin-right: 6rem;
-}
-
 .password_verification_prompt_text {
     display: flex;
+    justify-self: center;
 
-    width: 30rem;
     margin-left: 4rem;
 
     font-family: "Roboto Slab", sans-serif;
@@ -439,164 +451,4 @@ a.auth_hyperlink:hover {
     font-family: "Roboto Slab", sans-serif;
     font-size: 1.5rem;
     color: #403F4C;
-}
-
-/* Small sized tablets */
-@media (min-width: 600px) {
-    .input_box_title {
-        font-size: 1.3rem;
-    }
-
-    .input_box {
-        width: 92%;
-        height: 3rem;
-
-        padding-left: 0.45rem;
-    }
-
-    .input_box_container {
-        width: 231.2px;
-        margin-right: 0.6rem;
-    }
-
-    .password_input_box {
-        height: 3rem;
-    }
-
-    #password_input_box {
-        padding-right: 1rem;
-    }
-
-    .password_component{
-        width: 74.8%;
-        margin-right: 0.3rem;
-    }
-
-    .password_icon_container {
-        margin-left: 93%;
-    }
-
-    .login_input_container {
-        padding-left: 0.85rem
-    }
-
-    .login_button_container {
-        padding-right: 1rem;
-    }
-
-    .sign_up_input_container {
-        padding-left: 1.1rem;
-    }
-
-    .sign_up_password_component {
-        width: 105%;
-
-        padding-left: 4.8rem;
-    }
-
-    .verification_status_container {
-        padding-left: 0.75rem;
-    }
-
-    .email_verification_error_message {
-        margin-left: 6rem;
-    }
-
-    .password_error_message {
-        margin-left: 1.75rem;
-    }
-
-    .password_success_message {
-        margin-left: 1.5rem;
-    }
-}
-
-/* Regular sized tablets and up */
-@media (min-width: 1024px) {
-    .input_box {
-        width: 91%;
-
-        font-size: 1.5rem;
-    }
-
-    .input_box_container {
-        margin-right: 0.5rem;
-    }
-
-    .password_input_box {
-        width: 99%;
-    }
-
-    .login_input_container {
-        padding-left: 0.55rem;
-    }
-
-    .sign_up_input_container {
-        padding-left: 0.55rem;
-    }
-
-    .sign_up_password_component {
-        width: 104%;
-
-        padding-left: 4.8rem;
-    }
-
-    .email_response_container {
-        padding-right: 0.5rem;
-    }
-
-    .verification_status_container {
-        padding-left: 0.5rem;
-    }
-
-    .reset_navigation_buttons_container {
-        margin-top: 3.15rem;
-    }
-
-    .email_verification_success_message {
-        margin-left: 0.25rem;
-    }
-
-    .email_verification_error_message {
-        margin-left: 7rem;
-    }
-
-    .password_error_message {
-        margin-left: 1rem;
-    }
-}
-
-/* Average size laptop screens and up */
-@media (min-width: 1400px) {
-   
-
-    .sign_up_password_component {
-        width: 105%;
-
-        padding-left: 5.7rem;
-    }
-
-    .verification_status_container {
-        padding-left: 0.5rem;
-    }
-
-    .reset_navigation_buttons_container {
-        margin-top: 4rem;
-    }
-
-    .email_verification_success_message {
-        margin-right: -50rem;
-    }
-
-    .email_verification_error_message {
-        margin-left: 6rem;
-    }
-
-    .password_error_message {
-        margin-left: 1.75rem;
-    }
-
-    .password_success_message {
-        margin-left: 1.5rem;
-    }
 }
