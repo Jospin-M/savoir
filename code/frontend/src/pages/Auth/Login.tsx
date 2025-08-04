@@ -52,39 +52,33 @@ export default function Login() {
     }
 
     return (
-        <Background>
-            <div className={styles.login_container}>
-                <Rectangle cssClass={"login_page_background"}>
-                    <h1 className={styles.box_header}>Log In</h1>
+        <div>
+            <h1 className={styles.box_header}>Log In</h1>
 
-                    <div className={styles.login_input_container}> 
-                        <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput}/> 
-                        <PasswordInputBox name="password" inputBoxName="Password" handleChange={saveInput}/>
-                        
-                        <div className={styles.login_button_container}>
-                            <Button prompt="Log In"  buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={validateAuthForm(form)} handleClick={handleLogin}/>
-                        </div>
-                        
-                        <div className={styles.login_error_message_container}>
-                            {error && <p className={styles.login_error_message}>{error}</p>}
-                        </div>
-                    </div> 
+            <form> 
+                <InputBox input_box_title="Email Address" type="email" name="email" handleChange={saveInput}/> 
+                <PasswordInputBox name="password" handleChange={saveInput}/>
+                
+                <Button prompt="Log In" isDisabled={validateAuthForm(form)} handleClick={handleLogin}/>
+                
+                <div className={styles.login_error_message_container}>
+                    {error && <p className={styles.login_error_message}>{error}</p>}
+                </div>
+            </form> 
 
-                    <div className={styles.login_div_container}>
-                        <Divider length={60} />
-                    </div>
-
-                    <div className={styles.auth_hyperlink_container}>
-                        <Link className={styles.auth_hyperlink} to="/auth/password/sendResetLink">Forgot Password?</Link>
-
-                        <div className={styles.text_hyperlink_container}>
-                            Don't have an account?
-                            
-                            <Link className={styles.auth_hyperlink} to="/auth/signup"> Sign Up</Link>
-                        </div>
-                    </div>
-                </Rectangle>
+            <div className={styles.login_div_container}>
+                <Divider length={60} />
             </div>
-        </Background>
+
+            <div className={styles.auth_hyperlink_container}>
+                <Link className={styles.auth_hyperlink} to="/auth/password/sendResetLink">Forgot Password?</Link>
+
+                <div className={styles.text_hyperlink_container}>
+                    Don't have an account?
+                    
+                    <Link className={styles.auth_hyperlink} to="/auth/signup"> Sign Up</Link>
+                </div>
+            </div>
+        </div>
     );
 }
