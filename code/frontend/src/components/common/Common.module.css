@@ -1,16 +1,23 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
 
-.auth_button {
-  background-color: #EC9A29;
-  border: none;
-  border-radius: 8px;
+.auth_btn {
+    display: inline-block;
+    text-align: center;
 
-  width: 8rem;
-  height: 3.2rem;
-  padding: 5px 10px;
-  
-  cursor: pointer;
+    width: 100%;
+
+    border: 0.8rem;
+    border-radius: 0.8rem;
+    padding: 1.4rem 2.4rem;
+
+    font-family: "Roboto Bold", sans-serif;
+    font-size: 1.6rem;
+    background-color: #EC9A29;
+    color: white;
+
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .auth_button:disabled {
