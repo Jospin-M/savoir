@@ -64,7 +64,12 @@ form {
 }
 
 .form-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
     position: relative;
+    
     margin-bottom: 2.4rem;
 }
 
@@ -81,7 +86,6 @@ input, select, textarea {
     position: relative;
     z-index: 1;
 
-    width: 88.9%;
     padding: 1.4rem 1.6rem;
 
     border: 0.1rem solid #E0E0E0;
@@ -103,6 +107,10 @@ input:focus {
     font-family: "Roboto Slab", sans-serif;
     font-size: 1.3rem;
     color: #403F4C;
+}
+
+.password_input {
+    margin-right: 40px;
 }
 
 .password_icon_container {
@@ -356,27 +364,6 @@ a.auth_hyperlink:hover {
     font-size: 1.4rem;
 }
 
-.password_error_message {
-    position: absolute;
-    width: 32rem;
-
-    color: red; 
-
-    font-family: "Roboto Slab", sans-serif;
-    font-size: 1.4rem;
-}
-
-.password_success_message {
-    position: absolute;
-    width: 25rem;
-    margin-right: 3rem;
-
-    color: green; 
-
-    font-family: "Roboto Slab", sans-serif;
-    font-size: 14px;
-}
-
 .email_verification_input_container {
     display: flex;
     flex-direction: column;
@@ -391,7 +378,7 @@ a.auth_hyperlink:hover {
     gap: 2rem;
 }
 
-.reset_navigation_buttons_container {
+.initiate_reset_navigation_buttons_container {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -400,13 +387,51 @@ a.auth_hyperlink:hover {
     margin-top: 7rem;
 }
 
-.verification_email_container {
+.change_password_container {
     display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+
+    padding-top: 0.5rem;
+}
+
+.reset_password_prompt_text {
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
+
+    color: #403F4C;
+
+    margin-bottom: 4rem;
+}
+
+.password_change_status_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 3rem;
+}
+
+.password_error_message {
     position: absolute;
-    
-    margin-bottom: 20px;
+
+    color: red; 
+
+    font-family: "Roboto Slab", sans-serif;
+    font-size: 1.4rem;
+}
+
+.password_success_message {
+    position: absolute;
+
+    color: green; 
+
+    font-family: "Roboto Slab", sans-serif;
+    font-size: 14px;
 }
 
 .password_verification_prompt_text {
@@ -420,35 +445,11 @@ a.auth_hyperlink:hover {
     color: #403F4C;
 }
 
-.password_update_response {
+.reset_navigation_buttons_container {
     display: flex;
+    flex-direction: row;
     justify-content: center;
-    
-    width: 10.75rem;
 
-    padding-left: 7.2rem;
-}
-
-.password_update_input_box_container {
-    width: 125%;
-}
-
-.reset_password_input_container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    width: 95%;
-
-    margin-top: 4rem;
-    padding-left: .95rem;
-    
-    gap: 2rem;
-}
-
-.reset_password_prompt_text {
-    font-family: "Roboto Slab", sans-serif;
-    font-size: 1.5rem;
-    color: #403F4C;
+    gap: 10rem;
+    margin-top: 5rem;
 }

@@ -1,4 +1,3 @@
-import Background from "../../components/auth/Background.tsx";
 import Rectangle from "../../components/common/Rectangle.tsx";
 import InputBox from "../../components/auth/InputBox.tsx";
 import Button from "../../components/common/Button.tsx";
@@ -56,7 +55,7 @@ export default function InitiateReset() {
                     </div>
                 </div>
 
-                <div className={styles.reset_navigation_buttons_container}>
+                <div className={styles.initiate_reset_navigation_buttons_container }>
                     <div className={styles.nav_button_container}>
                         <Button prompt="Back" isDisabled={false} handleClick={()=>navigate("/auth/login")}/>
                     </div>
