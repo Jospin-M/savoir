@@ -58,7 +58,7 @@ export default function Login() {
 
                     <form> 
                         <InputBox input_box_title="Email Address" type="email" name="email" handleChange={saveInput}/> 
-                        <PasswordInputBox name="password" handleChange={saveInput}/>
+                        <PasswordInputBox name="password" inputBoxName="Password" handleChange={saveInput}/>
                         
                         <Button prompt="Log In" isDisabled={validateAuthForm(form)} handleClick={handleLogin}/>
                     </form> 

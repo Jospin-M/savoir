@@ -38,33 +38,34 @@ export default function InitiateReset() {
     }
 
     return (
-        <Background>
-            <div className={styles.sign_up_box_container}>
-                <Rectangle cssClass="verification_password_page_background">
-                    <h1 className={styles.box_header}>Verify Email</h1>
+       <Rectangle cssClass="verification_password_page_background">
+            <div className={styles.initiate_reset_container}>
+                <h1 className={styles.box_header}>Verify Email</h1>
 
-                    <div className={styles.email_verification_input_container}>
-                        <p className={styles.password_verification_prompt_text}>
-                            Enter your email address and we'll send you a link that you can use to reset your password.
-                        </p>
+                <p className={styles.password_verification_prompt_text}>
+                    Enter your email address and we'll send you a link that you can use to reset your password.
+                </p>
 
-                        <div className={styles.email_response_container}>
-                            <div className={styles.password_verification_input_box_container}>
-                                <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput} />
-                            </div>
-                            
-                            <div className={styles.verification_status_container}>
-                                {messageToDisplay && <p className={styles[styleToUse]}>{messageToDisplay}</p>}
-                            </div>
-                        </div>
+                <div className={styles.reset_input_container}>
+                    <form>
+                        <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput} />
+                    </form>
 
-                        <div className={styles.reset_navigation_buttons_container}>
-                            <Button prompt="Back" buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={false} handleClick={()=>navigate("/auth/login")}/>
-                            <Button prompt="Submit" buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={!validateEmail(form.email)} handleClick={handleEmailVerification}/>
-                        </div>
+                    <div className={styles.verification_status_container}>
+                        {messageToDisplay && <p className={styles[styleToUse]}>{messageToDisplay}</p>}
                     </div>
-                </Rectangle>
+                </div>
+
+                <div className={styles.reset_navigation_buttons_container}>
+                    <div className={styles.nav_button_container}>
+                        <Button prompt="Back" isDisabled={false} handleClick={()=>navigate("/auth/login")}/>
+                    </div>
+                    
+                    <div className={styles.nav_button_container}>
+                        <Button prompt="Submit" isDisabled={!validateEmail(form.email)} handleClick={handleEmailVerification}/>
+                    </div>
+                </div>
             </div>
-        </Background>
+        </Rectangle>
     );
 }

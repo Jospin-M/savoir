@@ -1,4 +1,3 @@
-import Background from "../../components/auth/Background.tsx";
 import Rectangle from "../../components/common/Rectangle.tsx";
 import InputBox from "../../components/auth/InputBox.tsx";
 import PasswordInputBox from "../../components/auth/PasswordInputBox.tsx";
@@ -43,7 +42,7 @@ export default function SignUp() {
                     <form>
                         <InputBox input_box_title="Full Name" type="text" name="fullName" handleChange={saveInput}/> 
                         <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput}/> 
-                        <PasswordInputBox name="password" handleChange={saveInput}/>
+                        <PasswordInputBox name="password" inputBoxName="Password"  handleChange={saveInput}/>
                         
                         <Button prompt="Register" isDisabled={validateSignUpForm(form)} handleClick={handleSignUp}/>
                     </form>
