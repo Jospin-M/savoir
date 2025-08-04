@@ -3,22 +3,27 @@
 .auth_background {
     display: flex;
     flex-direction: column;
+    align-items: center;
     position: relative;
-    min-height: 100vh;
+    overflow: hidden;
 
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);    
-    background-color: #F2EFE9;
-    
+    width: 94.8vw;
+    height: 88.5vh;
+
     border-radius: 1.6rem;
     padding: 4rem;
+
+    background-color: #F9F9F9;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
 .login_container {
     display: flex;
-    justify-content: center;
-    align-items: center;
- 
-    width: 100%;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+
+    width: 400px;
 }
 
 .sign_up_box_container {
@@ -43,10 +48,10 @@
 }
 
 .box_header {
-    font-family: "Roboto Slab", sans-serif;
+    font-family: "Roboto Bold", sans-serif;
     font-size: 30px;
     
-    color: #403f4c;
+    color: #EC9A29;
     text-align: center;
 }
 
@@ -57,6 +62,7 @@ form {
 }
 
 .form-group {
+    position: relative;
     margin-bottom: 2.4rem;
 }
 
@@ -70,7 +76,10 @@ label {
 }
 
 input, select, textarea {
-    width: 100%;
+    position: relative;
+    z-index: 1;
+
+    width: 91.6%;
     padding: 1.4rem 1.6rem;
 
     border: 0.1rem solid #E0E0E0;
@@ -96,13 +105,14 @@ input:focus {
 
 .password_icon_container {
     position: absolute;
-    
-    bottom: 72%;
 }
 
 .password_icon {
     position: absolute;
     cursor: pointer;
+    
+    right: 3%;
+    top: 55%;
 }
 
 .login_input_container {
@@ -137,7 +147,7 @@ input:focus {
 }
 
 .login_div_container {
-    margin-top: 3rem;
+    margin-top: 5rem;
 }
 
 .sign_up_div_container {
@@ -278,8 +288,11 @@ a.auth_hyperlink:hover {
 }
 
 .login_error_message_container {
-    margin-right: 19rem;
-    
+    display: flex;
+    justify-content: center;
+
+    margin-top: 4rem;
+    margin-bottom: -2.5rem;
 }
 
 .login_error_message {
@@ -446,6 +459,10 @@ a.auth_hyperlink:hover {
         height: 3rem;
     }
 
+    #password_input_box {
+        padding-right: 1rem;
+    }
+
     .password_component{
         width: 74.8%;
         margin-right: 0.3rem;
@@ -547,26 +564,7 @@ a.auth_hyperlink:hover {
 
 /* Average size laptop screens and up */
 @media (min-width: 1400px) {
-    .input_box_title {
-        font-size: 1.33rem;
-    }
-
-    .input_box {
-        width: 90%;
-        height: 2.95rem;
-
-        font-size: 1.5rem;
-    }
-
-    .input_box_container {
-        width: 231.2px;
-        margin-right: 0rem;
-    }
-
-    .password_component{
-        width: 72.7%;
-        margin-right: 0.15rem;
-    }
+   
 
     .sign_up_password_component {
         width: 105%;

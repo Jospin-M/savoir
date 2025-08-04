@@ -1,5 +1,3 @@
-import Background from "../../components/auth/Background.tsx";
-import Rectangle from "../../components/common/Rectangle.tsx";
 import InputBox from "../../components/auth/InputBox.tsx";
 import PasswordInputBox from "../../components/auth/PasswordInputBox.tsx";
 import Button from "../../components/common/Button.tsx";
@@ -15,6 +13,7 @@ import { Link } from "react-router-dom";
 import { validateAuthForm } from "../../../src/components/listeners/formValidators.ts";
 import { getUserProfileImageURL, sendHTTPRequest } from "../../../lib/utils.ts";
 import supabase from "../../../lib/utils.ts";
+import Rectangle from "../../components/common/Rectangle.tsx";
 
 export default function Login() {
     // explore other ways to use box shadow
@@ -28,7 +27,7 @@ export default function Login() {
     
     async function handleLogin(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
-       
+        
         const response = await sendHTTPRequest("/auth/login", "POST", form);
         
         if(response.error) {
@@ -52,33 +51,35 @@ export default function Login() {
     }
 
     return (
-        <div>
-            <h1 className={styles.box_header}>Log In</h1>
+        <div className={styles.auth_background}>
+            <Rectangle cssClass="login_page_background">
+                <div className={styles.login_container}>
+                    <h1 className={styles.box_header}>Savoir</h1>
 
-            <form> 
-                <InputBox input_box_title="Email Address" type="email" name="email" handleChange={saveInput}/> 
-                <PasswordInputBox name="password" handleChange={saveInput}/>
-                
-                <Button prompt="Log In" isDisabled={validateAuthForm(form)} handleClick={handleLogin}/>
-                
-                <div className={styles.login_error_message_container}>
-                    {error && <p className={styles.login_error_message}>{error}</p>}
+                    <form> 
+                        <InputBox input_box_title="Email Address" type="email" name="email" handleChange={saveInput}/> 
+                        <PasswordInputBox name="password" handleChange={saveInput}/>
+                        
+                        <Button prompt="Log In" isDisabled={validateAuthForm(form)} handleClick={handleLogin}/>
+                    </form> 
+                    <div className={styles.login_error_message_container}>
+                            {error && <p className={styles.login_error_message}>{error}</p>}
+                        </div>
+                    <div className={styles.login_div_container}>
+                        <Divider length={60} />
+                    </div>
+
+                    <div className={styles.auth_hyperlink_container}>
+                        <Link className={styles.auth_hyperlink} to="/auth/password/sendResetLink">Forgot Password?</Link>
+
+                        <div className={styles.text_hyperlink_container}>
+                            Don't have an account?
+                            
+                            <Link className={styles.auth_hyperlink} to="/auth/signup"> Sign Up</Link>
+                        </div>
+                    </div>
                 </div>
-            </form> 
-
-            <div className={styles.login_div_container}>
-                <Divider length={60} />
-            </div>
-
-            <div className={styles.auth_hyperlink_container}>
-                <Link className={styles.auth_hyperlink} to="/auth/password/sendResetLink">Forgot Password?</Link>
-
-                <div className={styles.text_hyperlink_container}>
-                    Don't have an account?
-                    
-                    <Link className={styles.auth_hyperlink} to="/auth/signup"> Sign Up</Link>
-                </div>
-            </div>
+            </Rectangle>
         </div>
     );
 }
