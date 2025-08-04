@@ -60,33 +60,32 @@ export default function ChangePassword() {
     }
 
     return (
-        <Background>
-            <Rectangle cssClass="reset_password_page_background">
-                    <div className={styles.box}>
-                        <h1 className={styles.box_header}>Reset Password</h1>
+        <Rectangle cssClass="reset_password_page_background">
+            <div className={styles.change_password_container}>
+                <h1 className={styles.box_header}>Reset Password</h1>
+
+                <p className={styles.reset_password_prompt_text}>
+                    Please enter your new password.
+                </p>
+
+                <form>
+                    <PasswordInputBox name="newPassword" inputBoxName="New Password" handleChange={saveInput} />
+                </form>
+
+                <div className={styles.password_change_status_container}>
+                    {messageToDisplay && <p className={styles[styleToUse]}>{messageToDisplay}</p>}
+                </div>
+
+                <div className={styles.reset_navigation_buttons_container}>
+                    <div className={styles.nav_button_container}>
+                        <Button prompt="Back" isDisabled={false} handleClick={()=>navigate("/auth/password/sendResetLink")}/>
                     </div>
-
-                    <div className={styles.reset_password_input_container}>
-                        <p className={styles.reset_password_prompt_text}>
-                            Please enter your new password.
-                        </p>
-
-                        <div>
-                            <div className={styles.password_update_input_box_container}>
-                                <PasswordInputBox name="newPassword" inputBoxName="New Password" handleChange={saveInput} />
-                            </div>
-                            
-                            <div className={styles.password_update_response}>
-                                {messageToDisplay && <p className={styles[styleToUse]}>{messageToDisplay}</p>}
-                            </div>
-                        </div>
-
-                        <div className={styles.reset_navigation_buttons_container}>
-                            <Button prompt="Back" buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={false} handleClick={()=>navigate("/auth/password/sendResetLink")}/>
-                            <Button prompt="Submit" buttonCSSClass="auth_button" buttonTitleCSSClass="auth_button_title" isDisabled={!validateInputLength(form.newPassword, 8)} handleClick={handlePasswordChange}/>
-                        </div>
+                    
+                    <div className={styles.nav_button_container}>
+                        <Button prompt="Submit" isDisabled={!validateInputLength(form.newPassword, 8)} handleClick={handlePasswordChange}/>
                     </div>
-                </Rectangle>
-        </Background>
+                </div>
+            </div>
+        </Rectangle>
     );
 }
