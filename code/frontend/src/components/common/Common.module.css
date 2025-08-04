@@ -20,7 +20,7 @@
     transition: background-color 0.3s;
 }
 
-.auth_button:disabled {
+.auth_btn:disabled {
   background-color: #EC9A29;
   border: none;
   border-radius: 8px;
@@ -71,8 +71,12 @@
 }
 
 .login_page_background {
-  width: 300px;
-  height: 450px;
+  display: flex;
+  justify-content: center;
+
+  width: 550px;
+  height: 500px;
+  margin-top: 50px;
   
   background-color: #F2EFE9;
   border-radius: 16px;

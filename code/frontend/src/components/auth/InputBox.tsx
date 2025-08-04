@@ -12,7 +12,7 @@ export default function InputBox({ input_box_title, name, type, handleChange } :
     return (
         <div className={styles["form-group"]}>
             <label htmlFor={name}>{input_box_title}</label>
-            <input type={type} id={name} onChange={handleChange}/>
+            <input type={type} id={name} name={name} onChange={handleChange}/>
         </div>
     );
 }
