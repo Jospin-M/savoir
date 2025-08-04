@@ -88,7 +88,7 @@
 
   width: 400px;
   height: 575px;
-  margin-top: 50px;
+  margin-top: 20px;
   
   background-color: #F2EFE9;
   border-radius: 16px;
@@ -97,6 +97,7 @@
 .verification_page_background {
   width: 400px;
   height: 450px;
+  margin-top: 40px;
 
   background-color: #F2EFE9;
   border-radius: 16px;
@@ -105,6 +106,7 @@
 .verification_password_page_background {
   width: 400px;
   height: 450px;
+  margin-top: 50px;
 
   background-color: #F2EFE9;
   border-radius: 16px;
