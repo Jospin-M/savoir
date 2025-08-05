@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab,wght@8..144,100..1000@display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
 
 .auth_btn {
@@ -120,36 +120,58 @@
   border-radius: 16px;
 }
 
-.nav_bar_background {
-  display: flex;
+.sidebar {
   position: fixed;
-  top: 0;
-  left: 0;
 
-  background-color: #403F4C;
+  width: 25rem;
+  height: 100vh;
+  padding-top: 1rem;
 
-  width: 100vw;
-  height: 60px;
+  background-color: white;
+  box-shadow: 0.2rem 0 1rem rgba(0, 0, 0, 0.05);
 }
 
-.nav_options {
+.logo {
+  padding: 0px 2rem 0rem;
+  border-bottom: 0.1rem solid rgba(64, 63, 76, 0.1);
+  margin-bottom: 3rem;
+}
+
+.logo h2 {
+  font-family: "Roboto Bold", sans-serif;
+  color: #EC9A29;
+  font-size: 2.4rem;
+}
+
+.nav_item {
   display: flex;
-  justify-content: center;
   align-items: center;
 
-  margin: auto;
-  margin-left: 9rem;
-  position: relative;
+  padding: 1.5rem 2rem;
 
-  gap: 2rem;
+  color: #403F4C;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
-a, a:visited {
-  font-family:"Roboto Flex", sans-serif;
-  font-weight: 25;
-  font-size: 1.7rem;
+.nav_item i {
+  margin-right: 1.5rem;
+  font-size: 2rem;
+}
 
-  color: #FFFFFF;
+.nav_item:hover:not(.active) {
+  background-color: rgba(64, 63, 76, 0.05);
+  color: #403F4C;
+}
+
+[class^=ri-] {
+  font-family: remixicon !important;
+  font-style: normal;
+}
+
+a {
+  font: "Roboto Slab", serif;
+  font-size: 1.88rem;
 
   text-decoration: none;
   cursor: pointer;
@@ -157,10 +179,6 @@ a, a:visited {
 }
 
 a.active, a:hover {
-  font-weight: 5;
-  
-  color: #C5C5C5;
-
   text-decoration: none;
 } 
 
@@ -170,30 +188,6 @@ img {
   image-rendering: smooth;
 }
 
-.nav_bar_profile_pic_container {
-  margin-right: 1rem;
-  margin-top: 1.2rem;
-}
-
-.nav_bar_profile_pic {
-  width: 3.5rem;
-}
-
 .nav_bar_profile_pic:hover {
   outline: 2px solid #FFFFFF;
-}
-
-@media (max-width: 896px) and (orientation: landscape) {
-  .edit_profile_button {
-    width: 15rem;
-    height: 4rem;
-  }
-
-  .roboto-edit_profile {
-    font-size: 2rem;
-  }
-
-  .nav_options {
-    margin-left: 30rem;
-  }
 }

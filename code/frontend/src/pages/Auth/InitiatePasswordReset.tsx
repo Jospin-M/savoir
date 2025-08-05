@@ -2,7 +2,7 @@ import Rectangle from "../../components/common/Rectangle.tsx";
 import InputBox from "../../components/auth/InputBox.tsx";
 import Button from "../../components/common/Button.tsx";
 import styles from "../../components/auth/Auth.module.css";
-
+    
 import { useState } from "react";
 import { useForm } from "../../hooks/useForm.ts";
 import { useNavigate } from "react-router-dom";
