@@ -4,9 +4,6 @@ import VerifyAccount from "./pages/Auth/VerifyAccount.tsx";
 import ChangePassword from "./pages/Auth/ChangePassword.tsx";
 import InitiateReset from "./pages/Auth/InitiatePasswordReset.tsx";
 import Authenticated from "./pages/Profile/Authenticated.tsx";
-import Browse from "./pages/Browse/Browse.tsx";
-import Dashboard from "./pages/Dashboard/Dashboard.tsx";
-import Messages from "./pages/Messages/Messages.tsx";
 
 import { createBrowserRouter } from "react-router-dom";
 
@@ -19,10 +16,6 @@ export const router = createBrowserRouter([
     { path: "/auth/verifyRegistration", element: <VerifyAccount /> },
     { path: "/auth/password/sendResetLink", element: <InitiateReset /> },
     { path: "/auth/password/reset", element: <ChangePassword /> },
-
-    { path: "/browse/", element: <Browse /> },
-    { path: "/dashboard/", element: <Dashboard /> },
-    { path: "/inbox/", element: <Messages /> },
     
     { 
         path: "/profile/:id", // combination of user fullname and id for unique identifier
