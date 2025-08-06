@@ -121,18 +121,18 @@
 }
 
 .sidebar {
-  position: relative;
+  position: fixed;
 
   width: 20rem;
   height: 90vh;
-  padding-top: 1rem;
-
+  padding-top: 9rem;
+  
   background-color: white;
   box-shadow: 0.2rem 0 1rem rgba(0, 0, 0, 0.05);
 }
 
 .logo {
-  padding: 0px 2rem 0rem;
+  margin-left: 1.4rem;
   margin-bottom: 3rem;
 
   font-family: "Roboto ", sans-serif;
@@ -149,14 +149,14 @@
   
   z-index: 1;
   flex-grow: 1;
-  margin: 0 3rem;
+  margin: 3rem;
 }
 
 .search_bar i {
   position: absolute;
   z-index: 5;
   top: 50%;
-  right: 0.5rem;
+  right: 1.3rem;
 
   padding-bottom: 50rem;
   transform: translateX(-1850%) translateY(-2.7%) ;

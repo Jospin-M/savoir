@@ -10,11 +10,6 @@ export default function NavBar() {
             </NavLink>
 
             <NavLink to="" className={styles.nav_item}>
-                <i className="ri-search-line"/>
-                Browse
-            </NavLink>
-
-            <NavLink to="" className={styles.nav_item}>
                 <i className="ri-lightbulb-line"/>
                 Skills
             </NavLink>
@@ -27,6 +22,11 @@ export default function NavBar() {
             <NavLink to="" className={styles.nav_item}>
                 <i className="ri-refresh-line"/>
                 Sessions
+            </NavLink>
+
+            <NavLink to="" className={styles.nav_item}>
+                <i className="ri-star-line"/>
+                Reviews
             </NavLink>
         </div>
     );
