@@ -6,7 +6,9 @@ type UserState = {
     setUserID: (id: string) => void,
 
     profileImageURL: string | null,
-    setProfileImageURL: (url: string) => void
+    setProfileImageURL: (url: string) => void,
+
+    clearUser: Function
 };
 
 export const useUserStore = create<UserState>()(
@@ -16,7 +18,9 @@ export const useUserStore = create<UserState>()(
             setUserID: (id: string) => set({ userID: id }),
 
             profileImageURL: null,
-            setProfileImageURL: (url: string) => set({ profileImageURL: url })
+            setProfileImageURL: (url: string) => set({ profileImageURL: url }),
+
+            clearUser: () => set({ userID: null, profileImageURL: null })
         }),
         {
             name: "user-storage"

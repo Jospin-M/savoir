@@ -4,13 +4,14 @@ import styles from "./Common.module.css";
 export default function NavBar() {
     return (
         <div className={styles.sidebar}>
-            <div className={styles.logo}>
-                <h2>Savoir</h2>
-            </div>
+            <NavLink to="" className={styles.nav_item}>
+                <i className="ri-dashboard-line" />
+                Dashboard
+            </NavLink>
 
             <NavLink to="" className={styles.nav_item}>
-                <i className={"ri-dashboard-line"} />
-                Dashboard
+                <i className="ri-search-line"/>
+                Browse
             </NavLink>
 
             <NavLink to="" className={styles.nav_item}>
