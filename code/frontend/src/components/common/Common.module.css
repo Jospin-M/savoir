@@ -121,10 +121,10 @@
 }
 
 .sidebar {
-  position: fixed;
+  position: relative;
 
   width: 20rem;
-  height: 100vh;
+  height: 90vh;
   padding-top: 1rem;
 
   background-color: white;
@@ -146,6 +146,7 @@
   display: flex;
   justify-content: center;
   position: relative;
+  
   z-index: 1;
   flex-grow: 1;
   margin: 0 3rem;
@@ -166,7 +167,7 @@
 .search_bar input {
   width: 50%;
   padding-left: 1rem;
-  padding-right: 3rem;
+  padding-right: 2.9rem;
 
   border-radius: 2rem;
   border: 1px solid ;
@@ -179,6 +180,10 @@
 .search_bar input:focus {
   border-color: black;
   border: 2px solid;
+}
+
+.search_icon_container {
+  margin-left: 2.8rem;
 }
 
 .user_menu {

@@ -11,7 +11,9 @@ export default function Header() {
 
             <div className={styles.search_bar}>
                 <input type="text" placeholder="Search for skills, users, or topics..." />
-                <i className="ri-search-line" />
+                <div className={styles.search_icon_container}>
+                    <i className="ri-search-line" />
+                </div>
             </div>
 
             <div className={styles.user_menu}>
