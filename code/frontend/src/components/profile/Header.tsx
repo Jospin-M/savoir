@@ -12,7 +12,7 @@ export default function Header({ fullName, bio, profileImageUrl }: { fullName: s
                     </div>
 
                     <div className={styles.edit_profile_button_container}>
-                        <Button prompt="Edit Profile" buttonCSSClass="edit_profile_button" buttonTitleCSSClass="roboto-edit_profile" isDisabled={false} handleClick={() => {}}/>
+                        <Button prompt="Edit Profile" isDisabled={false} handleClick={() => {}}/>
                     </div>
             </div>  
 

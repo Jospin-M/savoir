@@ -86,7 +86,7 @@ input, select, textarea {
     position: relative;
     z-index: 1;
 
-    padding: 1.4rem 1.6rem;
+    padding: 1.4rem 1.2rem;
 
     border: 0.1rem solid #E0E0E0;
     border-radius: 0.8rem;
@@ -103,14 +103,14 @@ input:focus {
     border-color: #EC9A29;
 }
 
+.form-group input {
+    padding-right: 3rem;
+}
+
 .input_box_title {
     font-family: "Roboto Slab", sans-serif;
     font-size: 1.3rem;
     color: #403F4C;
-}
-
-.password_input {
-    margin-right: 40px;
 }
 
 .password_icon_container {
@@ -333,7 +333,8 @@ a.auth_hyperlink:hover {
     margin-top: -1.5rem;
 
     color: red; 
-    font-size: 1.5rem;
+    font-family: "Roboto Slab", sans-serif;
+    font-size: 1.4rem;
 }
 
 .verification_error_message {
