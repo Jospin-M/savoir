@@ -9,7 +9,6 @@
   display: flex;
 
   width: 99vw;
-  height: 100vh;
 }
 
 html {
@@ -24,7 +23,6 @@ body {
   margin: 0;
 
   min-width: 320px;
-  min-height: 100vh;
 
   font-family: "Roboto Slab", serif;
   font-size: 1.7rem;
