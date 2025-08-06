@@ -10,9 +10,7 @@ export default function NavPicture() {
     // ratio of images must be changed to square before being saved in database
 
     return (
-        <NavLink 
-            to={"/profile/" + userID}
-        >
+        <NavLink to={"/profile/" + userID}>
             <img className={styles.nav_bar_profile_pic} src={profileImageURL}/>
         </NavLink>
     );

@@ -5,7 +5,7 @@ import NavPicture from "./NavPicture";
 export default function Header() {
     return (
         <header>
-            <NavLink to="/">
+            <NavLink to="/" className={styles.logo_container}>
                 <h2 className={styles.logo}>Savoir</h2>
             </NavLink>
 
