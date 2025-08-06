@@ -2,6 +2,7 @@ import InputBox from "../../components/auth/InputBox.tsx";
 import PasswordInputBox from "../../components/auth/PasswordInputBox.tsx";
 import Button from "../../components/common/Button.tsx";
 import Divider from "../../components/common/Divider.tsx";
+import Rectangle from "../../components/common/Rectangle.tsx";
 import styles from "../../components/Auth/Auth.module.css";
 
 import { useState } from "react";
@@ -10,10 +11,15 @@ import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../stores/useUserStore.ts";
 import { Link } from "react-router-dom";
 
+import type { UseBoundStore } from "zustand";
+
 import { validateAuthForm } from "../../../src/components/listeners/formValidators.ts";
-import { getUserProfileImageURL, sendHTTPRequest } from "../../../lib/utils.ts";
+import { sendHTTPRequest, sendAuthenticatedHTTPRequest } from "../../../lib/utils.ts";
 import supabase from "../../../lib/utils.ts";
-import Rectangle from "../../components/common/Rectangle.tsx";
+
+async function loadProfileData(state: any) {
+    
+}
 
 export default function Login() {
     // explore other ways to use box shadow
@@ -23,8 +29,7 @@ export default function Login() {
     const navigate = useNavigate();
 
     const setUserID = useUserStore((state) => state.setUserID);
-    const setProfileImageURL = useUserStore((state) => state.setProfileImageURL);
-    
+
     async function handleLogin(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
         
@@ -43,7 +48,6 @@ export default function Login() {
 
             // update the user store
             setUserID(user_id);
-            setProfileImageURL(await getUserProfileImageURL(user_id));
 
             setError("");
             navigate(`/profile/${user_id}/`); // if username is added, it should be used here instead of id
