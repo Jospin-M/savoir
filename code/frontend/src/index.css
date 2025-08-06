@@ -10,10 +10,12 @@
   display: flex;
   position: relative;
 
-  width: 86vw;
-  
-  margin-left: 21rem;
-  padding-top: 8rem;
+  width: 85vw;
+  height: 74vh;
+  margin-left: 20.1rem;
+  padding: 8rem 1rem;
+
+  background: #F2EFE9;
 }
 
 html {
@@ -77,4 +79,9 @@ div {
   button {
     background-color: #f9f9f9;
   }
+}
+
+@font-face {
+  font-family: "Roboto Bold";
+  src: url("https://assets-persist.lovart.ai/agent-static-assets/AlimamaShuHeiTi-Bold.otf");
 }

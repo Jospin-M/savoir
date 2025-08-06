@@ -7,8 +7,9 @@ import { useState } from "react";
 import { useForm } from "../../hooks/useForm";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useUserStore } from "../../stores/useUserStore.ts";
+
 import { validateInputLength } from "../../components/listeners/formValidators";
-import supabase, { getUserProfileImageURL, sendHTTPRequest } from "../../../lib/utils.ts";
+import supabase, { sendHTTPRequest } from "../../../lib/utils.ts";
 
 export default function VerifyCode() {
     const [code, saveInput] = useForm(useState({ code: "" }));
@@ -18,7 +19,6 @@ export default function VerifyCode() {
     const registrationResponse = location.state;
 
     const setUserID = useUserStore((state) => state.setUserID);
-    const setProfileImageURL = useUserStore((state) => state.setProfileImageURL);
     
     async function handleVerification(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
@@ -35,11 +35,10 @@ export default function VerifyCode() {
                 refresh_token: refresh_token
             });
 
-            // update user store
-            setProfileImageURL(await getUserProfileImageURL(user.id))
+            // update the user store
+            setUserID(user.id);
 
             setError("");
-            setUserID(user.id);
             navigate(`/profile/${user.id}`, { replace: true });
         }
     }

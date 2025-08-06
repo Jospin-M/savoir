@@ -8,8 +8,6 @@ import ProtectedRoute from "./components/common/ProtectedRoute.tsx";
 
 import { createBrowserRouter } from "react-router-dom";
 
-import { sendAuthenticatedHTTPRequest } from "../lib/utils.ts";
-
 export const router = createBrowserRouter([
     { 
         path: "/", 
@@ -26,21 +24,14 @@ export const router = createBrowserRouter([
 
     { 
         path: "/profile/:id", // combination of user fullname and id for unique identifier
-        element: <Authenticated />, // handle backend logic for which type of profile page is shown after frontend has been created
-        loader: profileLoader
+        element: 
+            <ProtectedRoute>
+                <Authenticated /> 
+            </ProtectedRoute>, 
+        // handle backend logic for which type of profile page is shown after frontend has been created
     },
 ]);
 
 // each loader will contain the necessary data required for that page, so that requests to the API 
 // are minimized. also consider seperating the function calls within each function into their own
 // own files depending on complexity
-
-async function profileLoader() {
-    // retrieve the user ID that was stored in localStorage by Zustand
-    const userID = JSON.parse(localStorage.getItem("user-storage")!).state.userID;
-    const profileData = await sendAuthenticatedHTTPRequest(`/auth/profile/${userID}`, "GET", {});
-
-    return {
-        profileData
-    }
-}

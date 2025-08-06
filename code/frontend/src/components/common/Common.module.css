@@ -135,7 +135,7 @@
   margin-left: 1.4rem;
   margin-bottom: 3rem;
 
-  font-family: "Roboto ", sans-serif;
+  font-family: "Roboto Bold", sans-serif;
   font-size: 2.8rem;
   font-weight: bolder;
 
@@ -168,6 +168,7 @@
   width: 50%;
   padding-left: 1rem;
   padding-right: 2.9rem;
+  padding-bottom: 1rem;
 
   border-radius: 2rem;
   border: 1px solid ;
@@ -202,6 +203,10 @@
   color: #403F4C;
   text-decoration: none;
   transition: all 0.3s ease;
+}
+
+.nav_item_text {
+  font-size: 1.78rem;
 }
 
 .nav_item i {
@@ -240,4 +245,6 @@ img {
 
 .nav_bar_profile_pic {
   width: 5rem;
+
+  padding-bottom: 1rem;
 }

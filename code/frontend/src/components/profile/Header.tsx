@@ -1,7 +1,7 @@
 import Button from "../common/Button.tsx";
 import styles from "../../components/profile/Profile.module.css";
 
-export default function Header({ fullName, bio, profileImageUrl }: { fullName: string, bio: string, profileImageUrl: string }) {
+export default function Header({ fullName, profileImageUrl }: { fullName: string, profileImageUrl: string }) {
     return (
         <div className={styles.profile_header}>
             <div className={styles.profile_header_top_layer}>
@@ -14,10 +14,6 @@ export default function Header({ fullName, bio, profileImageUrl }: { fullName: s
                     <div className={styles.edit_profile_button_container}>
                         <Button prompt="Edit Profile" isDisabled={false} handleClick={() => {}}/>
                     </div>
-            </div>  
-
-            <div className={styles.bio_container}>
-                <p className={styles["roboto-bio"]}>{bio}</p>
             </div>  
         </div>  
     );

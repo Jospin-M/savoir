@@ -93,15 +93,3 @@ export async function sendAuthenticatedHTTPRequest(endpoint: string, method: str
 
     return response;
 }
-
-/**
- * Retrieve the URL of the authenticated user's profile image.
- * 
- * @param userID - the user's id 
- * @returns - the image's url
- */
-export async function getUserProfileImageURL(userID: string) {
-    const { profileImageUrl } = await sendAuthenticatedHTTPRequest(`/auth/profile/${userID}`, "GET", {});
-
-    return profileImageUrl;
-}
