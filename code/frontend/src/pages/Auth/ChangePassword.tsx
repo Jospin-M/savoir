@@ -1,4 +1,3 @@
-import Background from "../../components/auth/Background.tsx";
 import Rectangle from "../../components/common/Rectangle.tsx";
 import PasswordInputBox from "../../components/auth/PasswordInputBox.tsx";
 import Button from "../../components/common/Button.tsx";
