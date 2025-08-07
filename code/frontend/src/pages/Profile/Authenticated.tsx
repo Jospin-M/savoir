@@ -2,8 +2,6 @@ import Header from "../../components/common/Header.tsx";
 import ProfileHeader from "../../components/profile/ProfileHeader.tsx";
 import NavBar from "../../components/common/NavBar.tsx";
 
-import "../../index.css";
-
 import { useUserStore } from "../../stores/useUserStore.ts";
 import { sendAuthenticatedHTTPRequest } from "../../../lib/utils.ts";
 

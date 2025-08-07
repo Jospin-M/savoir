@@ -1,7 +1,7 @@
 import { createBrowserClient } from "@supabase/ssr";
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
 /**
  * A browser client for Supabase that manages the user's session.
@@ -40,7 +40,7 @@ function createHTTPRequest(method: string, body: object) {
  * @returns the server's response
  */
 export async function sendHTTPRequest(endpoint: string, method: string, payload: object) {
-    const DOMAIN = import.meta.env.VITE_DOMAIN;
+    const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
     const result = await fetch(DOMAIN + "api" + endpoint, createHTTPRequest(method, payload));
     const response = await result.json();
 
@@ -87,7 +87,7 @@ async function createAuthenticatedHTTPRequest(method: string, body: object) {
  * @returns the server's response
  */
 export async function sendAuthenticatedHTTPRequest(endpoint: string, method: string, payload: object) {
-    const DOMAIN = import.meta.env.VITE_DOMAIN;
+    const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
     const result = await fetch(DOMAIN + "api" + endpoint, await createAuthenticatedHTTPRequest(method, payload));
     const response = await result.json();
 

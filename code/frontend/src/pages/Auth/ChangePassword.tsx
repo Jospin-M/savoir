@@ -67,7 +67,7 @@ export default function ChangePassword() {
                     Please enter your new password.
                 </p>
 
-                <form>
+                <form className={styles.user_input}>
                     <PasswordInputBox name="newPassword" inputBoxName="New Password" handleChange={saveInput} />
                 </form>
 

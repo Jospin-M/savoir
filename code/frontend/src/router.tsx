@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
     }, // the child of ProtectedRoute will be Dashboard when it's created, this is just a placedholder
     { path: "/auth/signup", element: <SignUp /> },
     { path: "/auth/login", element: <Login /> },
-    { path: "/auth/verifyRegistration", element: <VerifyAccount /> },
+    { path: "/auth/verify", element: <VerifyAccount /> },
     { path: "/auth/password/sendResetLink", element: <InitiateReset /> },
     { path: "/auth/password/reset", element: <ChangePassword /> },
 

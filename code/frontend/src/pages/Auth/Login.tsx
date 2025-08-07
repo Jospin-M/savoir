@@ -3,13 +3,14 @@ import PasswordInputBox from "../../components/auth/PasswordInputBox.tsx";
 import Button from "../../components/common/Button.tsx";
 import Divider from "../../components/common/Divider.tsx";
 import Rectangle from "../../components/common/Rectangle.tsx";
-import styles from "../../components/Auth/Auth.module.css";
+
+import styles from "../../components/auth/Auth.module.css";
 
 import { useState } from "react";
 import { useForm } from "../../hooks/useForm.ts";
-import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../stores/useUserStore.ts";
-import { Link } from "react-router-dom";
+import { useRouter } from "next/navigation";
+import Link from "next/Link";
 
 import { validateAuthForm } from "../../../src/components/listeners/formValidators.ts";
 import { sendHTTPRequest } from "../../../lib/utils.ts";
@@ -20,8 +21,7 @@ export default function Login() {
     // handle loading state
     const [form, saveInput] = useForm(useState({ email: "", password: "" }));
     const [error, setError] = useState("");
-    const navigate = useNavigate();
-
+    const router = useRouter();
     const setUserID = useUserStore((state) => state.setUserID);
 
     async function handleLogin(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
@@ -44,7 +44,7 @@ export default function Login() {
             setUserID(user_id);
 
             setError("");
-            navigate(`/profile/${user_id}/`); // if username is added, it should be used here instead of id
+            router.push(`/profile/${user_id}/`); // if username is added, it should be used here instead of id
         }
     }
 
@@ -54,11 +54,13 @@ export default function Login() {
                 <div className={styles.login_container}>
                     <h1 className={styles.box_header}>Savoir</h1>
 
-                    <form> 
+                    <form className={styles.user_input}> 
                         <InputBox input_box_title="Email Address" type="email" name="email" handleChange={saveInput}/> 
                         <PasswordInputBox name="password" inputBoxName="Password" handleChange={saveInput}/>
                         
-                        <Button prompt="Log In" isDisabled={validateAuthForm(form)} handleClick={handleLogin}/>
+                        <div className={styles.auth_button_container}>
+                            <Button prompt="Log In" isDisabled={validateAuthForm(form)} handleClick={handleLogin}/>
+                        </div>
                     </form> 
 
                     <div className={styles.login_error_message_container}>
@@ -70,12 +72,12 @@ export default function Login() {
                     </div>
 
                     <div className={styles.auth_hyperlink_container}>
-                        <Link className={styles.auth_hyperlink} to="/auth/password/sendResetLink">Forgot Password?</Link>
+                        <Link className={styles.auth_hyperlink} href="/auth/password/sendResetLink">Forgot Password?</Link>
 
                         <div className={styles.text_hyperlink_container}>
                             Don't have an account?
                             
-                            <Link className={styles.auth_hyperlink} to="/auth/signup"> Sign Up</Link>
+                            <Link className={styles.auth_hyperlink} href="/auth/signup"> Sign Up</Link>
                         </div>
                     </div>
                 </div>
