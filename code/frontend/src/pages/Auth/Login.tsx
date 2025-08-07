@@ -11,15 +11,9 @@ import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../stores/useUserStore.ts";
 import { Link } from "react-router-dom";
 
-import type { UseBoundStore } from "zustand";
-
 import { validateAuthForm } from "../../../src/components/listeners/formValidators.ts";
-import { sendHTTPRequest, sendAuthenticatedHTTPRequest } from "../../../lib/utils.ts";
+import { sendHTTPRequest } from "../../../lib/utils.ts";
 import supabase from "../../../lib/utils.ts";
-
-async function loadProfileData(state: any) {
-    
-}
 
 export default function Login() {
     // explore other ways to use box shadow
