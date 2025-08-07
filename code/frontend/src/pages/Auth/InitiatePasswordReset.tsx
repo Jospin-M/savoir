@@ -47,7 +47,7 @@ export default function InitiateReset() {
                     </p>
 
                     <div className={styles.reset_input_container}>
-                        <form>
+                        <form className={styles.user_input}>
                             <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput} />
                         </form>
 

@@ -5,27 +5,27 @@ export default function NavBar() {
     return (
         <div className={styles.sidebar}>
             <NavLink to="" className={styles.nav_item}>
-                <i className="ri-dashboard-line" />
+                <i className="ri-dashboard-line" id={styles.nav_item_logo} />
                 <div className={styles.nav_item_text}>Dashboard</div>
             </NavLink>
 
             <NavLink to="" className={styles.nav_item}>
-                <i className="ri-lightbulb-line"/>
+                <i className="ri-lightbulb-line" id={styles.nav_item_logo} />
                 <div className={styles.nav_item_text}>Skills</div>
             </NavLink>
 
             <NavLink to="" className={styles.nav_item}>
-                <i className="ri-message-3-line"/>
+                <i className="ri-message-3-line" id={styles.nav_item_logo} />
                 <div className={styles.nav_item_text}>Messages</div>
             </NavLink>
 
             <NavLink to="" className={styles.nav_item}>
-                <i className="ri-refresh-line"/>
+                <i className="ri-refresh-line" id={styles.nav_item_logo} />
                 <div className={styles.nav_item_text}>Sessions</div>
             </NavLink>
 
             <NavLink to="" className={styles.nav_item}>
-                <i className="ri-star-line"/>
+                <i className="ri-star-line" id={styles.nav_item_logo} />
                 <div className={styles.nav_item_text}>Reviews</div>
             </NavLink>
         </div>
