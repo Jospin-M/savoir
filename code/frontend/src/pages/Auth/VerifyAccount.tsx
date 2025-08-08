@@ -5,26 +5,26 @@ import styles from "../../components/auth/Auth.module.css"
 
 import { useState } from "react";
 import { useForm } from "../../hooks/useForm";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { useUserStore } from "../../stores/useUserStore.ts";
 
 import { validateInputLength } from "../../components/listeners/formValidators";
 import supabase, { sendHTTPRequest } from "../../../lib/utils.ts";
 
-export default function VerifyCode() {
+export default function VerifyAccount() {
     const [code, saveInput] = useForm(useState({ code: "" }));
     const [error, setError] = useState("");
-    const navigate = useNavigate();
-    const location = useLocation();
-    const registrationResponse = location.state;
+    const router = useRouter();
 
     const setUserID = useUserStore((state) => state.setUserID);
+    const clearUser = useUserStore((state) => state.clearUser);
+    const user = useUserStore((state) => state.user);
     
     async function handleVerification(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
         
-        const response = await sendHTTPRequest("/auth/verifyNewUser", "POST", { verificationCode: code, verificationRequest: registrationResponse });
-
+        const response = await sendHTTPRequest("/auth/verifyNewUser", "POST", { verificationCode: code, verificationRequest: user });
+        console.log(response)
         if(response.error) {
             setError(response.error);
         } else {
@@ -37,39 +37,42 @@ export default function VerifyCode() {
 
             // update the user store
             setUserID(user.id);
-
+            clearUser();
             setError("");
-            navigate(`/profile/${user.id}`, { replace: true });
+            //navigate(`/profile/${user.id}`, { replace: true });
         }
     }
 
     return (
         <div className={styles.auth_background}>
             <Rectangle cssClass={"verification_page_background"}>
-                <h1 className={styles.box_header}>Verify Code</h1>
-                
-                <div className={styles.verification_input_container}>
+                <div className={styles.verification_container}>
+                    <h1 className={styles.box_header}>Verify Account</h1>
+
                     <p className={styles.verification_prompt_text}>
                         We've sent a 6-digit code to your email. Please enter the code below to verify your account.
                     </p>
 
-                    <div className={styles.verification_input_box_container}>
+                    <form className={styles.user_input}>
                         <PasswordInputBox name="code" inputBoxName="Verification Code" handleChange={saveInput}/>
                         
-                        <div className={styles.verification_error_message}>
-                            {error && <p className={styles.error_message}>{error}</p>}
+                        <div className={styles.verification_error_message_container}>
+                            {error && <p className={styles.verification_error_message}>{error}</p>}
                         </div>
-                    </div>
 
-                    <div className={styles.verification_navigation_buttons_container}>
-                        <div>
-                            <Button prompt="Back" isDisabled={false} handleClick={()=>navigate("/auth/signup")}/>     
-                        </div>  
+                        <div className={styles.verification_navigation_buttons_container}>
+                            <div className={styles.nav_button_container}>
+                                <Button prompt="Back" isDisabled={false} handleClick={(event)=>{
+                                    event.preventDefault()
+                                    router.push("/auth/signup")
+                                }}/>     
+                            </div>  
 
-                        <div>
-                            <Button prompt="Verify" isDisabled={!validateInputLength(code.code, 6)} handleClick={handleVerification}/>
+                            <div className={styles.nav_button_container}>
+                                <Button prompt="Verify" isDisabled={!validateInputLength(code.code, 6)} handleClick={handleVerification}/>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </Rectangle>
         </div>

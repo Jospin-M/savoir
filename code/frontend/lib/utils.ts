@@ -41,9 +41,10 @@ function createHTTPRequest(method: string, body: object) {
  */
 export async function sendHTTPRequest(endpoint: string, method: string, payload: object) {
     const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
+    console.log(DOMAIN)
     const result = await fetch(DOMAIN + "api" + endpoint, createHTTPRequest(method, payload));
     const response = await result.json();
-
+    console.log(result)
     return response;
 }
 

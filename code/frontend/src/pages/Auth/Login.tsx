@@ -55,7 +55,7 @@ export default function Login() {
                     <h1 className={styles.box_header}>Savoir</h1>
 
                     <form className={styles.user_input}> 
-                        <InputBox input_box_title="Email Address" type="email" name="email" handleChange={saveInput}/> 
+                        <InputBox input_box_title="Email Address" name="email" handleChange={saveInput}/> 
                         <PasswordInputBox name="password" inputBoxName="Password" handleChange={saveInput}/>
                         
                         <div className={styles.auth_button_container}>

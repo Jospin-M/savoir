@@ -8,8 +8,8 @@
     height: 100%;
     width: 100%;
 
+    border: none;
     border-radius: 0.3rem;
-    
 
     font-family: "Roboto Bold", sans-serif;
     font-size: 1.1rem;
@@ -18,12 +18,13 @@
 
     cursor: pointer;
     transition: background-color 0.3s;
+    box-shadow: none;
 }
 
 .auth_btn:disabled {
   background-color: #EC9A29;
   border: none;
-  border-radius: 8px;
+  border-radius: 0.3rem;
 
   pointer-events: none;
   cursor: not-allowed;
@@ -95,6 +96,9 @@
 }
 
 .verification_page_background {
+  display: flex;
+  justify-content: center;
+
   width: 400px;
   height: 450px;
   margin-top: 40px;
@@ -104,6 +108,9 @@
 }
 
 .verification_password_page_background {
+  display: flex;
+  justify-content: center;
+
   width: 400px;
   height: 450px;
   margin-top: 50px;
@@ -113,6 +120,9 @@
 }
 
 .reset_password_page_background {
+  display: flex;
+  justify-content: center;
+
   width: 400px;
   height: 410px;
 

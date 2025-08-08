@@ -5,34 +5,26 @@ export type UserState = {
     userID: string | null,
     setUserID: (id: string) => void,
 
-    profileImageURL: string | null,
-    setProfileImageURL: (url: string) => void,
+    user: { id: string, first_name: string, last_name: string, email: string } | null,
+    setUser: ((userInfo: { id: string, first_name: string, last_name: string, email: string }) => void)
 
-    name: string | null,
-    setName: (name: string) => void,
-
-    bio: string | null,
-    setBio: (bio: string) => void,
-
-    clearUser: () => void
+    clearUserID: () => void,
+    clearUser: () => void,
+    clearData: () => void
 };
 
 export const useUserStore = create<UserState>()(
     persist(
         (set) => ({
             userID: null,
-            setUserID: (id: string) => set({ userID: id }),
+            setUserID: (id) => set({ userID: id }),
 
-            profileImageURL: null,
-            setProfileImageURL: (url: string) => set({ profileImageURL: url }),
+            user: null,
+            setUser: (userInfo) => set({ user: userInfo }),
 
-            name: null,
-            setName: (name: string) => set({ name: name }),
-
-            bio: null,
-            setBio: (bio: string) => set({ bio: bio }),
-
-            clearUser: () => set({ userID: null, profileImageURL: null, name: null, bio: null })
+            clearUserID: () => set({ userID: null }),
+            clearUser: () => set({ user: null }),
+            clearData: () => set({ user: null, userID: null })
         }),
         {
             name: "user-storage"

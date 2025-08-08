@@ -85,7 +85,7 @@
 
     height: 2.4rem;
     padding-left: 0.8rem;
-    padding-right: 2.2rem;
+    padding-right: 0.8rem;
     padding-bottom: 0;
     border: 0.1rem solid #E0E0E0;
     border-radius: 0.3rem;
@@ -95,6 +95,14 @@
     font-size: 1rem;
     color: #2C2C2C;
     transition: border-color 0.3s;
+}
+
+.form-group input[type="password"] {
+    padding-right: 1.9rem;
+}
+
+.form-group input[type="text"] {
+    padding-right: 1.9rem;
 }
 
 .form-group input:focus {
@@ -211,16 +219,14 @@ a.auth_hyperlink:hover {
     color: #EC9A29;
 }
 
-.verification_input_container {
+.verification_container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    position: relative;
+    overflow: hidden;
 
-    width: 95%;
-
-    margin-top: 50px;
-    padding-left: 20px;
+    width: 300px;
+    height: 575px;
 }
 
 .verification_input_box_container {
@@ -234,42 +240,31 @@ a.auth_hyperlink:hover {
     margin-left: -3rem;
 }
 
-.verification_status_container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding-top: 2rem;
-}
-
 .verification_prompt_text {
+    width: 100%;
+    padding-bottom: 2rem;
+
     font-family: "Roboto Slab", sans-serif;
-    font-size: 15px;
+    font-size: 1rem;
     color: #403F4C;
-
-    margin-right: 15px;
-    margin-left: 0.7rem;
-}
-
-.verification_input_container {
-    margin-top: 20px;
 }
 
 .verification_navigation_buttons_container {
     display: flex;
     flex-direction: row;
 
-    height: 4rem;
+    width: 100%;
+    height: 25%;
 
     gap: 10rem;
-    margin-top: 4.75rem;
-    margin-right: 3rem;
+    padding-top: 13%;
 }
 
 .nav_button_container {
     display: flex;
-    justify-self: center;
-    width: 9.6rem;
+    
+    width: 60%;
+    height: 80%;
 }
 
 .initiate_reset_container {
@@ -285,20 +280,12 @@ a.auth_hyperlink:hover {
     margin-top: 3rem;
 }
 
-.password_verification_prompt_text {
-    font-family: "Roboto Slab", sans-serif;
-    font-size: 1.5rem;
-    color: #403F4C;
-
-    padding-right: 2rem;
-}
-
 .sign_up_error_message_container {
     display: flex;
     justify-content: center;
 
-    margin-top: 2rem;
-    margin-bottom: -3rem;
+    margin-top: 1.8rem;
+    margin-bottom: -2.8rem;
 }
 
 .sign_up_error_message {
@@ -309,7 +296,8 @@ a.auth_hyperlink:hover {
     margin-top: -1.3rem;
 
     color: red; 
-    font-size: 1.5rem;
+    font-family: "Roboto Slab", sans-serif;
+    font-size: 1.1rem;
 }
 
 .login_error_message_container {
@@ -331,32 +319,27 @@ a.auth_hyperlink:hover {
     font-size: 1.1rem;
 }
 
+.verification_error_message_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    
+    height: 20%;
+    min-height: 3.8rem;
+}
+
 .verification_error_message {
-    position: absolute;
-    margin-top: 8rem;
-
     color: red; 
-
     font-family: "Roboto Slab", sans-serif;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
 }
 
 .email_verification_success_message {
-    position: absolute;
-
     color: green;
 
     font-family: "Roboto Slab", sans-serif;
-    font-size: 1.4rem;
-}
-
-.email_verification_error_message {
-    position: absolute;
-
-    color: red;
-
-    font-family: "Roboto Slab", sans-serif;
-    font-size: 1.4rem;
+    font-size: 1rem;
 }
 
 .email_verification_input_container {
@@ -371,15 +354,6 @@ a.auth_hyperlink:hover {
     padding-left: 0.75rem;
     
     gap: 2rem;
-}
-
-.initiate_reset_navigation_buttons_container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-
-    gap: 10rem;
-    margin-top: 7rem;
 }
 
 .change_password_container {
@@ -430,21 +404,10 @@ a.auth_hyperlink:hover {
 }
 
 .password_verification_prompt_text {
-    display: flex;
-    justify-self: center;
-
-    margin-left: 4rem;
+    width: 100%;
+    padding-bottom: 2rem;
 
     font-family: "Roboto Slab", sans-serif;
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: #403F4C;
-}
-
-.reset_navigation_buttons_container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-
-    gap: 10rem;
-    margin-top: 5rem;
 }
