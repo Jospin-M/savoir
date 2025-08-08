@@ -5,7 +5,7 @@ import styles from "../../components/auth/Auth.module.css";
 
 import { useState } from "react";
 import { useForm } from "../../hooks/useForm.ts";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 import { validateInputLength } from "../../components/listeners/formValidators.ts";
 import { sendHTTPRequest } from "../../../lib/utils.ts";
@@ -31,7 +31,7 @@ export default function ChangePassword() {
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
     const [count, setCount] = useState(0);
-    const navigate = useNavigate();
+    const router = useRouter();
 
     const messageToDisplay = success ? success : error;
     const styleToUse = success ? "password_success_message" : "password_error_message";
@@ -51,7 +51,7 @@ export default function ChangePassword() {
             setError("");
             setSuccess(response.message);
             /*setTimeout(() => {
-                navigate("/auth/login", { replace: true });
+                router.replace("/auth/login");
             }, 1500);*/
         }
 
@@ -77,7 +77,7 @@ export default function ChangePassword() {
 
                 <div className={styles.reset_navigation_buttons_container}>
                     <div className={styles.nav_button_container}>
-                        <Button prompt="Back" isDisabled={false} handleClick={()=>navigate("/auth/password/sendResetLink")}/>
+                        <Button prompt="Back" isDisabled={false} handleClick={()=>router.push("/auth/password/sendResetLink")}/>
                     </div>
                     
                     <div className={styles.nav_button_container}>

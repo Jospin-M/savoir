@@ -9,7 +9,7 @@ type ButtonProps = {
 
 export default function Button({ prompt, isDisabled, handleClick } : ButtonProps) {
     return (
-         <button type={"submit"} className={styles["auth_btn"]} onClick={handleClick} disabled={isDisabled}>
+         <button type={"button"} className={styles["auth_btn"]} onClick={handleClick} disabled={isDisabled}>
             <div className={""}>
                 {prompt}
             </div>

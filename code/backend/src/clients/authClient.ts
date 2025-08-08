@@ -72,7 +72,7 @@ export async function signUpNewUser(req: Request, res: Response, next: NextFunct
         email: email,
         password: password
     });
-
+    console.log(error)
     if(error) {
         req.body.error = error; 
         
@@ -117,22 +117,25 @@ async function verifyUser(params: VerifyOtpParams) {
  * @param next - an error-handling function.
  */
 export async function verifyNewUser(req: Request, res: Response, next: NextFunction) {
-    const { id, first_name, last_name, email } = req.body.verificationRequest.user; 
+    const { id, first_name, last_name, email } = req.body.verificationRequest;
     const code = req.body.verificationCode.code;
+
     const response = await verifyUser({
-        email: email,
+        email,
         token: code,
-        type: "signup"
+        type: "signup",
     });
 
-    if(response.error) {
+    if (response.error) {
         next(response.error);
-    } else {
-        res.status(201).json(response);
 
-        insertRecord<UsersSchema>("users", { id, first_name, last_name, email });
+        return;
     }
+
+    insertRecord<UsersSchema>("users", { id, first_name, last_name, email });
+    res.status(201).json(response);
 }
+
 
 /**
  * Sends an email to the user that will provide them with a link they can use to reset their password.
