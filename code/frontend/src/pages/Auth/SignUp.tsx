@@ -8,6 +8,7 @@ import styles from "../../components/auth/Auth.module.css";
 
 import { useState } from "react";
 import { useForm } from "../../hooks/useForm.ts";
+import { useUserStore } from "../../stores/useUserStore.ts";
 import { useRouter } from "next/navigation";
 import Link from "next/Link";
 
@@ -19,7 +20,7 @@ export default function SignUp() {
     const [error, setError] = useState("");
     const router = useRouter();
     // const [loading, setLoading] = useState(false); handle loading state
-    
+    const setUser = useUserStore((state) => state.setUser);
     // move this code to server middleware
     async function handleSignUp(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
@@ -32,6 +33,7 @@ export default function SignUp() {
             setError("");
             // use zustand to store server response, then retrieve it on the next page
             // after this data has been used, clear it from the storage
+            setUser(response.user);
             router.push("/auth/verify"); 
         }
     }
@@ -43,8 +45,8 @@ export default function SignUp() {
                     <h1 className={styles.box_header}>Savoir</h1>
 
                     <form className={styles.user_input}>
-                        <InputBox input_box_title="Full Name" type="text" name="fullName" handleChange={saveInput}/> 
-                        <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput}/> 
+                        <InputBox input_box_title="Full Name" name="fullName" handleChange={saveInput}/> 
+                        <InputBox input_box_title="Email" name="email" handleChange={saveInput}/> 
                         <PasswordInputBox name="password" inputBoxName="Password"  handleChange={saveInput}/>
                         
                         <div className={styles.auth_button_container}>

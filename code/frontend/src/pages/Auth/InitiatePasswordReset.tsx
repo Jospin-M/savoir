@@ -5,7 +5,7 @@ import styles from "../../components/auth/Auth.module.css";
     
 import { useState } from "react";
 import { useForm } from "../../hooks/useForm.ts";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 import { validateEmail } from "../../components/listeners/formValidators.ts";
 import { sendHTTPRequest } from "../../../lib/utils.ts";
@@ -15,10 +15,11 @@ export default function InitiateReset() {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [count, setCount] = useState(0);
-    const navigate = useNavigate();
     
+    const router = useRouter();
+
     const messageToDisplay = success ? success : error;
-    const styleToUse = success ? "email_verification_success_message" : "email_verification_error_message";
+    const styleToUse = success ? "email_verification_success_message" : "verification_error_message";
     
     async function handleEmailVerification(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
@@ -39,32 +40,33 @@ export default function InitiateReset() {
     return (
        <div className={styles.auth_background}>
             <Rectangle cssClass="verification_password_page_background">
-                <div className={styles.initiate_reset_container}>
+                <div className={styles.verification_container}>
                     <h1 className={styles.box_header}>Verify Email</h1>
 
                     <p className={styles.password_verification_prompt_text}>
                         Enter your email address and we'll send you a link that you can use to reset your password.
                     </p>
 
-                    <div className={styles.reset_input_container}>
-                        <form className={styles.user_input}>
-                            <InputBox input_box_title="Email" type="email" name="email" handleChange={saveInput} />
-                        </form>
-
-                        <div className={styles.verification_status_container}>
+                    <form className={styles.user_input}>
+                        <InputBox input_box_title="Email" name="email" handleChange={saveInput} />
+                    
+                        <div className={styles.verification_error_message_container}>
                             {messageToDisplay && <p className={styles[styleToUse]}>{messageToDisplay}</p>}
                         </div>
-                    </div>
-
-                    <div className={styles.initiate_reset_navigation_buttons_container }>
-                        <div className={styles.nav_button_container}>
-                            <Button prompt="Back" isDisabled={false} handleClick={()=>navigate("/auth/login")}/>
+                    
+                        <div className={styles.verification_navigation_buttons_container}>
+                            <div className={styles.nav_button_container}>
+                                <Button prompt="Back" isDisabled={false} handleClick={(event)=>{
+                                    event.preventDefault();
+                                    router.push("/auth/login");
+                                }}/>
+                            </div>
+                            
+                            <div className={styles.nav_button_container}>
+                                <Button prompt="Submit" isDisabled={!validateEmail(form.email)} handleClick={handleEmailVerification}/>
+                            </div>
                         </div>
-                        
-                        <div className={styles.nav_button_container}>
-                            <Button prompt="Submit" isDisabled={!validateEmail(form.email)} handleClick={handleEmailVerification}/>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </Rectangle>
        </div>
