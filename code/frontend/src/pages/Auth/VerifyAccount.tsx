@@ -24,7 +24,7 @@ export default function VerifyAccount() {
         event.preventDefault();
         
         const response = await sendHTTPRequest("/auth/verifyNewUser", "POST", { verificationCode: code, verificationRequest: user });
-        console.log(response)
+        
         if(response.error) {
             setError(response.error);
         } else {
@@ -39,7 +39,8 @@ export default function VerifyAccount() {
             setUserID(user.id);
             clearUser();
             setError("");
-            //navigate(`/profile/${user.id}`, { replace: true });
+
+            router.push(`/profile/${user.id}`);
         }
     }
 

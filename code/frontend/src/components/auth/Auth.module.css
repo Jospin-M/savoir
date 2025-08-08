@@ -254,7 +254,7 @@ a.auth_hyperlink:hover {
     flex-direction: row;
 
     width: 100%;
-    height: 25%;
+    height: 20%;
 
     gap: 10rem;
     padding-top: 13%;
@@ -332,12 +332,11 @@ a.auth_hyperlink:hover {
 .verification_error_message {
     color: red; 
     font-family: "Roboto Slab", sans-serif;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 .email_verification_success_message {
     color: green;
-
     font-family: "Roboto Slab", sans-serif;
     font-size: 1rem;
 }
