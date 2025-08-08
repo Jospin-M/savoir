@@ -34,7 +34,7 @@ export default function ChangePassword() {
     const router = useRouter();
 
     const messageToDisplay = success ? success : error;
-    const styleToUse = success ? "password_success_message" : "password_error_message";
+    const styleToUse = success ? "password_success_message" : "verification_error_message";
     
     async function handlePasswordChange(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
@@ -50,41 +50,49 @@ export default function ChangePassword() {
         } else {
             setError("");
             setSuccess(response.message);
-            /*setTimeout(() => {
+            setTimeout(() => {
                 router.replace("/auth/login");
-            }, 1500);*/
+            }, 1500);
         }
 
         setCount(count+1);
     }
 
     return (
-        <Rectangle cssClass="reset_password_page_background">
-            <div className={styles.change_password_container}>
-                <h1 className={styles.box_header}>Reset Password</h1>
+        <div className={styles.auth_background}>
+            <Rectangle cssClass="verification_page_background">
+                <div className={styles.verification_container}>
+                    <h1 className={styles.box_header}>Reset Password</h1>
 
-                <p className={styles.reset_password_prompt_text}>
-                    Please enter your new password.
-                </p>
+                    <p className={styles.password_verification_prompt_text}>
+                        Please enter your new password.
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                    </p>
 
-                <form className={styles.user_input}>
-                    <PasswordInputBox name="newPassword" inputBoxName="New Password" handleChange={saveInput} />
-                </form>
-
-                <div className={styles.password_change_status_container}>
-                    {messageToDisplay && <p className={styles[styleToUse]}>{messageToDisplay}</p>}
-                </div>
-
-                <div className={styles.reset_navigation_buttons_container}>
-                    <div className={styles.nav_button_container}>
-                        <Button prompt="Back" isDisabled={false} handleClick={()=>router.push("/auth/password/sendResetLink")}/>
-                    </div>
+                    <form className={styles.user_input}>
+                        <PasswordInputBox name="newPassword" inputBoxName="New Password" handleChange={saveInput} />
                     
-                    <div className={styles.nav_button_container}>
-                        <Button prompt="Submit" isDisabled={!validateInputLength(form.newPassword, 8)} handleClick={handlePasswordChange}/>
-                    </div>
+                        <div className={styles.verification_error_message_container}>
+                            {messageToDisplay && <p className={styles[styleToUse]}>{messageToDisplay}</p>}
+                        </div>
+
+                        <div className={styles.verification_navigation_buttons_container}>
+                            <div className={styles.nav_button_container}>
+                                <Button prompt="Back" isDisabled={false} handleClick={(event)=>{
+                                    event.preventDefault();
+                                    router.push("/auth/password/sendResetLink");
+                                }}/>
+                            </div>
+                            
+                            <div className={styles.nav_button_container}>
+                                <Button prompt="Submit" isDisabled={!validateInputLength(form.newPassword, 8)} handleClick={handlePasswordChange}/>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </div>
-        </Rectangle>
+            </Rectangle>
+        </div>
     );
 }
