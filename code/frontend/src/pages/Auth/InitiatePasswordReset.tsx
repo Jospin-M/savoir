@@ -32,14 +32,14 @@ export default function InitiateReset() {
             } else {
                 setError("");
                 setCount(count+1);
-                setSuccess("We've sent you a link to reset your password.");
+                setSuccess("Check your inbox for a reset link.");
             }
         }
     }
 
     return (
        <div className={styles.auth_background}>
-            <Rectangle cssClass="verification_password_page_background">
+            <Rectangle cssClass="verification_page_background">
                 <div className={styles.verification_container}>
                     <h1 className={styles.box_header}>Verify Email</h1>
 

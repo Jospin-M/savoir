@@ -107,24 +107,12 @@
   border-radius: 16px;
 }
 
-.verification_password_page_background {
-  display: flex;
-  justify-content: center;
-
-  width: 400px;
-  height: 450px;
-  margin-top: 50px;
-
-  background-color: #F2EFE9;
-  border-radius: 16px;
-}
-
 .reset_password_page_background {
   display: flex;
   justify-content: center;
 
   width: 400px;
-  height: 410px;
+  height: 450px;
 
   background-color: #F2EFE9;
   border-radius: 16px;
