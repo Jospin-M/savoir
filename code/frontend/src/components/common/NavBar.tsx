@@ -1,33 +1,33 @@
-import { NavLink } from "react-router-dom";
+import Link from "next/Link";
 import styles from "./Common.module.css";
 
 export default function NavBar() {
     return (
         <div className={styles.sidebar}>
-            <NavLink to="" className={styles.nav_item}>
+            <Link href="" className={styles.nav_item}>
                 <i className="ri-dashboard-line" id={styles.nav_item_logo} />
                 <div className={styles.nav_item_text}>Dashboard</div>
-            </NavLink>
+            </Link>
 
-            <NavLink to="" className={styles.nav_item}>
+            <Link href="" className={styles.nav_item}>
                 <i className="ri-lightbulb-line" id={styles.nav_item_logo} />
                 <div className={styles.nav_item_text}>Skills</div>
-            </NavLink>
+            </Link>
 
-            <NavLink to="" className={styles.nav_item}>
+            <Link href="" className={styles.nav_item}>
                 <i className="ri-message-3-line" id={styles.nav_item_logo} />
                 <div className={styles.nav_item_text}>Messages</div>
-            </NavLink>
+            </Link>
 
-            <NavLink to="" className={styles.nav_item}>
+            <Link href="" className={styles.nav_item}>
                 <i className="ri-refresh-line" id={styles.nav_item_logo} />
                 <div className={styles.nav_item_text}>Sessions</div>
-            </NavLink>
+            </Link>
 
-            <NavLink to="" className={styles.nav_item}>
+            <Link href="" className={styles.nav_item}>
                 <i className="ri-star-line" id={styles.nav_item_logo} />
                 <div className={styles.nav_item_text}>Reviews</div>
-            </NavLink>
+            </Link>
         </div>
     );
 }

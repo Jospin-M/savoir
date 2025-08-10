@@ -1,18 +1,14 @@
 import styles from "./Common.module.css";
 
-import { NavLink } from "react-router-dom";
-
-import { useUserStore } from "../../stores/useUserStore";
+import Link from "next/Link";
 
 export default function NavPicture() {
-    const profileImageURL = useUserStore((state) => state.profileImageURL)!;
-    const userID = useUserStore((state) => state.userID);
     // ratio of images must be changed to square before being saved in database
-
-    console.log(profileImageURL)
+    // href will use the id passed in through ssr
+    console.log()
     return (
-        <NavLink to={"/profile/" + userID}>
-            <img className={styles.nav_bar_profile_pic} src={profileImageURL}/>
-        </NavLink>
+        <Link href={"/profile/" + ""} className={styles.profile_pic_link}>
+            <img className={styles.nav_bar_profile_pic} src={"https://static01.nyt.com/images/2020/03/09/sports/09nba-topteams1/09nba-topteams1-mediumSquareAt3X.jpg"}/>
+        </Link>
     );
 }
