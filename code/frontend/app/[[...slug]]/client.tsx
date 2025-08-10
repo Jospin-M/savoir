@@ -1,7 +1,12 @@
 "use client"
 
 import Login from "../../src/pages/Auth/Login";
+import ProtectedRoute from "../../src/components/common/ProtectedRoute";
 
 export function ClientOnly() {
-    return <Login />;
+    return (
+        <ProtectedRoute>
+            <Login />
+        </ProtectedRoute>
+    );
 }

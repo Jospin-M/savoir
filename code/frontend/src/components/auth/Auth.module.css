@@ -54,7 +54,8 @@
 }
 
 .box_header {
-    font-family: "Roboto Bold", sans-serif;
+    font-family: "Roboto", sans-serif;
+    font-weight: bolder;
     font-size: 30px;
     
     color: #EC9A29;
@@ -112,8 +113,10 @@
 
 
 .input_box_title {
+    padding-bottom: 0.1rem;
+
     font-family: "Roboto Slab", sans-serif;
-    font-size: 1rem;
+    font-size: 0.85rem;
     color: #403F4C;
 }
 
@@ -316,7 +319,7 @@ a.auth_hyperlink:hover {
 
     color: red; 
     font-family: "Roboto Slab", sans-serif;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 .verification_error_message_container {

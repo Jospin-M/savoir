@@ -1,13 +1,15 @@
-import { NavLink } from "react-router-dom";
-import styles from "../common/Common.module.css";
 import NavPicture from "./NavPicture";
+
+import styles from "../common/Common.module.css";
+
+import Link from "next/Link";
 
 export default function Header() {
     return (
-        <header>
-            <NavLink to="/" className={styles.logo_container}>
+        <header className={styles.header_container}>
+            <Link href="" className={styles.logo_container}>
                 <h2 className={styles.logo}>Savoir</h2>
-            </NavLink>
+            </Link>
 
             <div className={styles.search_bar}>
                 <input type="text" placeholder="Search for skills, users, or topics..." />
