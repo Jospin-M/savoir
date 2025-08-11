@@ -123,9 +123,6 @@
   flex-direction: row;
   position: relative;
 
-  width: 70rem;
-  height: 74vh;
-  margin-left: 18.5rem;
   
 
   background-color: #F2EFE9;
@@ -227,9 +224,7 @@
 }
 
 .sidebar {
-  position: relative;
-  width: 15.6rem;
-  height: 90vh;
+  width: 250rem;
   padding-top: 4rem;
   
   background-color: white;
@@ -240,7 +235,6 @@
   align-items: center;
 
   padding: 1.2rem;
-  padding-left: 1.5rem;
 
   text-decoration: none;
   transition: all 0.3s ease;
@@ -287,6 +281,5 @@
   flex-direction: column;
 
   height: 800px;
-
   background-color: #F2EFE9;
 }
