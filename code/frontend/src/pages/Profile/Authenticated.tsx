@@ -3,6 +3,7 @@ import NavBar from "../../components/common/NavBar.tsx";
 import ProfileHeader from "../../components/profile/ProfileHeader.tsx";
 
 import styles from "../../components/common/Common.module.css";
+import ProfileContent from "../../components/profile/ProfileContent.tsx";
 
 export default function Authenticated() {
     // use React query -- reference tutorial
@@ -15,7 +16,8 @@ export default function Authenticated() {
                 <NavBar />
                 
                 <div className={styles.page_content}>
-                    <ProfileHeader/>
+                    <ProfileHeader />
+                    <ProfileContent />
                 </div>
             </div>
         </div>

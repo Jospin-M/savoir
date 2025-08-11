@@ -29,24 +29,25 @@
     background: #E0E0E0
 }
 
-.profile_picture {
-    position: relative;
-    margin-left: 2rem;
-
-    width: 8rem;
-    height: 8rem;
-
-    border: 5px solid white;
-    border-radius: 50%;
-    background-color: white;
-}
-
 .profile_picture_container {
     display: flex;
     flex-direction: row;
     position: absolute;
 
-    padding-top: 8.2rem;
+    padding-top: 7.2rem;
+    padding-left: 1.5rem;
+}
+
+.profile_picture {
+    position: relative;
+    margin-left: 2rem;
+
+    width: 10rem;
+    height: 10rem;
+
+    border: 5px solid white;
+    border-radius: 50%;
+    background-color: white;
 }
 
 .profile_name {
@@ -58,4 +59,94 @@
     font-size: 2rem;
     font-weight: bolder;
     color: #2C2C2C;
+}
+
+.profile_content {
+    display: flex;
+}
+
+.profile_sidebar {
+    width: 27%;
+    padding-left: 1.8rem;
+    padding-bottom: 1.5rem;
+}
+
+.card {
+    width: 100%;
+    padding: 1.15rem;
+    margin-bottom: 1.5rem;
+
+    border-radius: 1rem;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+#profile {
+    height: 10rem;
+}
+
+.card_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card_header h2 {
+    font-family: "Roboto Bold", sans-serif;
+    font-size: 1rem;
+    font-weight: bolder;
+    color: #2C2C2C;
+
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.bio_text {
+    height: 75%;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+
+    font-family: "Roboto", sans-serif;
+    font-size: 1.05rem;
+    color: #2C2C2C;
+}
+
+.languages_container {
+    padding-top: 1rem;
+}
+
+.language_item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+
+    font-family: "Roboto", sans-serif;
+    font-size: 1.05rem;
+    color: #2C2C2C;
+}
+
+.language_level {
+    display: flex;
+    align-items: center;
+}
+
+.language_level span {
+    width: 8px;
+    height: 8px;
+    margin-left: 5px;
+
+    border-radius: 50%;
+    background-color: #E0E0E0;
+}
+
+.language_level span.active {
+    background-color: #EC9A29;
+}
+
+.card_header [class^=ri-] {
+    font-family: remixicon !important;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    
+    cursor: pointer;
 }
