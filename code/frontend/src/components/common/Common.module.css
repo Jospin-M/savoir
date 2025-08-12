@@ -39,18 +39,6 @@
   color: #FFFFFF;
 }
 
-.edit_profile_button {
-  background-color: #EC9A29;
-  border: none;
-  border-radius: 8px;
-
-  width: 8rem;
-  height: 2.5rem;
-  
-  margin-bottom: 2rem;
-  cursor: pointer;
-}
-
 .roboto-edit_profile {
     font-family: "Roboto", sans-serif;
     font-optical-sizing: auto;
@@ -279,7 +267,7 @@
 .page_content {
   display: flex;
   flex-direction: column;
-
-  height: 800px;
+  align-items: stretch;
+  
   background-color: #F2EFE9;
 }
