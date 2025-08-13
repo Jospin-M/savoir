@@ -1,11 +1,15 @@
 import type { ProfileData } from "./EditProfileModal.tsx";
-import type { Language } from "../sidebar/Sidebar.tsx";
 
 import styles from "./EditProfile.module.css";
 
 import type { ChangeEvent } from "react";
 import { Controller, type ControllerRenderProps } from "react-hook-form";
 import type { Control, FieldErrors } from "react-hook-form";
+
+export type Language = {
+    name: string,
+    proficiency: "Fluent" | "Intermediate" | "Beginner"
+}
 
 function LanguageOptions({ field, index }: { field:  ControllerRenderProps<ProfileData, "languages">, index: number }) {
     const languages: string[] = ["English", "French"] // will be replaced with list of languages provided by server
@@ -113,6 +117,7 @@ export default function Languages({ control, errors }: { control: Control<Profil
                     { createLanguageItems(field.value, field) }
 
                     <button 
+                        id={"languages"}
                         type={"button"} 
                         className={styles.add_language} 
                         onClick={() => {

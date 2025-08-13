@@ -9,9 +9,9 @@ type UploadProps = {
     field: ControllerRenderProps<any>
 }
 
-export default function UploadButton({ promptText, field}: UploadProps) {
+export default function UploadButton({ promptText, field }: UploadProps) {
     const fileInputRef = useRef<HTMLInputElement>(null);
-
+    
     return (
         <div>
             <button className={styles.upload_button} onClick={(e) => {
@@ -24,6 +24,7 @@ export default function UploadButton({ promptText, field}: UploadProps) {
             </button>
 
             <input 
+                id={"photo"}
                 name={field.name}
                 type="file" 
                 accept="image/*"
@@ -36,7 +37,8 @@ export default function UploadButton({ promptText, field}: UploadProps) {
 
                         if(file) {
                             const url = URL.createObjectURL(file);
-                            field.onChange(url);
+
+                            field.onChange({ file: file, url: url});
                         }
                     }
                 }}

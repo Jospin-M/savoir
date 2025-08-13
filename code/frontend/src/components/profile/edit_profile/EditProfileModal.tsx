@@ -1,16 +1,15 @@
-import CoverPhoto from "./CoverPhoto.tsx";
-import ProfilePhoto from "./ProfilePhoto.tsx";
+import { CoverPhoto, ProfilePhoto } from "./Photos.tsx";
 import NameAndBio from "./NameAndBio.tsx";
 import Languages from "./Languages.tsx";
+import type { Language } from "../edit_profile/Languages.tsx";
 
 import styles from "./EditProfile.module.css";
 
 import { useForm } from "react-hook-form";
-import type { Language } from "../sidebar/Sidebar.tsx";
 
 export type ProfileData = {
-    coverPhoto: string,
-    profilePhoto: string,
+    coverPhoto: { file: File | null, url: string } | null,
+    profilePhoto: { file: File | null, url: string } | null,
     name: string,
     bio: string,
     languages: Language[]
@@ -19,7 +18,7 @@ export type ProfileData = {
 export default function EditProfileModal({ closeButtonHandler }: { closeButtonHandler: () => void }) {
     // another method should be defined to handle the updating of profile information when react query is setup
     // default values should be populated with user data from server
-    const defaultValues: ProfileData = { coverPhoto: "", profilePhoto: "", name: "", bio: "", languages: [] };
+    const defaultValues: ProfileData = { coverPhoto: null, profilePhoto: null, name: "", bio: "", languages: [] };
     // maybe define a loading state for the button, depending on how fast the requests are made
     const { 
         control,
@@ -27,7 +26,7 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
         formState: { errors }
     } = useForm({ defaultValues: defaultValues });
 
-    function onSubmit(data: any) {
+    async function onSubmit(data: ProfileData) {
         console.log(data);
     }
 
@@ -44,8 +43,8 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
 
                 <div className={styles.modal_body}>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <CoverPhoto control={control} />
-                        <ProfilePhoto control={control} />
+                        <CoverPhoto control={control} errors={errors}/>
+                        <ProfilePhoto control={control} errors={errors}/>
                         <NameAndBio control={control} errors={errors} />
                         <Languages control={control} errors={errors} />
                     

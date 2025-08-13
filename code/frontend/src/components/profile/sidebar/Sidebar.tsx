@@ -1,16 +1,11 @@
 "use client";
 
 import EditProfileModal from "../edit_profile/EditProfileModal";
+import type { Language } from "../edit_profile/Languages";
 import Button from "../../common/Button";
-
 import styles from "./Sidebar.module.css";
 
 import { useState, type JSX } from "react";
-
-export type Language = {
-    name: string,
-    proficiency: "Fluent" | "Intermediate" | "Beginner"
-}
 
 /**
  * Creates a visual representation of the user's proficiency in a list of languages.
@@ -18,10 +13,9 @@ export type Language = {
  * @param languages A list of all the languages known by the user.
  */
 export function createLanguageItems(languages: Language[]) {
-    const languageItems: JSX.Element[] = [];
-
     /**
-     * Makes use of the user's profiency level in the language to determine how many stars should be rendered in the 'active' state.
+     * Makes use of the user's profiency level in the language to determine how many stars should be shown next to the name of the language
+     * on their profile.
      *  
      * @param states A mapping of the profiency level to the amount of stars that should be shown.
      */
@@ -38,6 +32,8 @@ export function createLanguageItems(languages: Language[]) {
         Intermediate: ["active", "active", ""],
         Beginner: ["active", "", ""]
     }
+
+    const languageItems: JSX.Element[] = [];
     
     languages.forEach((language, index) => {
         languageItems.push((
