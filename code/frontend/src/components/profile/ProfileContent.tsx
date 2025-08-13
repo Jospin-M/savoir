@@ -1,5 +1,5 @@
 import styles from "./Profile.module.css";
-import Sidebar from "./Sidebar";
+import Sidebar from "./sidebar/Sidebar";
 
 export default function ProfileContent() {
     return (
