@@ -3,22 +3,41 @@ import type { Language } from "../sidebar/Sidebar.tsx";
 
 import styles from "./EditProfile.module.css";
 
-import { Controller } from "react-hook-form";
+import type { ChangeEvent } from "react";
+import { Controller, type ControllerRenderProps } from "react-hook-form";
 import type { Control, FieldErrors } from "react-hook-form";
 
-function LanguageOptions({ selectedLanguage }: { selectedLanguage: Language }) {
+function LanguageOptions({ field, index }: { field:  ControllerRenderProps<ProfileData, "languages">, index: number }) {
     const languages: string[] = ["English", "French"] // will be replaced with list of languages provided by server
     const proficiencyLevels = ["Fluent", "Intermediate", "Beginner"];
 
+    /**
+     * Updates the selected language choice in a <select> element.
+     */
+    function updateLanguageChoice(e: ChangeEvent<HTMLSelectElement>) {
+        const newChoices = [...field.value];
+        newChoices[index] = {...newChoices[index], name: e.target.value};
+        field.onChange(newChoices);
+    }
+
+    /**
+     * Updates the selected language choice in a <select> element.
+     */
+    function updateProficiencyChoice(e: ChangeEvent<HTMLSelectElement>) {
+        const newChoices = [...field.value];
+        newChoices[index] = {...newChoices[index], proficiency: e.target.value as "Fluent" | "Intermediate" | "Beginner"};
+        field.onChange(newChoices);
+    }
+
     return (
         <div className={styles.language_items_container}>
-            <select className={styles.language_select} defaultValue={selectedLanguage.name}>
+            <select className={styles.language_select} value={field.value[index].name} onChange={updateLanguageChoice}>
                 {languages.map((lang) => (
-                    <option value={lang}>{lang}</option>
+                    <option key={lang} value={lang}>{lang}</option>
                 ))}
             </select>
 
-            <select className={styles.proficiency_select} defaultValue={selectedLanguage.proficiency}>
+            <select className={styles.proficiency_select} value={field.value[index].proficiency} onChange={updateProficiencyChoice}>
                 {proficiencyLevels.map((lvl) => (
                     <option key={lvl} value={lvl}>{lvl}</option>
                 ))}
@@ -36,15 +55,22 @@ function LanguageOptions({ selectedLanguage }: { selectedLanguage: Language }) {
  *
  * @param knownLanguages - The languages the user has previously selected.
  */
-function createLanguageItems(knownLanguages: Language[]) {
+function createLanguageItems(knownLanguages: Language[], field: ControllerRenderProps<ProfileData, "languages">) {
     const languageItems: React.JSX.Element[] = []
     
-    knownLanguages.forEach((lang) => {
+    knownLanguages.forEach((lang, index) => {
         languageItems.push((
-            <div className={styles.language_item} key={lang.name}>
-                <LanguageOptions selectedLanguage={lang}/>
+            <div className={styles.language_item} key={index}>
+                <LanguageOptions field={field} index={index}/>
 
-                <button type="button" className={styles.remove_language}>
+                <button 
+                    type="button" 
+                    className={styles.remove_language}
+                    onClick={() => {
+                        const newValue = field.value.filter((value) => value !== lang);
+                        field.onChange(newValue);
+                    }}
+                >
                     <i className={"ri-delete-bin-line"}/>
                 </button>
             </div>
@@ -55,22 +81,50 @@ function createLanguageItems(knownLanguages: Language[]) {
 }
 
 export default function Languages({ control, errors }: { control: Control<ProfileData>, errors: FieldErrors<ProfileData> }) {
-    /** Their should always be at least one language in this list. Enforce this somehow */
+    /**
+     * Validates an array of Language objects according to length and uniqueness rules.
+     */
+    function formValidator(value: Language[]) {
+        if(value.length >= 5) {
+            return "Maximum 5 languages allowed.";
+        } else if(value.length < 1) {
+            return "At least 1 language is required.";
+        }
+
+        const languageNames: string[] = [];
+        value.forEach((lang) => {
+            languageNames.push(lang.name)
+        });
+        
+        if((new Set(languageNames)).size < value.length) {
+            return "Each language must be unique.";
+        }
+    }
+    
     return (
         <Controller 
             name="languages"
             control={control}
+            rules={{ validate: formValidator}}
             render={({ field }) => (
                 <div className={styles.form_group}>
                     <label htmlFor={"languages"}>Languages</label>
                     
-                    { createLanguageItems(field.value) }
+                    { createLanguageItems(field.value, field) }
 
-                    <button type={"button"} className={styles.add_language}>
+                    <button 
+                        type={"button"} 
+                        className={styles.add_language} 
+                        onClick={() => {
+                            field.onChange([...field.value, { name: "English", proficiency: "Beginner" }]);
+                        }}
+                    >
                         <i className={"ri-add-circle-line"} />
                         
                         { " Add new language " }
                     </button>
+
+                    {errors.languages && <p className={styles.error_message}>{errors.languages.message}</p>}
                 </div>
             )}
         />
