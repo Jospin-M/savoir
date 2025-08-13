@@ -16,6 +16,7 @@ function NameField({ control, errors }: { control: Control<ProfileData>, errors:
 
                     <input 
                         type="text" 
+                        id={"full_name"}
                         name={field.name}
                         className={styles.form_control} 
                         value={field.value}
@@ -37,7 +38,7 @@ function BioField({ control }: { control: Control<ProfileData> }) {
             control={control}
             render= {({ field }) => (
                 <div className={styles.form_group}>
-                    <label htmlFor="bio">Bio</label>
+                    <label>Bio</label>
 
                     {/* If the user already has a bio, we pre-populate the textarea with it. Otherwise, the default is shown.*/}
                     
