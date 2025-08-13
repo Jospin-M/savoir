@@ -12,7 +12,7 @@ export default function Header() {
             </Link>
 
             <div className={styles.search_bar}>
-                <input type="text" placeholder="Search for skills, users, or topics..." />
+                <input id={"search_bar"} type="text" placeholder="Search for skills, users, or topics..." />
                 <div className={styles.search_icon_container}>
                     <i className="ri-search-line" />
                 </div>

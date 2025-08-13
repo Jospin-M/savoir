@@ -15,7 +15,7 @@ export default function CoverPhoto({ control }: { control: Control<ProfileData> 
                     <label htmlFor="cover_photo">Cover Photo</label>
 
                     <div className={styles.modal_cover_photo}>
-                        <img src={field.value}/>
+                        <img src={field.value} id={field.name}/>
                     </div>
 
                     <UploadButton promptText="Change Cover Photo" field={field} />

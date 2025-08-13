@@ -24,6 +24,7 @@ export default function UploadButton({ promptText, field}: UploadProps) {
             </button>
 
             <input 
+                name={field.name}
                 type="file" 
                 accept="image/*"
                 ref={fileInputRef} 

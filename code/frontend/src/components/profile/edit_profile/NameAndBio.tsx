@@ -10,7 +10,7 @@ function NameField({ control, errors }: { control: Control<ProfileData>, errors:
             name="name"
             control={control}
             rules={{ required: "Name is required." }}
-            render = {({ field }) => (
+            render={({ field }) => (
                 <div className={styles.form_group}>
                     <label htmlFor="full_name">Full Name</label>
 
@@ -43,11 +43,13 @@ function BioField({ control }: { control: Control<ProfileData> }) {
                     
                     { field.value ? 
                         <textarea 
+                            name={field.name}
                             className={styles.form_control} 
                             maxLength={230} 
                             value={field.value}
                             onChange={e => field.onChange(e.target.value)}/> : 
                         <textarea
+                            name={field.name}
                             className={styles.form_control} 
                             maxLength={230} 
                             placeholder="Describe your skills, passions, and experience."

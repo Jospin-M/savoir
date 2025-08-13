@@ -6,7 +6,7 @@ import Languages from "./Languages.tsx";
 import styles from "./EditProfile.module.css";
 
 import { useForm } from "react-hook-form";
-import type { Language } from "../sidebar/utils";
+import type { Language } from "../sidebar/Sidebar.tsx";
 
 export type ProfileData = {
     coverPhoto: string,
@@ -24,7 +24,7 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
     const { 
         control,
         handleSubmit, 
-        formState: { errors, isSubmitting }
+        formState: { errors }
     } = useForm({ defaultValues: defaultValues });
 
     function onSubmit(data: any) {
