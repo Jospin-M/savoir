@@ -1,57 +1,12 @@
 "use client";
 
-import type { JSX } from "react";
-import EditProfileModal from "./EditProfileModal";
-import Button from "../common/Button";
+import EditProfileModal from "../edit_profile/EditProfileModal";
+import Button from "../../common/Button";
 
-import styles from "./Profile.module.css";
+import styles from "./Sidebar.module.css";
 
 import { useState } from "react";
-
-type Language = {
-    name: string,
-    proficiency: "advanced" | "intermediate" | "beginner"
-}
-
-/**
- * Creates a visual representation of the user's proficiency in a list of languages.
- * 
- * @param languages A list of all the languages known by the user.
- */
-function createLanguageItems(languages: Language[]) {
-    const languageItems: JSX.Element[] = [];
-
-    /**
-     * Makes use of the user's profiency level in the language to determine how many stars should be rendered in the 'active' state.
-     *  
-     * @param states A mapping of the profiency level to the amount of stars that should be shown in.
-     */
-    function createLevel(states: string[]) {
-        const elements: JSX.Element[] = []
-
-        states.forEach((state, index) => elements.push(<span key={index} className={styles[state]}/>))
-    
-        return <div className={styles.language_level}>{elements}</div>;
-    }
-
-    const activeStates = {
-        advanced: ["active", "active", "active"],
-        intermediate: ["active", "active", ""],
-        beginner: ["active", "", ""]
-    }
-    
-    languages.forEach((language, index) => {
-        languageItems.push((
-            <div key={index} className={styles.language_item}>
-                <span>{language.name}</span>
-
-                {createLevel(activeStates[language.proficiency])}
-            </div>
-        ));
-    });
-
-    return languageItems;
-}
+import {type Language, createLanguageItems} from "./utils";
 
 export default function Sidebar() {
     // editing the profile in any way should refresh the page so that updated data

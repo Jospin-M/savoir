@@ -1,0 +1,97 @@
+.profile_sidebar {
+    width: 27%;
+    padding-left: 1.5rem;
+    margin-bottom: 2rem;
+    z-index: 1;
+}
+
+.card {
+    width: 100%;
+    padding: 1.15rem;
+    margin-bottom: 1.5rem;
+
+    border-radius: 1rem;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+#profile {
+    height: 10rem;
+}
+
+.card_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card_header h2 {
+    font-family: "Roboto Bold", sans-serif;
+    font-size: 1rem;
+    font-weight: bolder;
+    color: #2C2C2C;
+
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.card_header [class^=ri-] {
+    font-family: remixicon !important;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    
+    cursor: pointer;
+}
+
+.bio_text {
+    height: 75%;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+
+    font-family: "Roboto", sans-serif;
+    font-size: 1.05rem;
+    color: #2C2C2C;
+}
+
+.languages_container {
+    padding-top: 1rem;
+}
+
+.language_item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+
+    font-family: "Roboto", sans-serif;
+    font-size: 1.05rem;
+    color: #2C2C2C;
+}
+
+.language_level {
+    display: flex;
+    align-items: center;
+}
+
+.language_level span {
+    width: 8px;
+    height: 8px;
+    margin-left: 5px;
+
+    border-radius: 50%;
+    background-color: #E0E0E0;
+}
+
+.language_level span.active {
+    background-color: #EC9A29;
+}
+  
+.sidebar_container {
+    display: flex;
+}
+
+.edit_profile_button_container {
+    width: 111%;
+    height: 2.5rem;
+
+    border-radius: 8px;
+}
