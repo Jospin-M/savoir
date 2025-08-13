@@ -15,7 +15,7 @@ export default function ProfilePhoto({ control }: { control: Control<ProfileData
 
                     <div className={styles.edit_profile_photo_container}>
                         <div className={styles.edit_profile_photo_container}>
-                            <img className={styles.edit_profile_photo} src={field.value} />
+                            <img className={styles.edit_profile_photo} src={field.value} id={field.name} />
                         </div>
 
                         <UploadButton promptText="Change Profile Photo" field={field} />

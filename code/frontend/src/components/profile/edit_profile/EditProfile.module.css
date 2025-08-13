@@ -155,6 +155,13 @@
     margin-top: 0.8rem;
 }
 
+.language_items_container {
+    display: flex;
+    flex-direction: row;
+
+    width: 92%;
+    gap: 0.5rem;
+}
 .language_item {
     display: flex;
     align-items: center;
@@ -165,7 +172,8 @@
 
 .language_select, .proficiency_select {
     width: 18rem;
-    padding: 0.7rem 1rem;
+    height: 2.5rem;
+    padding: 0.4rem 1rem;
 
     border: 1px solid #E0DED8;
     border-radius: 0.6rem;
