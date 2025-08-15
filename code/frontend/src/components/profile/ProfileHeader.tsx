@@ -1,23 +1,21 @@
 import styles from "./Profile.module.css";
 
+import { useProfileData } from "../../hooks/useProfileData";
+
 export default function ProfileHeader() {
-    //const profileImageURL = useUserStore((state) => state.profileImageURL)!;
-    //const name = useUserStore((state) => state.name);
-    
+    const { profileQuery: { data } } = useProfileData();
+
     return (
         <div className={styles.profile_header}>
-            <div className={styles.cover_photo}>
-                <div className={styles.cover_photo_placeholder}>
-                    <i className="ri-image-line"/>
-                    Add Cover Photo
-                </div>
+            <div className={styles.cover_photo_container}>
+                <img className={styles.cover_photo} src={data?.coverImageUrl}/>
             </div>
             
             <div className={styles.profile_picture_container}>
-                <img className={styles.profile_picture} src={"https://static01.nyt.com/images/2020/03/09/sports/09nba-topteams1/09nba-topteams1-mediumSquareAt3X.jpg"}/>
+                <img className={styles.profile_picture} src={data?.profileImageUrl}/>
 
                 <div className={styles.profile_name}>
-                    <h2 className={styles.profile_header_name }>{"Jospin Muhanuzi"}</h2>
+                    <h2 className={styles.profile_header_name }>{data?.fullName}</h2>
                 </div>
             </div>
         </div>

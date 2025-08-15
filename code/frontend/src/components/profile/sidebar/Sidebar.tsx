@@ -1,11 +1,12 @@
 "use client";
 
 import EditProfileModal from "../edit_profile/EditProfileModal";
-import type { Language } from "../edit_profile/Languages";
 import Button from "../../common/Button";
+import type { Language } from "../edit_profile/Languages";
 import styles from "./Sidebar.module.css";
 
 import { useState, type JSX } from "react";
+import { useProfileData } from "../../../hooks/useProfileData";
 
 /**
  * Creates a visual representation of the user's proficiency in a list of languages.
@@ -20,8 +21,10 @@ export function createLanguageItems(languages: Language[]) {
      * @param states A mapping of the profiency level to the amount of stars that should be shown.
      */
     function createLevel(states: string[]) {
-        const elements: JSX.Element[] = []
+        const elements: JSX.Element[] = [];
 
+        // if styles[state] = "active", then the <span> element will be colored orange
+        // otherwise, it will be gray
         states.forEach((state, index) => elements.push(<span key={index} className={styles[state]}/>))
     
         return <div className={styles.language_level}>{elements}</div>;
@@ -49,15 +52,8 @@ export function createLanguageItems(languages: Language[]) {
 }
 
 export default function Sidebar() {
-    // editing the profile in any way should refresh the page so that updated data
-    // is shown when the user completes the action
-    const languages: Language[] = [ // these would be retrieved from the database
-        { name: "English", proficiency: "Fluent" },
-        { name: "French", proficiency: "Fluent" },
-        { name: "Swahili", proficiency: "Intermediate" },
-        { name: "Lingala", proficiency: "Beginner" }
-    ];
-    const languageItems = createLanguageItems(languages);
+    const { profileQuery: { data } } = useProfileData();
+    let languageItems = data ? createLanguageItems(data.languages): null;
 
     const [showModal, setShowModal] = useState(false);
 
@@ -69,9 +65,7 @@ export default function Sidebar() {
                         <h2>About Me</h2>
                     </div>
 
-                    <p className={styles.bio_text}>
-                        Passionate language teacher with 5+ years of experience. I love helping others discover new cultures through language learning. In my free time, I enjoy hiking and photography and exploring local cuisine with friends from Italy.    
-                    </p>
+                    <p className={styles.bio_text}>{data?.bio}</p>
                 </div>
 
                 <div className={styles.card}>
@@ -88,7 +82,8 @@ export default function Sidebar() {
                     <Button prompt="Edit Profile" isDisabled={false} handleClick={() => setShowModal(true)}/>
                 </div>
 
-                {showModal && <EditProfileModal closeButtonHandler={() => setShowModal(false)} />}
+                {showModal && 
+                    <EditProfileModal closeButtonHandler={() => setShowModal(false)} />}
             </div>
         </div>
     ));

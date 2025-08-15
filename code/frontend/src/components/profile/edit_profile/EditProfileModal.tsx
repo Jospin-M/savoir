@@ -1,24 +1,32 @@
 import { CoverPhoto, ProfilePhoto } from "./Photos.tsx";
-import NameAndBio from "./NameAndBio.tsx";
+import Textfields from "./Textfields.tsx";
 import Languages from "./Languages.tsx";
 import type { Language } from "../edit_profile/Languages.tsx";
 
 import styles from "./EditProfile.module.css";
 
 import { useForm } from "react-hook-form";
+import { useProfileData } from "../../../hooks/useProfileData.ts";
 
-export type ProfileData = {
-    coverPhoto: { file: File | null, url: string } | null,
-    profilePhoto: { file: File | null, url: string } | null,
-    name: string,
-    bio: string,
-    languages: Language[]
+export type CurrentProfileData = {
+    coverPhoto: { file: File | null, url: string | undefined} | null,
+    profilePhoto: { file: File | null, url: string | undefined} | null,
+    name: string | undefined,
+    bio: string | undefined,
+    languages: Language[] | undefined
 }
 
 export default function EditProfileModal({ closeButtonHandler }: { closeButtonHandler: () => void }) {
     // another method should be defined to handle the updating of profile information when react query is setup
-    // default values should be populated with user data from server
-    const defaultValues: ProfileData = { coverPhoto: null, profilePhoto: null, name: "", bio: "", languages: [] };
+    const { profileQuery: { data, refetch } } = useProfileData();
+    const defaultValues: CurrentProfileData = { 
+        coverPhoto: { file: null, url: data?.coverImageUrl!}, 
+        profilePhoto: { file: null, url: data?.profileImageUrl}, 
+        name: data?.fullName, 
+        bio: data?.bio, 
+        languages: data?.languages as Language[]
+    };
+    
     // maybe define a loading state for the button, depending on how fast the requests are made
     const { 
         control,
@@ -26,7 +34,8 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
         formState: { errors }
     } = useForm({ defaultValues: defaultValues });
 
-    async function onSubmit(data: ProfileData) {
+    async function onSubmit(data: CurrentProfileData) {
+        refetch?.();
         console.log(data);
     }
 
@@ -45,7 +54,7 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <CoverPhoto control={control} errors={errors}/>
                         <ProfilePhoto control={control} errors={errors}/>
-                        <NameAndBio control={control} errors={errors} />
+                        <Textfields control={control} errors={errors} />
                         <Languages control={control} errors={errors} />
                     
                         <div className={styles.modal_footer}>

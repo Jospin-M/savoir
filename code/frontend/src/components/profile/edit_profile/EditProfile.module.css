@@ -175,13 +175,13 @@
 .language_select, .proficiency_select {
     width: 18rem;
     height: 2.5rem;
-    padding: 0.4rem 1rem;
+    padding: 0rem 1rem;
 
     border: 1px solid #E0DED8;
     border-radius: 0.6rem;
 
     font-family: "Roboto Slab", serif;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: #403F4C;
     appearance: none;
     cursor: pointer;

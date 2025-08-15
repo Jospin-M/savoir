@@ -1,10 +1,10 @@
-import type { ProfileData } from "./EditProfileModal.tsx";
+import type { CurrentProfileData } from "./EditProfileModal.tsx";
 
 import styles from "./EditProfile.module.css";
 
 import { Controller, type Control, type FieldErrors } from "react-hook-form";
 
-function NameField({ control, errors }: { control: Control<ProfileData>, errors: FieldErrors<ProfileData> }) {
+function NameField({ control, errors }: { control: Control<CurrentProfileData>, errors: FieldErrors<CurrentProfileData> }) {
     return (
         <Controller 
             name="name"
@@ -31,7 +31,7 @@ function NameField({ control, errors }: { control: Control<ProfileData>, errors:
     );
 }
 
-function BioField({ control }: { control: Control<ProfileData> }) {
+function BioField({ control }: { control: Control<CurrentProfileData> }) {
     return (
         <Controller 
             name="bio"
@@ -62,7 +62,7 @@ function BioField({ control }: { control: Control<ProfileData> }) {
     );
 }
 
-export default function NameAndBio({ control, errors }: { control: Control<ProfileData>, errors: FieldErrors<ProfileData> }) {
+export default function Textfields({ control, errors }: { control: Control<CurrentProfileData>, errors: FieldErrors<CurrentProfileData> }) {
     return(
         <div>
             <NameField control={control} errors={errors}/>

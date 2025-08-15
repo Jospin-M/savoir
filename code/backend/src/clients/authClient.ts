@@ -1,4 +1,4 @@
-import { supabase, createAuthenticatedClient, insertRecord } from "./supabaseClient";
+import { supabase, insertRecord } from "./supabaseClient";
 import { Request, Response, NextFunction } from "express";
 import * as dotenv from "dotenv";
 
@@ -214,36 +214,6 @@ export async function changePassword(req: Request, res: Response, next: NextFunc
             session: authData
         });
     }
-}
-
-/**
- * Retrieves the profile of a user.
- * 
- * @param req - a request containing the id of the user whose profile will be retrieved
- * @param res - a response with the user's profile information
- */
-export async function getProfile(req: Request, res: Response) {
-    const userID = req.params.id;
-    const accessToken: string = req.headers.authorization!;
-    const supabaseClient = createAuthenticatedClient(accessToken);
-    const { data, error } = await supabaseClient
-        .from("users")
-        .select("first_name,last_name,bio,profile_image_url")
-        .eq("id", userID)
-        .maybeSingle();
-        
-    if(error) {
-        console.error("Supabase error:", error);
-        return res.status(500).json({ error: "Failed to fetch user profile" });
-    }
-    
-    const { first_name, last_name, bio, profile_image_url } = data!;
-
-    res.status(201).json({
-        fullName: first_name + " " + last_name,
-        bio: bio,
-        profileImageUrl: profile_image_url
-    });
 }
 
 export async function signOut() { // fully implement with server once option is available
