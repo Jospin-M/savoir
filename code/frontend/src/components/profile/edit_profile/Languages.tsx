@@ -1,25 +1,29 @@
-import type { ProfileData } from "./EditProfileModal.tsx";
+import type { CurrentProfileData } from "./EditProfileModal.tsx";
 
 import styles from "./EditProfile.module.css";
 
 import type { ChangeEvent } from "react";
 import { Controller, type ControllerRenderProps } from "react-hook-form";
 import type { Control, FieldErrors } from "react-hook-form";
+import { useProfileData } from "../../../hooks/useProfileData.ts";
 
 export type Language = {
     name: string,
     proficiency: "Fluent" | "Intermediate" | "Beginner"
 }
 
-function LanguageOptions({ field, index }: { field:  ControllerRenderProps<ProfileData, "languages">, index: number }) {
-    const languages: string[] = ["English", "French"] // will be replaced with list of languages provided by server
+function LanguageOptions({ field, index }: { field:  ControllerRenderProps<CurrentProfileData, "languages">, index: number }) {
+    const { languages: languageNames } = useProfileData();
+    const languages: string[] = []
+    languageNames?.forEach(lang => languages.push(lang.name));
+    
     const proficiencyLevels = ["Fluent", "Intermediate", "Beginner"];
 
     /**
      * Updates the selected language choice in a <select> element.
      */
     function updateLanguageChoice(e: ChangeEvent<HTMLSelectElement>) {
-        const newChoices = [...field.value];
+        const newChoices = [...field.value!];
         newChoices[index] = {...newChoices[index], name: e.target.value};
         field.onChange(newChoices);
     }
@@ -28,20 +32,20 @@ function LanguageOptions({ field, index }: { field:  ControllerRenderProps<Profi
      * Updates the selected language choice in a <select> element.
      */
     function updateProficiencyChoice(e: ChangeEvent<HTMLSelectElement>) {
-        const newChoices = [...field.value];
+        const newChoices = [...field.value!];
         newChoices[index] = {...newChoices[index], proficiency: e.target.value as "Fluent" | "Intermediate" | "Beginner"};
         field.onChange(newChoices);
     }
 
     return (
         <div className={styles.language_items_container}>
-            <select className={styles.language_select} value={field.value[index].name} onChange={updateLanguageChoice}>
+            <select className={styles.language_select} value={field.value![index].name} onChange={updateLanguageChoice}>
                 {languages.map((lang) => (
                     <option key={lang} value={lang}>{lang}</option>
                 ))}
             </select>
 
-            <select className={styles.proficiency_select} value={field.value[index].proficiency} onChange={updateProficiencyChoice}>
+            <select className={styles.proficiency_select} value={field.value![index].proficiency} onChange={updateProficiencyChoice}>
                 {proficiencyLevels.map((lvl) => (
                     <option key={lvl} value={lvl}>{lvl}</option>
                 ))}
@@ -59,7 +63,7 @@ function LanguageOptions({ field, index }: { field:  ControllerRenderProps<Profi
  *
  * @param knownLanguages - The languages the user has previously selected.
  */
-function createLanguageItems(knownLanguages: Language[], field: ControllerRenderProps<ProfileData, "languages">) {
+function createLanguageItems(knownLanguages: Language[], field: ControllerRenderProps<CurrentProfileData, "languages">) {
     const languageItems: React.JSX.Element[] = []
     
     knownLanguages.forEach((lang, index) => {
@@ -71,7 +75,7 @@ function createLanguageItems(knownLanguages: Language[], field: ControllerRender
                     type="button" 
                     className={styles.remove_language}
                     onClick={() => {
-                        const newValue = field.value.filter((value) => value !== lang);
+                        const newValue = field.value!.filter((value) => value !== lang);
                         field.onChange(newValue);
                     }}
                 >
@@ -84,11 +88,13 @@ function createLanguageItems(knownLanguages: Language[], field: ControllerRender
     return languageItems;
 }
 
-export default function Languages({ control, errors }: { control: Control<ProfileData>, errors: FieldErrors<ProfileData> }) {
+export default function Languages({ control, errors }: { control: Control<CurrentProfileData>, errors: FieldErrors<CurrentProfileData> }) {
     /**
      * Validates an array of Language objects according to length and uniqueness rules.
      */
-    function formValidator(value: Language[]) {
+    function formValidator(value: Language[] | undefined) {
+        if (!value) return "At least 1 language is required."; 
+
         if(value.length >= 5) {
             return "Maximum 5 languages allowed.";
         } else if(value.length < 1) {
@@ -114,14 +120,14 @@ export default function Languages({ control, errors }: { control: Control<Profil
                 <div className={styles.form_group}>
                     <label htmlFor={"languages"}>Languages</label>
                     
-                    { createLanguageItems(field.value, field) }
+                    { createLanguageItems(field.value!, field) }
 
                     <button 
                         id={"languages"}
                         type={"button"} 
                         className={styles.add_language} 
                         onClick={() => {
-                            field.onChange([...field.value, { name: "English", proficiency: "Beginner" }]);
+                            field.onChange([...field.value!, { name: "English", proficiency: "Beginner" }]);
                         }}
                     >
                         <i className={"ri-add-circle-line"} />

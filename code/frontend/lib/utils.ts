@@ -53,10 +53,7 @@ export async function sendHTTPRequest(endpoint: string, method: string, payload:
  * @param method - the HTTP method to use
  * @param body - the payload sent from the browser.
  */
-async function createAuthenticatedHTTPRequest(method: string, body: object) {
-    const { data: { session } } = await supabase.auth.getSession();
-    const { access_token } = session!;
-
+async function createAuthenticatedHTTPRequest(method: string, body: object, access_token: string) {
     if(method === "GET") {
         return {
             method: method,
@@ -86,9 +83,9 @@ async function createAuthenticatedHTTPRequest(method: string, body: object) {
  * 
  * @returns the server's response
  */
-export async function sendAuthenticatedHTTPRequest(endpoint: string, method: string, payload: object) {
+export async function sendAuthenticatedHTTPRequest(endpoint: string, method: string, payload: object, access_token: string) {
     const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
-    const result = await fetch(DOMAIN + "api" + endpoint, await createAuthenticatedHTTPRequest(method, payload));
+    const result = await fetch(DOMAIN + "api" + endpoint, await createAuthenticatedHTTPRequest(method, payload, access_token));
     const response = await result.json();
 
     return response;

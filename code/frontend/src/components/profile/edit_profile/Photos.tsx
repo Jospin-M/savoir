@@ -1,19 +1,21 @@
 import UploadButton from "./UploadButton.tsx";
-import type { ProfileData } from "./EditProfileModal.tsx";
+import type { CurrentProfileData } from "./EditProfileModal.tsx";
 
 import styles from "./EditProfile.module.css";
 
 import { Controller, type Control, type FieldErrors } from "react-hook-form";
 
-export function validateFileSize(value: { file: File | null, url: string } | null) {
+export function validateFileSize(value: { file: File | null, url: string | undefined} | null) {
     if(value?.file) {
         if(value.file.size >= 5e6) {
             return "File too large. Maximum allowed size is 5MB."
         }
     }
+
+    return true;
 }
 
-export function CoverPhoto({ control, errors }: { control: Control<ProfileData>, errors: FieldErrors<ProfileData> }) {
+export function CoverPhoto({ control, errors }: { control: Control<CurrentProfileData>, errors: FieldErrors<CurrentProfileData> }) {
     return (
         <Controller 
             name="coverPhoto"
@@ -36,7 +38,7 @@ export function CoverPhoto({ control, errors }: { control: Control<ProfileData>,
     );
 }
 
-export function ProfilePhoto({ control, errors }: { control: Control<ProfileData>, errors: FieldErrors<ProfileData> }) {
+export function ProfilePhoto({ control, errors }: { control: Control<CurrentProfileData>, errors: FieldErrors<CurrentProfileData> }) {
     return (
         <Controller 
             name="profilePhoto"

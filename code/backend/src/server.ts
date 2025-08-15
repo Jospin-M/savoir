@@ -1,4 +1,6 @@
 import authRouter from "./routes/authRoutes";
+import profileRouter from "./routes/profileRoutes";
+import referenceRotuer from "./routes/referenceRoutes";
 
 import cors from "cors";
 import helmet from "helmet";
@@ -12,7 +14,12 @@ app.use(helmet());
 app.use(morgan("dev"));
 app.use(express.json());
 
-app.use("/api/auth", authRouter);
+const API_ROOT = "/api/";
+
+app.use(API_ROOT + "auth", authRouter);
+app.use(API_ROOT + "profile", profileRouter);
+app.use(API_ROOT + "reference", referenceRotuer)
+
 
 const PORT = 4000;
 

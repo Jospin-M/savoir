@@ -14,14 +14,14 @@
     padding-top: 1rem;
 }
 
-.cover_photo {
+.cover_photo_container {
     width: 98.5%;
     height: 70%;
 
     border-radius: 10rem;
 }
 
-.cover_photo_placeholder {
+.cover_photo {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,9 +29,6 @@
     width: 100%;
     height: 100%;
     border-radius: 0.7rem;
-
-    color: #999;
-    background: #E0E0E0
 }
 
 .profile_picture_container {

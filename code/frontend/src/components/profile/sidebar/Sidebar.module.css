@@ -1,5 +1,12 @@
+.sidebar_container {
+    display: flex;
+
+    width: 23rem;
+    min-height: 28rem;
+}
+
 .profile_sidebar {
-    width: 27%;
+    width: 100%;
     padding-left: 1.5rem;
     margin-bottom: 2rem;
     z-index: 1;
@@ -15,24 +22,21 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-#profile {
-    height: 10rem;
-}
-
 .card_header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    padding-bottom: -1rem;
 }
 
 .card_header h2 {
-    font-family: "Roboto Bold", sans-serif;
-    font-size: 1rem;
-    font-weight: bolder;
-    color: #2C2C2C;
-
     margin: 0;
+    
+    font-family: "Roboto Bold", sans-serif;
+    font-weight: bolder;
     font-size: 1.2rem;
+    color: #2C2C2C;
 }
 
 .card_header [class^=ri-] {
@@ -43,10 +47,12 @@
     cursor: pointer;
 }
 
+#profile {
+    max-height: 10rem;
+}
+
 .bio_text {
-    height: 75%;
-    margin-bottom: 1rem;
-    line-height: 1.4;
+    line-height: 1.2;
 
     font-family: "Roboto", sans-serif;
     font-size: 1.05rem;
@@ -83,10 +89,6 @@
 
 .language_level span.active {
     background-color: #EC9A29;
-}
-  
-.sidebar_container {
-    display: flex;
 }
 
 .edit_profile_button_container {
