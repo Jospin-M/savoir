@@ -7,7 +7,7 @@ import { Controller, type ControllerRenderProps } from "react-hook-form";
 import type { Control, FieldErrors } from "react-hook-form";
 import { useProfileData } from "../../../hooks/useProfileData.ts";
 
-export type Language = {
+export type LanguageItem = {
     name: string,
     proficiency: "Fluent" | "Intermediate" | "Beginner"
 }
@@ -63,7 +63,7 @@ function LanguageOptions({ field, index }: { field:  ControllerRenderProps<Curre
  *
  * @param knownLanguages - The languages the user has previously selected.
  */
-function createLanguageItems(knownLanguages: Language[], field: ControllerRenderProps<CurrentProfileData, "languages">) {
+function createLanguageItems(knownLanguages: LanguageItem[], field: ControllerRenderProps<CurrentProfileData, "languages">) {
     const languageItems: React.JSX.Element[] = []
     
     knownLanguages.forEach((lang, index) => {
@@ -92,10 +92,10 @@ export default function Languages({ control, errors }: { control: Control<Curren
     /**
      * Validates an array of Language objects according to length and uniqueness rules.
      */
-    function formValidator(value: Language[] | undefined) {
+    function formValidator(value: LanguageItem[] | undefined) {
         if (!value) return "At least 1 language is required."; 
 
-        if(value.length >= 5) {
+        if(value.length > 5) {
             return "Maximum 5 languages allowed.";
         } else if(value.length < 1) {
             return "At least 1 language is required.";

@@ -38,24 +38,18 @@ function BioField({ control }: { control: Control<CurrentProfileData> }) {
             control={control}
             render= {({ field }) => (
                 <div className={styles.form_group}>
-                    <label>Bio</label>
+                    <label htmlFor={"bio"}>Bio</label>
 
                     {/* If the user already has a bio, we pre-populate the textarea with it. Otherwise, the default is shown.*/}
                     
-                    { field.value ? 
-                        <textarea 
-                            name={field.name}
-                            className={styles.form_control} 
-                            maxLength={230} 
-                            value={field.value}
-                            onChange={e => field.onChange(e.target.value)}/> : 
-                        <textarea
-                            name={field.name}
-                            className={styles.form_control} 
-                            maxLength={230} 
-                            placeholder="Describe your skills, passions, and experience."
+                    <textarea
+                        id={"bio"}
+                        name={field.name}
+                        className={styles.form_control} 
+                        maxLength={230} 
+                        value={field.value}
+                        onChange={e => field.onChange(e.target.value)}
                         />
-                    }
                 </div>
             )}
         />
