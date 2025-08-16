@@ -1,19 +1,20 @@
 import { CoverPhoto, ProfilePhoto } from "./Photos.tsx";
 import Textfields from "./Textfields.tsx";
 import Languages from "./Languages.tsx";
-import type { Language } from "../edit_profile/Languages.tsx";
 
 import styles from "./EditProfile.module.css";
 
 import { useForm } from "react-hook-form";
+import type { LanguageItem } from "./Languages.tsx";
 import { useProfileData } from "../../../hooks/useProfileData.ts";
+import supabase, { sendAuthenticatedHTTPRequest } from "../../../../lib/utils.ts";
 
 export type CurrentProfileData = {
     coverPhoto: { file: File | null, url: string | undefined} | null,
     profilePhoto: { file: File | null, url: string | undefined} | null,
     name: string | undefined,
     bio: string | undefined,
-    languages: Language[] | undefined
+    languages: LanguageItem[] | undefined
 }
 
 export default function EditProfileModal({ closeButtonHandler }: { closeButtonHandler: () => void }) {
@@ -24,7 +25,7 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
         profilePhoto: { file: null, url: data?.profileImageUrl}, 
         name: data?.fullName, 
         bio: data?.bio, 
-        languages: data?.languages as Language[]
+        languages: data?.languages as LanguageItem[]
     };
     
     // maybe define a loading state for the button, depending on how fast the requests are made
@@ -34,11 +35,18 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
         formState: { errors }
     } = useForm({ defaultValues: defaultValues });
 
+    const hasErrors = !!errors.coverPhoto || !!errors.profilePhoto || !!errors.name || !!errors.bio || !!errors.languages;
+    
     async function onSubmit(data: CurrentProfileData) {
-        refetch?.();
-        console.log(data);
-    }
+        const { data: { session } } = await supabase.auth.getSession();
 
+        await sendAuthenticatedHTTPRequest("/profile/me", "POST", data, session?.access_token!);
+        await refetch?.(); // refresh the data on the page so that the data stored in the query client cache is fresh
+        // NOTE: refetch() is used instead of invalidateQueryClient() since hooks can only be called in components
+
+        closeButtonHandler();
+    }
+ 
     return (
         <div className={styles.modal_overlay}>
             <div className={styles.modal}>
@@ -46,7 +54,7 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
                     <h2>Edit Profile</h2>
                     
                     <button className={styles.close_button} onClick={() => closeButtonHandler()}>
-                        <i className={"ri-close-line"}></i>
+                        <i className={"ri-close-line"}/>
                     </button>
                 </div>
 
@@ -54,11 +62,13 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <CoverPhoto control={control} errors={errors}/>
                         <ProfilePhoto control={control} errors={errors}/>
-                        <Textfields control={control} errors={errors} />
-                        <Languages control={control} errors={errors} />
+                        <Textfields control={control} errors={errors}/>
+                        <Languages control={control} errors={errors}/>
                     
                         <div className={styles.modal_footer}>
-                            <button className={styles.save_button} type="submit" >Save</button>
+                            <button className={styles.save_button} type="submit" disabled={hasErrors}>
+                                Save
+                            </button>
                         </div>
                     </form>
                 </div>

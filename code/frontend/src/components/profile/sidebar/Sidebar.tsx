@@ -2,7 +2,7 @@
 
 import EditProfileModal from "../edit_profile/EditProfileModal";
 import Button from "../../common/Button";
-import type { Language } from "../edit_profile/Languages";
+import type { LanguageItem } from "../edit_profile/Languages";
 import styles from "./Sidebar.module.css";
 
 import { useState, type JSX } from "react";
@@ -13,7 +13,7 @@ import { useProfileData } from "../../../hooks/useProfileData";
  * 
  * @param languages A list of all the languages known by the user.
  */
-export function createLanguageItems(languages: Language[]) {
+export function createLanguageItems(languages: LanguageItem[]) {
     /**
      * Makes use of the user's profiency level in the language to determine how many stars should be shown next to the name of the language
      * on their profile.
