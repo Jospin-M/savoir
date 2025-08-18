@@ -3,28 +3,31 @@ import type { CurrentProfileData } from "./EditProfileModal.tsx";
 import styles from "./EditProfile.module.css";
 
 import type { ChangeEvent } from "react";
-import { Controller, type ControllerRenderProps } from "react-hook-form";
 import type { Control, FieldErrors } from "react-hook-form";
 import { useProfileData } from "../../../hooks/useProfileData.ts";
-
-export type LanguageItem = {
-    name: string,
-    proficiency: "Fluent" | "Intermediate" | "Beginner"
-}
+import type { LanguageItem } from "../../../../lib/queryFunctions.ts";
+import { Controller, type ControllerRenderProps } from "react-hook-form";
 
 function LanguageOptions({ field, index }: { field:  ControllerRenderProps<CurrentProfileData, "languages">, index: number }) {
-    const { languages: languageNames } = useProfileData();
-    const languages: string[] = []
-    languageNames?.forEach(lang => languages.push(lang.name));
-    
     const proficiencyLevels = ["Fluent", "Intermediate", "Beginner"];
-
+    
+    // obtain the list of languages for use in the display of available options to be selected
+    const languageNames: string[] = [];
+    const { languages: languageData } = useProfileData();
+    languageData?.forEach(lang => languageNames.push(lang.name));
+    
     /**
      * Updates the selected language choice in a <select> element.
      */
     function updateLanguageChoice(e: ChangeEvent<HTMLSelectElement>) {
         const newChoices = [...field.value!];
         newChoices[index] = {...newChoices[index], name: e.target.value};
+
+        // using the name of the language, we find the matching entry in the languageData array and 
+        // obtain its id. a reference to the language id needs to be maintained so that the server 
+        // can correctly process the updated language choices.
+        const { id: newLanguageID } = languageData?.find(lang => lang.name == newChoices[index].name)!;
+        newChoices[index] = {...newChoices[index], id: newLanguageID};
         field.onChange(newChoices);
     }
 
@@ -34,13 +37,14 @@ function LanguageOptions({ field, index }: { field:  ControllerRenderProps<Curre
     function updateProficiencyChoice(e: ChangeEvent<HTMLSelectElement>) {
         const newChoices = [...field.value!];
         newChoices[index] = {...newChoices[index], proficiency: e.target.value as "Fluent" | "Intermediate" | "Beginner"};
+        
         field.onChange(newChoices);
     }
 
     return (
         <div className={styles.language_items_container}>
             <select className={styles.language_select} value={field.value![index].name} onChange={updateLanguageChoice}>
-                {languages.map((lang) => (
+                {languageNames.map((lang) => (
                     <option key={lang} value={lang}>{lang}</option>
                 ))}
             </select>
@@ -127,7 +131,7 @@ export default function Languages({ control, errors }: { control: Control<Curren
                         type={"button"} 
                         className={styles.add_language} 
                         onClick={() => {
-                            field.onChange([...field.value!, { name: "English", proficiency: "Beginner" }]);
+                            field.onChange([...field.value!, { name: "English", proficiency: "Beginner", id: 1 }]);
                         }}
                     >
                         <i className={"ri-add-circle-line"} />
