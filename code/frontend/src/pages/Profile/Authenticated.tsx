@@ -17,7 +17,8 @@ export default function Authenticated() {
     const { data: profileData, refetch } = useQueryClient<ProfileData>(
         ["profileData", id], 
         getProfileData, 
-        id);
+        id
+    );
 
     const { data: languagesData } = useQueryClient<Language[]>(["languages"], getLanguages);
 

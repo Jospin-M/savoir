@@ -4,9 +4,10 @@ import Languages from "./Languages.tsx";
 
 import styles from "./EditProfile.module.css";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import type { LanguageItem } from "./Languages.tsx";
 import { useProfileData } from "../../../hooks/useProfileData.ts";
+import type { LanguageItem } from "../../../../lib/queryFunctions.ts";
 import supabase, { sendAuthenticatedHTTPRequest } from "../../../../lib/utils.ts";
 
 export type CurrentProfileData = {
@@ -25,22 +26,25 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
         profilePhoto: { file: null, url: data?.profileImageUrl}, 
         name: data?.fullName, 
         bio: data?.bio, 
-        languages: data?.languages as LanguageItem[]
+        languages: data?.languages
     };
     
-    // maybe define a loading state for the button, depending on how fast the requests are made
+    // button should be disabled as requests are being made as a form of rate limiting
     const { 
         control,
         handleSubmit, 
         formState: { errors }
     } = useForm({ defaultValues: defaultValues });
-
-    const hasErrors = !!errors.coverPhoto || !!errors.profilePhoto || !!errors.name || !!errors.bio || !!errors.languages;
     
-    async function onSubmit(data: CurrentProfileData) {
-        const { data: { session } } = await supabase.auth.getSession();
+    const hasErrors = !!errors.coverPhoto || !!errors.profilePhoto || !!errors.name || !!errors.bio || !!errors.languages;
+    const [isLoading, setIsLoading] = useState(false);
 
-        await sendAuthenticatedHTTPRequest("/profile/me", "POST", data, session?.access_token!);
+    async function onSubmit(data: CurrentProfileData) {
+        setIsLoading(true);
+    
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        await sendAuthenticatedHTTPRequest("/profile/me", "PUT", data, session?.access_token!);
         await refetch?.(); // refresh the data on the page so that the data stored in the query client cache is fresh
         // NOTE: refetch() is used instead of invalidateQueryClient() since hooks can only be called in components
 
@@ -66,7 +70,7 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
                         <Languages control={control} errors={errors}/>
                     
                         <div className={styles.modal_footer}>
-                            <button className={styles.save_button} type="submit" disabled={hasErrors}>
+                            <button className={styles.save_button} type="submit" disabled={hasErrors && isLoading}>
                                 Save
                             </button>
                         </div>

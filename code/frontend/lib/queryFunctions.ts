@@ -1,5 +1,10 @@
 import supabase, { sendAuthenticatedHTTPRequest } from "../lib/utils.ts";
-import type { LanguageItem } from "../src/components/profile/edit_profile/Languages.tsx";
+
+export type LanguageItem = {
+    id: number,
+    name: string,
+    proficiency: "Fluent" | "Intermediate" | "Beginner"
+}
 
 export type ProfileData = {
     fullName: string,
@@ -21,7 +26,8 @@ export async function getProfileData(id?: string): Promise<ProfileData> {
     return data;
 }
 
-export type LanguageNameOnly = {
+export type Language = {
+    id: string,
     name: string
 }
 
@@ -29,9 +35,9 @@ export type LanguageNameOnly = {
  * Retrieves the list of languages the user can potentially add to their profile.
  * 
  * NOTE: "Potentially" is used here since the user can only select a maximum of 5 languages, but
- * the response contains a list longer than 5.
+ * the response returned by the server contains a list longer than 5.
  */
-export async function getLanguages(): Promise<LanguageNameOnly[]> {
+export async function getLanguages(): Promise<Language[]> {
     const { data: { session } } = await supabase.auth.getSession();
     const data = await sendAuthenticatedHTTPRequest(`/reference/languages`, "GET", {}, session?.access_token!);
     

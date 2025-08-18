@@ -7,7 +7,7 @@ export async function getLanguages(req: Request, res: Response) {
     
     const { data } = await supabaseClient
         .from("languages")
-        .select("name");
+        .select("id,name");
 
-    res.status(201).json(data);
+    res.status(200).json(data);
 }
