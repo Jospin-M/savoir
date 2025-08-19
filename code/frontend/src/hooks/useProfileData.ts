@@ -8,7 +8,7 @@ export const ProfileDataContext = createContext<{
         data: ProfileData | null,
         refetch: ((options?: RefetchOptions | undefined) => Promise<QueryObserverResult<ProfileData, Error>>) | null
     },
-    languages: { id: number, name: string, proficiency: string }[] | null
+    languages: { id: number, name: string}[] | null
 }>({ userID: "", profileQuery: { data: null, refetch: null }, languages: null });
 
 export const useProfileData = () => useContext(ProfileDataContext);

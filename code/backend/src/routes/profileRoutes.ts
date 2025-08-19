@@ -1,4 +1,4 @@
-import { getProfile, updateProfile } from "../clients/profileClient";
+import { getProfile, updateProfile } from "../clients/profilesClient";
 
 import * as express from "express";
 

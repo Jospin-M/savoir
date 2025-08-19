@@ -1,6 +1,7 @@
 import authRouter from "./routes/authRoutes";
+import fileRoutes from "./routes/filesRoutes";
 import profileRouter from "./routes/profileRoutes";
-import referenceRotuer from "./routes/referenceRoutes";
+import referenceRouter from "./routes/referenceRoutes";
 
 import cors from "cors";
 import helmet from "helmet";
@@ -17,9 +18,9 @@ app.use(express.json());
 const API_ROOT = "/api/";
 
 app.use(API_ROOT + "auth", authRouter);
-app.use(API_ROOT + "profile", profileRouter);
-app.use(API_ROOT + "reference", referenceRotuer)
-
+app.use(API_ROOT + "files", fileRoutes);
+app.use(API_ROOT + "profiles", profileRouter);
+app.use(API_ROOT + "references", referenceRouter)
 
 const PORT = 4000;
 
