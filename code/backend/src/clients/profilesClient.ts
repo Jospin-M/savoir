@@ -1,18 +1,11 @@
 import { createAuthenticatedClient } from "./supabaseClient";
 import { Request, Response } from "express";
-import type { SupabaseClient } from "@supabase/supabase-js";
-
-function createSupabaseClient(req: Request): SupabaseClient<any, "public", any> {
-    const access_token: string = req.headers.authorization!;
-
-    return createAuthenticatedClient(access_token);
-}
 
 /**
  * Retrieves the languages known by the user along with their profiency levels in those languages.
  */
 async function getUserLanguages(req: Request) {
-    const { data } = await createSupabaseClient(req)
+    const { data } = await createAuthenticatedClient(req)
         .from("users_languages")
         .select(`
             proficiency,
@@ -47,10 +40,10 @@ async function getUserLanguages(req: Request) {
  * @param res - a response with the user's profile information
  */
 export async function getProfile(req: Request, res: Response) {
-    const supabaseClient = createSupabaseClient(req);
+    const supabaseClient = createAuthenticatedClient(req);
     const { data, error } = await supabaseClient
         .from("users")
-        .select("first_name,last_name,bio,profile_photo_url,cover_photo_url")
+        .select("first_name,last_name,bio,profile_photo_path,cover_photo_path")
         .maybeSingle();
         
     if(error) {
@@ -58,37 +51,44 @@ export async function getProfile(req: Request, res: Response) {
         return res.status(500).json({ error: "Failed to fetch user profile" });
     }
 
-    const { first_name, last_name, bio, profile_photo_url, cover_photo_url } = data!;
+    const { first_name, last_name, bio, profile_photo_path, cover_photo_path } = data!;
     const languageData = await getUserLanguages(req) ;
     
     res.status(200).json({
         fullName: first_name + " " + last_name,
         bio: bio,
-        profileImageUrl: profile_photo_url,
-        coverImageUrl: cover_photo_url,
+        profilePhotoPath: profile_photo_path,
+        coverPhotoPath: cover_photo_path,
         languages: languageData
     });
 }
 
 type UpdatedProfileData = {
-    coverPhoto: { file: File, url: string },
-    profilePhoto: { file: File, url: string },
     name: string,
     bio: string,
-    languages: { id: number, name: string, proficiency: string }[]
+    languages: { id: number, name: string, proficiency: string }[],
+    coverPhoto: string,
+    profilePhoto: string
 }
 
 export async function updateProfile(req: Request, res: Response) {
-    const { coverPhoto, profilePhoto, name, bio, languages }: UpdatedProfileData = req.body;
-
-    // investigate updating cover and profile photos with s3. this should happen first, then we use the urls provided to update the users
-    // record - this is only if there isn't an automatic update. check rules for this
-    const supabaseClient = createSupabaseClient(req);
+    const supabaseClient = createAuthenticatedClient(req);
+    const { name, bio, coverPhoto, profilePhoto, languages }: UpdatedProfileData = req.body;
     const [first_name, last_name] = name.split(/ (.+)/).filter(Boolean);
 
+    // right now, the logic doesn't take into account the fact that the user might not change their photos
+    // after updating the Context in Authenticated to use the blobs of the files from the database, figure out
+    // a way so that we don't have to manually check which fields were included in the request. this way, we can
+    // just update the record with confidence that values won't be lost
     await supabaseClient
         .from("users")
-        .upsert({ first_name: first_name, last_name: last_name, bio: bio });
+        .upsert({ 
+            first_name: first_name, 
+            last_name: last_name, 
+            bio: bio, 
+            profile_photo_path: profilePhoto, 
+            cover_photo_path: coverPhoto 
+        });
     
     const { data: { user } } = await supabaseClient.auth.getUser();
     const { id } = user!;

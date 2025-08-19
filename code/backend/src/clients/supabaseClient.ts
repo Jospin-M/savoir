@@ -1,4 +1,5 @@
 import { createClient, PostgrestSingleResponse, type SupabaseClient } from "@supabase/supabase-js";
+import { Request } from "express";
 import { resolve } from "path";
 
 import * as dotenv from "dotenv";
@@ -14,13 +15,15 @@ export { supabase };
 /**
  * Creates a Supabase client using the access token of an authenticated user.
  * 
- * @param accessToken - an access token received from Supabase 
+ * @param request - a request from the client containing their access token
  */
-export function createAuthenticatedClient(accessToken: string) {
+export function createAuthenticatedClient(request: Request) {
+    const access_token: string = request.headers.authorization!;
+    
     return createClient(supabaseURL, supabaseKey, {
         global: {
             headers: { 
-                Authorization: accessToken
+                Authorization: access_token
             }
         }
     });

@@ -29,3 +29,13 @@ export async function createClient() {
     }
   )
 }
+
+/**
+ * Retrieves the access token for the current Supabase session.
+ */
+export async function getSupabaseSession(): Promise<string> {
+    const supabase = await createClient();
+    const { data: { session } } = await supabase.auth.getSession();
+
+    return session?.access_token!;
+}

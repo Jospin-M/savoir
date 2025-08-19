@@ -1,4 +1,4 @@
-import supabase, { sendAuthenticatedHTTPRequest } from "../lib/utils.ts";
+import { sendAuthenticatedHTTPRequest } from "../lib/utils.ts";
 
 export type LanguageItem = {
     id: number,
@@ -9,8 +9,8 @@ export type LanguageItem = {
 export type ProfileData = {
     fullName: string,
     bio: string,
-    profileImageUrl: string,
-    coverImageUrl: string,
+    profilePhotoPath: string,
+    coverPhotoPath: string,
     languages: LanguageItem[]
 }
 
@@ -20,8 +20,7 @@ export type ProfileData = {
  * @param id - the user's id
  */
 export async function getProfileData(id?: string): Promise<ProfileData> {
-    const { data: { session } } = await supabase.auth.getSession();
-    const data = await sendAuthenticatedHTTPRequest(`/profile/${id}`, "GET", {}, session?.access_token!);
+    const data = await sendAuthenticatedHTTPRequest(`/profiles/${id}`, "GET");
     
     return data;
 }
@@ -38,8 +37,7 @@ export type Language = {
  * the response returned by the server contains a list longer than 5.
  */
 export async function getLanguages(): Promise<Language[]> {
-    const { data: { session } } = await supabase.auth.getSession();
-    const data = await sendAuthenticatedHTTPRequest(`/reference/languages`, "GET", {}, session?.access_token!);
+    const data = await sendAuthenticatedHTTPRequest(`/references/languages`, "GET");
     
     return data;
 }
