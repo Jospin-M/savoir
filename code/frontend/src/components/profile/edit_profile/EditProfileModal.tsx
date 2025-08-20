@@ -83,11 +83,7 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
         } else {
             updatedProfile.coverPhoto = data?.coverPhoto.location as string;
             updatedProfile.profilePhoto = data?.profilePhoto.location as string;
-            } 
-        } else {
-            updatedProfile.coverPhoto = data?.coverPhoto.path as string;
-            updatedProfile.profilePhoto = data?.profilePhoto.path as string;
-        }
+        } 
 
         await sendAuthenticatedHTTPRequest("/profiles/me", "PUT", updatedProfile);
         await refetch?.(); // refresh the data on the page so that the data stored in the query client cache is fresh
