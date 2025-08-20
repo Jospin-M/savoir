@@ -5,8 +5,8 @@ import type { QueryObserverResult, RefetchOptions } from "@tanstack/react-query"
 export type ContextProfileData = {
     fullName: string,
     bio: string,
-    profilePhoto: { url: string, path: string},
-    coverPhoto: { url: string, path: string},
+    profilePhoto: { url: string, location: string},
+    coverPhoto: { url: string, location: string},
     languages: LanguageItem[]
 }
 
