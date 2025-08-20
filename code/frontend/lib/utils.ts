@@ -139,5 +139,6 @@ export async function uploadFiles(fileData: UploadData, files: File[], bucket: s
             .uploadToSignedUrl(path, token, compressedFile);
     }
 
+    console.log(filePaths)
     return filePaths;
 }

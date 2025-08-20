@@ -209,6 +209,10 @@
 
 .nav_bar_profile_pic {
   width: 3.5rem;
+  height: 3.5rem;
+  margin-bottom: 0.5rem;
+  object-fit: cover;
+  image-rendering: smooth;
 }
 
 .sidebar {

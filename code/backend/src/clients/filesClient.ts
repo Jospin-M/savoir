@@ -15,7 +15,7 @@ export async function getPresignedURL(req: Request, res: Response) {
         const { data } = await supabaseClient
             .storage
             .from(bucket)
-            .createSignedUploadUrl(`${folder}/${id}`, { upsert: true });
+            .createSignedUploadUrl(`${folder}/${id + Date.now()}`, { upsert: true });
 
         uploadURLS[folder] = data;
     }

@@ -9,8 +9,14 @@ export type LanguageItem = {
 export type ProfileData = {
     fullName: string,
     bio: string,
-    profilePhotoPath: string,
-    coverPhotoPath: string,
+    profilePhoto: {
+        buffer: { data: number[], name: string },
+        location: string
+    },
+    coverPhoto: {
+        buffer: { data: number[], name: string },
+        location: string
+    },
     languages: LanguageItem[]
 }
 
