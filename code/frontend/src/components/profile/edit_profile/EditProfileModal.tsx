@@ -11,8 +11,8 @@ import type { LanguageItem } from "../../../../lib/queryFunctions.ts";
 import { sendAuthenticatedHTTPRequest, uploadFiles } from "../../../../lib/utils.ts";
 
 export type CurrentProfileData = {
-    coverPhoto: { file: File | null, url: string | undefined } | null,
-    profilePhoto: { file: File | null, url: string | undefined } | null,
+    coverPhoto: { file: File | null, url: string | undefined, location: string | undefined } | null,
+    profilePhoto: { file: File | null, url: string | undefined, location: string| undefined } | null,
     name: string | undefined,
     bio: string | undefined,
     languages: LanguageItem[] | undefined
@@ -71,10 +71,18 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
             
             if(folders.includes("covers")) {
                 updatedProfile.coverPhoto = filePaths.find((path) => path.includes("covers"))!;
+            } else {
+                updatedProfile.coverPhoto = data?.coverPhoto.location as string;
             }
             
             if(folders.includes("avatars")) {
                 updatedProfile.profilePhoto = filePaths.find((path) => path.includes("avatars"))!;
+            } else {
+                updatedProfile.profilePhoto = data?.profilePhoto.location as string;
+            }
+        } else {
+            updatedProfile.coverPhoto = data?.coverPhoto.location as string;
+            updatedProfile.profilePhoto = data?.profilePhoto.location as string;
             } 
         } else {
             updatedProfile.coverPhoto = data?.coverPhoto.path as string;
@@ -91,8 +99,8 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
     
     // pre-populate fields with data provided by Context
     const defaultValues: CurrentProfileData = { 
-        coverPhoto: { file: null, url: data?.coverPhoto!.url }, 
-        profilePhoto: { file: null, url: data?.profilePhoto.url }, 
+        coverPhoto: { file: null, url: data?.coverPhoto!.url, location: data?.coverPhoto!.location }, 
+        profilePhoto: { file: null, url: data?.profilePhoto.url, location: data?.profilePhoto!.location  }, 
         name: data?.fullName, 
         bio: data?.bio, 
         languages: data?.languages

@@ -35,7 +35,8 @@ async function getUserLanguages(req: Request) {
 }
 
 async function getPictures(paths: string[], req: Request) {
-    const buffers = []
+    const buffers: Buffer[] = [];
+    const promises = [];
     
     for(const path of paths) {
         const { data } = await createAuthenticatedClient(req)
@@ -44,11 +45,14 @@ async function getPictures(paths: string[], req: Request) {
             .download(path);
             
         if(data) {
-            const arrayBuffer = await data.arrayBuffer()!;
-            buffers.push(Buffer.from(arrayBuffer));
+            promises.push(data.arrayBuffer());
         }
     }
 
+    const results = await Promise.all(promises)
+    results.forEach(buffer => {
+        buffers.push(Buffer.from(buffer))
+    });
     return buffers;
 }
 
@@ -71,8 +75,10 @@ export async function getProfile(req: Request, res: Response) {
     }
 
     const { first_name, last_name, bio, profile_photo_path, cover_photo_path } = data!;
-    const languageData = await getUserLanguages(req); //try executing these at the same time
-    const buffers = await getPictures([profile_photo_path, cover_photo_path], req);
+    const [languageData, buffers] = await Promise.all([
+        getUserLanguages(req),
+        getPictures([profile_photo_path, cover_photo_path], req)
+    ]);
     
     res.status(200).json({
         fullName: first_name + " " + last_name,
@@ -95,11 +101,7 @@ export async function updateProfile(req: Request, res: Response) {
     const supabaseClient = createAuthenticatedClient(req);
     const { name, bio, coverPhoto, profilePhoto, languages }: UpdatedProfileData = req.body;
     const [first_name, last_name] = name.split(/ (.+)/).filter(Boolean);
-    console.log(coverPhoto)
-    // right now, the logic doesn't take into account the fact that the user might not change their photos
-    // after updating the Context in Authenticated to use the blobs of the files from the database, figure out
-    // a way so that we don't have to manually check which fields were included in the request. this way, we can
-    // just update the record with confidence that values won't be lost. also provide a default value in the database for these images
+
     await supabaseClient
         .from("users")
         .upsert({ 
@@ -112,6 +114,7 @@ export async function updateProfile(req: Request, res: Response) {
     
     const { data: { user } } = await supabaseClient.auth.getUser();
     const { id } = user!;
+  
     await supabaseClient
         .rpc("update_user_languages", {
             new_rows: languages,

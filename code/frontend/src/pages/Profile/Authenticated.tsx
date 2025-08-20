@@ -42,16 +42,16 @@ export default function Authenticated() {
     let contextProfileData: ContextProfileData = {
         fullName: "",
         bio: "",
-        coverPhoto: { url: "", path: "" },
-        profilePhoto: { url: "", path: "" },
+        coverPhoto: { url: "", location: "" },
+        profilePhoto: { url: "", location: "" },
         languages: []
     };
     
     contextProfileData =  {
         fullName: profileData?.fullName,
         bio: profileData?.bio,
-        coverPhoto: { url: pictureURLs[0], path: profileData?.coverPhoto.location }, 
-        profilePhoto: { url: pictureURLs[1], path: profileData?.profilePhoto.location },
+        coverPhoto: { url: pictureURLs[0], location: profileData?.coverPhoto.location }, 
+        profilePhoto: { url: pictureURLs[1], location: profileData?.profilePhoto.location },
         languages: profileData?.languages
     }
 
