@@ -94,7 +94,7 @@ export async function updateProfile(req: Request, res: Response) {
     const supabaseClient = createAuthenticatedClient(req);
     const { name, bio, coverPhoto, profilePhoto, languages }: UpdatedProfileData = req.body;
     const [first_name, last_name] = name.split(/ (.+)/).filter(Boolean);
-
+    console.log(coverPhoto)
     // right now, the logic doesn't take into account the fact that the user might not change their photos
     // after updating the Context in Authenticated to use the blobs of the files from the database, figure out
     // a way so that we don't have to manually check which fields were included in the request. this way, we can
