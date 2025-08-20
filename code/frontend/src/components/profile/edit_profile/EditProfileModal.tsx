@@ -11,47 +11,45 @@ import type { LanguageItem } from "../../../../lib/queryFunctions.ts";
 import { sendAuthenticatedHTTPRequest, uploadFiles } from "../../../../lib/utils.ts";
 
 export type CurrentProfileData = {
-    coverPhoto: { file: File | null, url: string | undefined, blob: Blob | null} | null,
-    profilePhoto: { file: File | null, url: string | undefined, blob: Blob | null} | null,
+    coverPhoto: { file: File | null, url: string | undefined } | null,
+    profilePhoto: { file: File | null, url: string | undefined } | null,
     name: string | undefined,
     bio: string | undefined,
     languages: LanguageItem[] | undefined
 }
 
-export default function EditProfileModal({ closeButtonHandler }: { closeButtonHandler: () => void }) {
-    // another method should be defined to handle the updating of profile information when react query is setup
-    const { profileQuery: { data, refetch }, userID } = useProfileData();
-    const defaultValues: CurrentProfileData = { 
-        coverPhoto: { file: null, url: data?.coverImageUrl!, blob: null }, // remove url parameter since blob can be read on <img> element
-        profilePhoto: { file: null, url: data?.profileImageUrl, blob: null}, 
-        name: data?.fullName, 
-        bio: data?.bio, 
-        languages: data?.languages
-    };
-    
-    // button should be disabled as requests are being made as a form of rate limiting
-    const { 
-        control,
-        handleSubmit, 
-        formState: { errors }
-    } = useForm({ defaultValues: defaultValues });
-    
-    const hasErrors = !!errors.coverPhoto || !!errors.profilePhoto || !!errors.name || !!errors.bio || !!errors.languages;
-    const [isLoading, setIsLoading] = useState(false);
+/**
+ * Prepares file data for upload based on the user’s profile information. 
+ * 
+ * @param profileData - the user’s profile data object. It may include optional 
+ * coverPhoto and profilePhoto entries, each of which can hold a File object.
+ * 
+ * @returns two parallel arrays: one containing the files themselves and one containing 
+ * the corresponding storage folder names.
+ */
+function initializeFiles(profileData: CurrentProfileData): [File[], string[]] {
+    const files: File[] = [];
+    const folders = []; // represents the folders within the storage bucket that the files will go into
 
+    if(profileData.coverPhoto?.file) {
+        folders.push("covers");
+        files.push(profileData.coverPhoto?.file)
+    } 
+    
+    if(profileData.profilePhoto?.file!) {
+        folders.push("avatars");
+        files.push(profileData.profilePhoto?.file!);
+    }
+
+    return [files, folders];
+}
+
+export default function EditProfileModal({ closeButtonHandler }: { closeButtonHandler: () => void }) {
+    const [isLoading, setIsLoading] = useState(false);
+    const { profileQuery: { data, refetch }, userID } = useProfileData();
+    
     async function onSubmit(profileData: CurrentProfileData) {
         setIsLoading(true);
-
-        const files: File[] = [];
-        const folders = [];
-
-        if(profileData.coverPhoto?.file) {
-            folders.push("covers");
-            files.push(profileData.coverPhoto?.file)
-        } else if(profileData.profilePhoto?.file!) {
-            folders.push("avatars");
-            files.push(profileData.profilePhoto?.file!);
-        }
 
         const updatedProfile = {
             name: profileData.name,
@@ -59,33 +57,28 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
             languages: profileData.languages,
             coverPhoto: "",
             profilePhoto: ""
-        }
+        };
 
+        const [files, folders] = initializeFiles(profileData);
+        const fileData = { bucket: "user-images", folders: folders, id: userID };
         const compressionOptions = {
-            avatars: {
-                maxSizeMB: 0.2,           
-                maxWidthOrHeight: 300,    
-                useWebWorker: true,       
-                initialQuality: 0.7 
-            },
-            covers: {
-                maxSizeMB: 1,           
-                maxWidthOrHeight: 1280,   
-                useWebWorker: true,
-                initialQuality: 0.8       
-            }
-        }
+            avatars: { maxSizeMB: 0.2, maxWidthOrHeight: 300, useWebWorker: true, initialQuality: 0.7 },
+            covers: { maxSizeMB: 1, maxWidthOrHeight: 1280, useWebWorker: true, initialQuality: 0.8 }
+        };
 
-        if(files.length > 0) {
-            const fileData = { bucket: "user-images", folders: folders, id: userID };
+        if(files.length > 0) { 
             const filePaths = await uploadFiles(fileData, files, "user-images", compressionOptions);
             
             if(folders.includes("covers")) {
                 updatedProfile.coverPhoto = filePaths.find((path) => path.includes("covers"))!;
+            } else {
+                updatedProfile.coverPhoto = data?.coverPhoto.path!;
             }
-
+            
             if(folders.includes("avatars")) {
                 updatedProfile.profilePhoto = filePaths.find((path) => path.includes("avatars"))!;
+            } else {
+                updatedProfile.profilePhoto = data?.profilePhoto.path!
             }
         }
 
@@ -96,6 +89,23 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
         closeButtonHandler();
         setIsLoading(false);
     }
+    
+    // pre-populate fields with data provided by Context
+    const defaultValues: CurrentProfileData = { 
+        coverPhoto: { file: null, url: data?.coverPhoto!.url }, 
+        profilePhoto: { file: null, url: data?.profilePhoto.url }, 
+        name: data?.fullName, 
+        bio: data?.bio, 
+        languages: data?.languages
+    };
+    
+    const { 
+        control,
+        handleSubmit, 
+        formState: { errors }
+    } = useForm({ defaultValues: defaultValues });
+    
+    const hasErrors = !!errors.coverPhoto || !!errors.profilePhoto || !!errors.name || !!errors.bio || !!errors.languages;
  
     return (
         <div className={styles.modal_overlay}>

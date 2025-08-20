@@ -7,8 +7,24 @@ import styles from "../../components/common/Common.module.css";
 
 import { useUserStore } from "../../stores/useUserStore";
 import { useQueryClient } from "../../hooks/useQueryClient";
-import { ProfileDataContext } from "../../hooks/useProfileData";
+import { ProfileDataContext, type ContextProfileData } from "../../hooks/useProfileData";
 import { getProfileData, type ProfileData, getLanguages, type Language } from "../../../lib/queryFunctions.ts";
+
+function createURLs(profileData: ProfileData) {
+    const urls = [];
+    const files = [profileData?.coverPhoto.buffer, profileData?.profilePhoto.buffer];
+    
+    for(let file of files) {
+        if(file) {
+            const byteArray = new Uint8Array(file.data);
+            const blob = new Blob([byteArray]);
+            const url = URL.createObjectURL(blob);
+            urls.push(url);
+        }
+    }
+
+    return urls;
+}
 
 export default function Authenticated() {
     // to decide which page should be shown (authenticated vs. unauthenticated),
@@ -21,11 +37,31 @@ export default function Authenticated() {
     );
 
     const { data: languagesData } = useQueryClient<Language[]>(["languages"], getLanguages);
+    const pictureURLs = createURLs(profileData);
+
+    let contextProfileData: ContextProfileData = {
+        fullName: "",
+        bio: "",
+        coverPhoto: { url: "", path: "" },
+        profilePhoto: { url: "", path: "" },
+        languages: []
+    };
+    
+    contextProfileData =  {
+        fullName: profileData?.fullName,
+        bio: profileData?.bio,
+        coverPhoto: { url: pictureURLs[0], path: profileData?.coverPhoto.location }, 
+        profilePhoto: { url: pictureURLs[1], path: profileData?.profilePhoto.location },
+        languages: profileData?.languages
+    }
 
     return (
         <ProfileDataContext.Provider value={{
             userID: id,
-            profileQuery: { data: profileData, refetch: refetch },
+            profileQuery: { 
+                data: contextProfileData, 
+                refetch: refetch
+            },
             languages: languagesData
         }}>
             <div>

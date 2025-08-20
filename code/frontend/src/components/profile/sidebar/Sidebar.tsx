@@ -2,7 +2,7 @@
 
 import EditProfileModal from "../edit_profile/EditProfileModal";
 import Button from "../../common/Button";
-import type { LanguageItem } from "../edit_profile/Languages";
+import type { LanguageItem } from "../../../../lib/queryFunctions";
 import styles from "./Sidebar.module.css";
 
 import { useState, type JSX } from "react";
@@ -38,7 +38,7 @@ export function createLanguageItems(languages: LanguageItem[]) {
 
     const languageItems: JSX.Element[] = [];
     
-    languages.forEach((language, index) => {
+    languages?.forEach((language, index) => {
         languageItems.push((
             <div key={index} className={styles.language_item}>
                 <span>{language.name}</span>

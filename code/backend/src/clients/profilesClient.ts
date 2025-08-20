@@ -33,6 +33,24 @@ async function getUserLanguages(req: Request) {
     return processedLanguageData;
 }
 
+async function getPictures(paths: string[], req: Request) {
+    const buffers = []
+    
+    for(const path of paths) {
+        const { data } = await createAuthenticatedClient(req)
+            .storage
+            .from("user-images")
+            .download(path);
+            
+        if(data) {
+            const arrayBuffer = await data?.arrayBuffer()!;
+            buffers.push(Buffer.from(arrayBuffer));
+        }
+    }
+
+    return buffers;
+}
+
 /**
  * Retrieves the profile information of a user.
  * 
@@ -52,13 +70,14 @@ export async function getProfile(req: Request, res: Response) {
     }
 
     const { first_name, last_name, bio, profile_photo_path, cover_photo_path } = data!;
-    const languageData = await getUserLanguages(req) ;
+    const languageData = await getUserLanguages(req); //try executing these at the same time
+    const buffers = await getPictures([profile_photo_path, cover_photo_path], req);
     
     res.status(200).json({
         fullName: first_name + " " + last_name,
         bio: bio,
-        profilePhotoPath: profile_photo_path,
-        coverPhotoPath: cover_photo_path,
+        profilePhoto: { buffer: buffers[0], location: profile_photo_path },
+        coverPhoto: { buffer: buffers[1], location: cover_photo_path },
         languages: languageData
     });
 }
@@ -79,7 +98,7 @@ export async function updateProfile(req: Request, res: Response) {
     // right now, the logic doesn't take into account the fact that the user might not change their photos
     // after updating the Context in Authenticated to use the blobs of the files from the database, figure out
     // a way so that we don't have to manually check which fields were included in the request. this way, we can
-    // just update the record with confidence that values won't be lost
+    // just update the record with confidence that values won't be lost. also provide a default value in the database for these images
     await supabaseClient
         .from("users")
         .upsert({ 
