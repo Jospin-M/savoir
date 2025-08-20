@@ -53,7 +53,6 @@ async function getPictures(paths: string[], req: Request) {
     results.forEach(buffer => {
         buffers.push(Buffer.from(buffer))
     });
-
     return buffers;
 }
 
@@ -115,7 +114,7 @@ export async function updateProfile(req: Request, res: Response) {
     
     const { data: { user } } = await supabaseClient.auth.getUser();
     const { id } = user!;
-
+  
     await supabaseClient
         .rpc("update_user_languages", {
             new_rows: languages,

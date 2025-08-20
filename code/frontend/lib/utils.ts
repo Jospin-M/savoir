@@ -119,7 +119,7 @@ export async function uploadFiles(fileData: UploadData, files: File[], bucket: s
     
     // transform the server response into a list so we can simutaneously traverse both the url and the file lists 
     const folderEntries: [string,
-        { signedUrl: string, path: string, token: string, updated_at: number }
+        { signedUrl: string, path: string, token: string }
     ][] = Object.entries(folderInformation);
     
     // upload the files to the database
@@ -138,6 +138,6 @@ export async function uploadFiles(fileData: UploadData, files: File[], bucket: s
             .from(bucket)
             .uploadToSignedUrl(path, token, compressedFile);
     }
-    
+  
     return filePaths;
 }
