@@ -53,7 +53,7 @@ export function createLanguageItems(languages: LanguageItem[]) {
 
 export default function Sidebar() {
     const { profileQuery: { data } } = useProfileData();
-    let languageItems = data ? createLanguageItems(data.languages): null;
+    const languageItems = data ? createLanguageItems(data.languages): null;
 
     const [showModal, setShowModal] = useState(false);
 

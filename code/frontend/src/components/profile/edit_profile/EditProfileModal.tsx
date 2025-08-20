@@ -36,9 +36,9 @@ function initializeFiles(profileData: CurrentProfileData): [File[], string[]] {
         files.push(profileData.coverPhoto?.file)
     } 
     
-    if(profileData.profilePhoto?.file!) {
+    if(profileData.profilePhoto?.file) {
         folders.push("avatars");
-        files.push(profileData.profilePhoto?.file!);
+        files.push(profileData.profilePhoto?.file);
     }
 
     return [files, folders];
@@ -77,8 +77,8 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
                 updatedProfile.profilePhoto = filePaths.find((path) => path.includes("avatars"))!;
             } 
         } else {
-            updatedProfile.coverPhoto = data?.coverPhoto.path!;
-            updatedProfile.profilePhoto = data?.profilePhoto.path!;
+            updatedProfile.coverPhoto = data?.coverPhoto.path as string;
+            updatedProfile.profilePhoto = data?.profilePhoto.path as string;
         }
 
         await sendAuthenticatedHTTPRequest("/profiles/me", "PUT", updatedProfile);
