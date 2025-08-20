@@ -3,10 +3,11 @@ import styles from "./EditProfile.module.css";
 
 import { useRef } from "react";
 import { type ControllerRenderProps } from "react-hook-form";
+import type { CurrentProfileData } from "./EditProfileModal.tsx";
 
 type UploadProps = {
     promptText: string, 
-    field: ControllerRenderProps<any>
+    field: ControllerRenderProps<CurrentProfileData, "coverPhoto" | "profilePhoto">
 }
 
 export default function UploadButton({ promptText, field }: UploadProps) {

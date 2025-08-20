@@ -87,11 +87,11 @@ async function createAuthenticatedHTTPRequest(method: string, access_token: stri
 export async function sendAuthenticatedHTTPRequest(endpoint: string, method: string, payload?: object, access_token?: string) {
     if(!access_token) { // for client-side requests, we use the access token in the browser session
         const { data: { session } } = await supabase.auth.getSession();
-        access_token = session?.access_token!;
+        access_token = session?.access_token;
     } // otherwise, the token is provided as a parameter since the request is made from the server 
 
     const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
-    const result = await fetch(DOMAIN + "api" + endpoint, await createAuthenticatedHTTPRequest(method, access_token, payload));
+    const result = await fetch(DOMAIN + "api" + endpoint, await createAuthenticatedHTTPRequest(method, access_token!, payload));
     const response = await result.json();
     
     return response;

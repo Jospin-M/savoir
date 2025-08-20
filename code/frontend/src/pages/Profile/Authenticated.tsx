@@ -14,7 +14,7 @@ function createURLs(profileData: ProfileData) {
     const urls = [];
     const files = [profileData?.coverPhoto.buffer, profileData?.profilePhoto.buffer];
     
-    for(let file of files) {
+    for(const file of files) {
         if(file) {
             const byteArray = new Uint8Array(file.data);
             const blob = new Blob([byteArray]);

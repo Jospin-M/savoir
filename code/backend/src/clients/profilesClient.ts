@@ -16,13 +16,14 @@ async function getUserLanguages(req: Request) {
     // property of the 'language_id' object returned by supabase
     type LanguageData = {
         id: number
-        language_id: { name: string },
+        language_id: { id: number, name: string },
         proficiency: string
     }
 
     const rawLanguageData = data as unknown as LanguageData[];
+    
     const processedLanguageData: { id: number, name: string, proficiency: string }[] = [];
-    rawLanguageData?.forEach((langData: any) => {
+    rawLanguageData?.forEach((langData: LanguageData) => {
         processedLanguageData.push({ 
             id: langData.language_id.id,
             name: langData.language_id.name,
@@ -43,7 +44,7 @@ async function getPictures(paths: string[], req: Request) {
             .download(path);
             
         if(data) {
-            const arrayBuffer = await data?.arrayBuffer()!;
+            const arrayBuffer = await data.arrayBuffer()!;
             buffers.push(Buffer.from(arrayBuffer));
         }
     }

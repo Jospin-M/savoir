@@ -26,7 +26,7 @@ function LanguageOptions({ field, index }: { field:  ControllerRenderProps<Curre
         // using the name of the language, we find the matching entry in the languageData array and 
         // obtain its id. a reference to the language id needs to be maintained so that the server 
         // can correctly process the updated language choices.
-        const { id: newLanguageID } = languageData?.find(lang => lang.name == newChoices[index].name)!;
+        const { id: newLanguageID } = languageData?.find(lang => lang.name == newChoices[index].name) as { id: number; name: string; };
         newChoices[index] = {...newChoices[index], id: newLanguageID};
         field.onChange(newChoices);
     }
