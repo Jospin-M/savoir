@@ -71,15 +71,14 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
             
             if(folders.includes("covers")) {
                 updatedProfile.coverPhoto = filePaths.find((path) => path.includes("covers"))!;
-            } else {
-                updatedProfile.coverPhoto = data?.coverPhoto.path!;
             }
             
             if(folders.includes("avatars")) {
                 updatedProfile.profilePhoto = filePaths.find((path) => path.includes("avatars"))!;
-            } else {
-                updatedProfile.profilePhoto = data?.profilePhoto.path!
-            }
+            } 
+        } else {
+            updatedProfile.coverPhoto = data?.coverPhoto.path!;
+            updatedProfile.profilePhoto = data?.profilePhoto.path!;
         }
 
         await sendAuthenticatedHTTPRequest("/profiles/me", "PUT", updatedProfile);
