@@ -1,6 +1,6 @@
-import { sendAuthenticatedHTTPRequest } from "../lib/utils.ts";
+import { sendAuthenticatedHTTPRequest } from "./utils.ts";
 
-export type LanguageItem = {
+export type ProfileLanguageItem = {
     id: number,
     name: string,
     proficiency: "Fluent" | "Intermediate" | "Beginner"
@@ -17,7 +17,7 @@ export type ProfileData = {
         buffer: { data: number[], name: string },
         location: string
     },
-    languages: LanguageItem[]
+    languages: ProfileLanguageItem[]
 }
 
 /**

@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import type { LanguageItem, ProfileData } from "../../lib/queryFunctions";
+import type { Language, ProfileLanguageItem, ProfileData } from "../../lib/clientQueryFunctions";
 import type { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 
 export type ContextProfileData = {
@@ -7,7 +7,7 @@ export type ContextProfileData = {
     bio: string,
     profilePhoto: { url: string, location: string},
     coverPhoto: { url: string, location: string},
-    languages: LanguageItem[]
+    languages: ProfileLanguageItem[]
 }
 
 export const ProfileDataContext = createContext<{
@@ -16,7 +16,7 @@ export const ProfileDataContext = createContext<{
         data: ContextProfileData | null,
         refetch: ((options?: RefetchOptions | undefined) => Promise<QueryObserverResult<ProfileData, Error>>) | null
     },
-    languages: { id: number, name: string}[] | null
+    languages: Language[] | null
 }>({ userID: "", profileQuery: { data: null, refetch: null }, languages: null });
 
 export const useProfileData = () => useContext(ProfileDataContext);

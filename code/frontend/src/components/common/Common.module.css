@@ -216,7 +216,7 @@
 }
 
 .sidebar {
-  width: 250rem;
+  width: 15rem;
   padding-top: 4rem;
   
   background-color: white;
@@ -274,4 +274,6 @@
   align-items: stretch;
   
   background-color: #F2EFE9;
+
+  width: 100%;
 }

@@ -7,7 +7,7 @@ import styles from "./EditProfile.module.css";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useProfileData } from "../../../hooks/useProfileData.ts";
-import type { LanguageItem } from "../../../../lib/queryFunctions.ts";
+import type { ProfileLanguageItem } from "../../../../lib/clientQueryFunctions.ts";
 import { sendAuthenticatedHTTPRequest, uploadFiles } from "../../../../lib/utils.ts";
 
 export type CurrentProfileData = {
@@ -15,7 +15,7 @@ export type CurrentProfileData = {
     profilePhoto: { file: File | null, url: string | undefined, location: string| undefined } | null,
     name: string | undefined,
     bio: string | undefined,
-    languages: LanguageItem[] | undefined
+    languages: ProfileLanguageItem[] | undefined
 }
 
 /**

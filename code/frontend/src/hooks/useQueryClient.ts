@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
  * @param id - the unique identifier of the user making the request
  * */
 export function useQueryClient<T>(queryKey: string[], queryFunction: (id?: string) => Promise<T>, id?: string) {
-   const { data, refetch } = useQuery({
+    const { data, refetch } = useQuery({
         queryKey: queryKey,
         queryFn: () => queryFunction(id),
         enabled: Boolean(id), // only run when id exists

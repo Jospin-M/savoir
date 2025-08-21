@@ -1,16 +1,7 @@
 import Profile from "./profile.tsx";
 
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import { sendAuthenticatedHTTPRequest } from "../../../lib/utils.ts";
-import { getSupabaseSession } from "../../../utils/supabase/server.ts";
-
-async function getProfileData(id: string)  {
-    return await sendAuthenticatedHTTPRequest(`/profiles/${id}`, "GET", {}, await getSupabaseSession());
-}
-
-async function getLanguages() {
-    return await sendAuthenticatedHTTPRequest("/references/languages", "GET", {}, await getSupabaseSession());
-}
+import { getProfileData, getLanguages } from "../../../lib/serverQueryFunctions.ts";
 
 export default async function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } =  await params;

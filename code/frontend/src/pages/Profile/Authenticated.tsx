@@ -8,11 +8,11 @@ import styles from "../../components/common/Common.module.css";
 import { useUserStore } from "../../stores/useUserStore";
 import { useQueryClient } from "../../hooks/useQueryClient";
 import { ProfileDataContext, type ContextProfileData } from "../../hooks/useProfileData";
-import { getProfileData, type ProfileData, getLanguages, type Language } from "../../../lib/queryFunctions.ts";
+import { getProfileData, type ProfileData, getLanguages, type Language } from "../../../lib/clientQueryFunctions.ts";
 
 function createURLs(profileData: ProfileData) {
     const urls = [];
-    const files = [profileData?.coverPhoto.buffer, profileData?.profilePhoto.buffer];
+    const files = [profileData?.coverPhoto?.buffer, profileData?.profilePhoto?.buffer];
     
     for(const file of files) {
         if(file) {
@@ -50,8 +50,8 @@ export default function Authenticated() {
     contextProfileData =  {
         fullName: profileData?.fullName,
         bio: profileData?.bio,
-        coverPhoto: { url: pictureURLs[0], location: profileData?.coverPhoto.location }, 
-        profilePhoto: { url: pictureURLs[1], location: profileData?.profilePhoto.location },
+        coverPhoto: { url: pictureURLs[0], location: profileData?.coverPhoto?.location }, 
+        profilePhoto: { url: pictureURLs[1], location: profileData?.profilePhoto?.location },
         languages: profileData?.languages
     }
 
