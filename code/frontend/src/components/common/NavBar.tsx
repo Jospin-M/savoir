@@ -1,4 +1,5 @@
-import Link from "next/Link";
+import Link from "next/link";
+
 import styles from "./Common.module.css";
 
 export default function NavBar() {
@@ -9,7 +10,7 @@ export default function NavBar() {
                 <div className={styles.nav_item_text}>Dashboard</div>
             </Link>
 
-            <Link href="" className={styles.nav_item}>
+            <Link href="/skills" className={styles.nav_item}>
                 <i className="ri-lightbulb-line" id={styles.nav_item_logo} />
                 <div className={styles.nav_item_text}>Skills</div>
             </Link>
