@@ -6,6 +6,7 @@ import styles from "./EditProfile.module.css";
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { updateUser } from "../../../../app/lib/actions.ts";
 import { useProfileData } from "../../../hooks/useProfileData.ts";
 import type { ProfileLanguageItem } from "../../../../lib/clientQueryFunctions.ts";
 import { sendAuthenticatedHTTPRequest, uploadFiles } from "../../../../lib/utils.ts";
@@ -89,6 +90,7 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
         await refetch?.(); // refresh the data on the page so that the data stored in the query client cache is fresh
         // NOTE: refetch() is used instead of invalidateQueryClient() since hooks can only be called in components
 
+        updateUser();
         closeButtonHandler();
         setIsLoading(false);
     }

@@ -48,31 +48,37 @@ export async function sendHTTPRequest(endpoint: string, method: string, payload:
     return response;
 }
 
+type CacheOptions = {
+    cache?: RequestCache,
+    next?: {
+        tags?: string[]
+    }
+};
+
 /**
  * Create a request to the server that is authenticated by the access token provided with the user's session.
  * 
  * @param method - the HTTP method to use
  * @param body - the payload sent from the browser.
  */
-async function createAuthenticatedHTTPRequest(method: string, access_token: string, body?: object) {
-    if(method === "GET") {
-        return {
-            method: method,
-            headers: { 
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${access_token}`
-            }
-        };
-    }
-
-    return {
+function createAuthenticatedHTTPRequest(method: string, access_token: string, body?: object, cacheOptions?: CacheOptions) {
+    const baseOptions = {
         method: method,
         headers: { 
             "Content-Type": "application/json",
             "Authorization": `Bearer ${access_token}`
         },
-        body: JSON.stringify(body)
-    };
+        ...cacheOptions
+    }
+    
+    if(method !== "GET" && body) {
+        return {
+            ...baseOptions,
+            body: JSON.stringify(body)
+        };
+    }
+
+   return baseOptions;
 }
 
 /**
@@ -84,14 +90,14 @@ async function createAuthenticatedHTTPRequest(method: string, access_token: stri
  * 
  * @returns the server's response
  */
-export async function sendAuthenticatedHTTPRequest(endpoint: string, method: string, payload?: object, access_token?: string) {
+export async function sendAuthenticatedHTTPRequest(endpoint: string, method: string, payload?: object, access_token?: string, cacheOptions?: CacheOptions) {
     if(!access_token) { // for client-side requests, we use the access token in the browser session
         const { data: { session } } = await supabase.auth.getSession();
         access_token = session?.access_token;
     } // otherwise, the token is provided as a parameter since the request is made from the server 
 
     const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
-    const result = await fetch(DOMAIN + "api" + endpoint, await createAuthenticatedHTTPRequest(method, access_token!, payload));
+    const result = await fetch(DOMAIN + "api" + endpoint, createAuthenticatedHTTPRequest(method, access_token!, payload, cacheOptions));
     const response = await result.json();
     
     return response;
