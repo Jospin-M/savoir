@@ -5,26 +5,11 @@ import ProfileContent from "../../components/profile/ProfileContent.tsx";
 
 import styles from "../../components/common/Common.module.css";
 
+import { createURLs } from "../../../lib/utils.ts";
 import { useUserStore } from "../../stores/useUserStore";
 import { useQueryClient } from "../../hooks/useQueryClient";
 import { ProfileDataContext, type ContextProfileData } from "../../hooks/useProfileData";
 import { getProfileData, type ProfileData, getLanguages, type Language } from "../../../lib/clientQueryFunctions.ts";
-
-function createURLs(profileData: ProfileData) {
-    const urls = [];
-    const files = [profileData?.coverPhoto?.buffer, profileData?.profilePhoto?.buffer];
-    
-    for(const file of files) {
-        if(file) {
-            const byteArray = new Uint8Array(file.data);
-            const blob = new Blob([byteArray]);
-            const url = URL.createObjectURL(blob);
-            urls.push(url);
-        }
-    }
-
-    return urls;
-}
 
 export default function Authenticated() {
     // to decide which page should be shown (authenticated vs. unauthenticated),
@@ -37,7 +22,7 @@ export default function Authenticated() {
     );
 
     const { data: languagesData } = useQueryClient<Language[]>(["languages"], getLanguages);
-    const pictureURLs = createURLs(profileData);
+    const pictureURLs = createURLs([profileData?.coverPhoto?.buffer, profileData?.profilePhoto?.buffer]);
 
     let contextProfileData: ContextProfileData = {
         fullName: "",

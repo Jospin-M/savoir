@@ -1,4 +1,4 @@
-import { sendAuthenticatedHTTPRequest } from "./utils.ts";
+import { type Buffer, sendAuthenticatedHTTPRequest } from "./utils.ts";
 
 export type ProfileLanguageItem = {
     id: number,
@@ -10,11 +10,11 @@ export type ProfileData = {
     fullName: string,
     bio: string,
     profilePhoto: {
-        buffer: { data: number[], name: string },
+        buffer: Buffer,
         location: string
     },
     coverPhoto: {
-        buffer: { data: number[], name: string },
+        buffer: Buffer,
         location: string
     },
     languages: ProfileLanguageItem[]
