@@ -2,7 +2,7 @@ import NavPicture from "./NavPicture";
 
 import styles from "../common/Common.module.css";
 
-import Link from "next/Link";
+import Link from "next/link";
 
 export default function Header() {
     return (
