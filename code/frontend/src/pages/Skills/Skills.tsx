@@ -1,5 +1,6 @@
 import Header from "../../components/common/Header";
 import NavBar from "../../components/common/NavBar";
+import SkillsContent from "../../components/skills/SkillsContent";
 
 import styles from "../../components/common/Common.module.css";
 
@@ -11,9 +12,7 @@ export default function Skills() {
             <div className={styles.main_content}>
                 <NavBar />
                 
-                <div className={styles.page_content}>
-                   hello 
-                </div>
+                <SkillsContent />
             </div>
         </div>
     );
