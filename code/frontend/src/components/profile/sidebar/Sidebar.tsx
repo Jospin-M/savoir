@@ -1,19 +1,18 @@
 "use client";
 
-import EditProfileModal from "../edit_profile/EditProfileModal";
 import Button from "../../common/Button";
-import type { LanguageItem } from "../../../../lib/queryFunctions";
 import styles from "./Sidebar.module.css";
+import EditProfileModal from "../edit_profile/EditProfileModal";
 
 import { useState, type JSX } from "react";
 import { useProfileData } from "../../../hooks/useProfileData";
-
+import type { ProfileLanguageItem } from "../../../../lib/clientQueryFunctions";
 /**
  * Creates a visual representation of the user's proficiency in a list of languages.
  * 
  * @param languages A list of all the languages known by the user.
  */
-export function createLanguageItems(languages: LanguageItem[]) {
+export function createLanguageItems(languages: ProfileLanguageItem[]) {
     /**
      * Makes use of the user's profiency level in the language to determine how many stars should be shown next to the name of the language
      * on their profile.

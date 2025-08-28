@@ -1,97 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
-.modal_overlay {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-
-    top: 0;
-    left: 0;
-    
-    background: rgba(0, 0, 0, 0.4);
-}
-
-.modal {
-    z-index: 3;
-    width: 650px;
-    height: 90vh;
-    overflow-y: scroll;
-
-    border-radius: 16px;
-    background-color: #F2EFE9;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-
-.modal_header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    width: 88%;
-    margin: auto;
-
-    border-bottom: 2px solid #E0DDD5;
-}
-
-.modal_header h2 {
-    font-family: "Roboto", sans-serif;
-    font-weight: bold;
-    color: #2C2C2C;
-    font-size: 1.7rem;
-}
-
-.close_button {
-    width: 2.5rem;
-    height: 2.5rem;
-
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-
-    font-size: 1.6rem;
-    color: #403F4C;
-
-    background: none;
-}
-
-.close_button:hover {
-    background-color: #eddcbd;
-}
-
-.close_button [class^=ri-] {
-    font-family: remixicon !important;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    
-    cursor: pointer;
-}
-
-.modal_body {
-    padding: 2.2rem;
-    padding-top: 1.4rem;
-    padding-bottom: 1.4rem;
-}
-
-.form_group {
-    margin-bottom: 2rem;
-}
-
-.form_group label {
-    display: block;
-    margin-bottom: 1rem;
-
-    color: #2C2C2C;
-    font-family: "Roboto", sans-serif;
-    font-size: 1rem;
-    font-weight: bold;
-}
-
 .modal_cover_photo {
     display: flex;
     justify-content: center;
@@ -181,7 +89,7 @@
     border-radius: 0.6rem;
 
     font-family: "Roboto Slab", serif;
-    font-size: 0.86rem;
+    font-size: 0.84rem;
     color: #403F4C;
     appearance: none;
     cursor: pointer;
@@ -224,79 +132,4 @@
     font-family: "Roboto", sans-serif;
     font-weight: bold;
     font-size: 0.9rem;
-}
-
-.form_control:focus {
-    outline: none;
-    border-color: #EC9A29;
-}
-
-.form_control textarea {
-    height: 10rem;
-}
-
-.form_control {
-    resize: none;
-    width: 93%;
-    height: 5rem;
-    padding: 0.8rem 1rem;
-
-    border: 1px solid #E0DED8;
-    border-radius: 0.6rem;
-
-    font-family: "Roboto Slab", serif;
-    font-size: 0.9rem;
-    color: #403F4C;
-}
-
-.form_group input {
-    height: 1rem;
-}
-
-.modal_footer {
-    display: flex;
-    justify-content: flex-end;
-
-    gap: 0.9rem;
-    padding-top: 2rem;
-    border-top: 1px solid #E0DDD5;
-}
-
-.save_button {
-    width: 6.5rem;
-    padding: 0.7rem 1.3rem;
-
-    cursor: pointer;
-    border: none;
-    border-radius: 0.6rem;
-    transition: all 0.2s;
-
-    background-color: #EC9A29;
-    color: white;
-    
-    font-family: "Roboto", sans-serif;
-    font-size: 1rem;
-}
-
-.save_button:disabled {
-    background-color: #EC9A29;
-    border: none;
-    border-radius: 0.3rem;
-
-    pointer-events: none;
-    cursor: not-allowed;
-    opacity: 0.65;
-    box-shadow: none;
-}
-
-.save_button:hover {
-    background-color: #D88B20;
-}
-
-.error_message {
-    padding-left: 0.1rem;
-
-    color: red; 
-    font-family: "Roboto Slab", sans-serif;
-    font-size: 0.8rem;
 }

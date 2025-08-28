@@ -1,8 +1,7 @@
+import StandardModal from "../../common/modal/StandardModal.tsx";
 import { CoverPhoto, ProfilePhoto } from "./Photos.tsx";
 import Textfields from "./Textfields.tsx";
 import Languages from "./Languages.tsx";
-
-import styles from "./EditProfile.module.css";
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -107,37 +106,23 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
     const { 
         control,
         handleSubmit, 
-        formState: { errors }
+        formState: { errors, isDirty }
     } = useForm({ defaultValues: defaultValues });
     
     const hasErrors = !!errors.coverPhoto || !!errors.profilePhoto || !!errors.name || !!errors.bio || !!errors.languages;
+    const isDisabled = hasErrors || isLoading || !isDirty;
  
     return (
-        <div className={styles.modal_overlay}>
-            <div className={styles.modal}>
-                <div className={styles.modal_header}>
-                    <h2>Edit Profile</h2>
-                    
-                    <button className={styles.close_button} onClick={() => closeButtonHandler()}>
-                        <i className={"ri-close-line"}/>
-                    </button>
-                </div>
-
-                <div className={styles.modal_body}>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <CoverPhoto control={control} errors={errors}/>
-                        <ProfilePhoto control={control} errors={errors}/>
-                        <Textfields control={control} errors={errors}/>
-                        <Languages control={control} errors={errors}/>
-                    
-                        <div className={styles.modal_footer}>
-                            <button className={styles.save_button} type="submit" disabled={hasErrors || isLoading}>
-                                Save
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <StandardModal
+            title={"Edit Profile"}
+            onClose={closeButtonHandler} 
+            onSubmit={handleSubmit(onSubmit)}
+            isDisabled={isDisabled}
+        >
+            <CoverPhoto control={control} errors={errors}/>
+            <ProfilePhoto control={control} errors={errors}/>
+            <Textfields control={control} errors={errors}/>
+            <Languages control={control} errors={errors}/>
+        </StandardModal>
     );
 }
