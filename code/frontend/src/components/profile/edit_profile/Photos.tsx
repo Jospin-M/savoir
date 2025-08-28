@@ -1,6 +1,7 @@
 import UploadButton from "./UploadButton.tsx";
 import type { CurrentProfileData } from "./EditProfileModal.tsx";
 
+import modalStyles from "../../common/modal/Modal.module.css";
 import styles from "./EditProfile.module.css";
 
 import { Controller, type Control, type FieldErrors } from "react-hook-form";
@@ -22,7 +23,7 @@ export function CoverPhoto({ control, errors }: { control: Control<CurrentProfil
             control={control}
             rules={{ validate:  validateFileSize}}
             render={({ field }) => (
-                <div className={styles.form_group}>
+                <div className={modalStyles.form_group}>
                     <label htmlFor="photo">Cover Photo</label>
 
                     <div className={styles.modal_cover_photo}>
@@ -31,7 +32,7 @@ export function CoverPhoto({ control, errors }: { control: Control<CurrentProfil
 
                     <UploadButton promptText="Change Cover Photo" field={field} />
 
-                    {errors.coverPhoto && <p className={styles.error_message}>{errors.coverPhoto.message}</p>}
+                    {errors.coverPhoto && <p className={modalStyles.error_message}>{errors.coverPhoto.message}</p>}
                 </div>
             )}
         />
@@ -45,7 +46,7 @@ export function ProfilePhoto({ control, errors }: { control: Control<CurrentProf
             control={control}
             rules={{ validate: validateFileSize }}
             render={({ field }) => (
-                <div className={styles.form_group}>
+                <div className={modalStyles.form_group}>
                     <label htmlFor="photo">Profile Photo</label>
 
                     <div className={styles.edit_profile_photo_container}>
@@ -55,7 +56,7 @@ export function ProfilePhoto({ control, errors }: { control: Control<CurrentProf
 
                         <UploadButton promptText="Change Profile Photo" field={field} />
 
-                        {errors.profilePhoto && <p className={styles.error_message}>{errors.profilePhoto.message}</p>}
+                        {errors.profilePhoto && <p className={modalStyles.error_message}>{errors.profilePhoto.message}</p>}
                     </div>
                 </div>
             )}

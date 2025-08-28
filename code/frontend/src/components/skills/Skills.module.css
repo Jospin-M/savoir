@@ -4,7 +4,7 @@
   align-items: center;
 
   width: 100%;
-  padding-bottom: 3rem;
+  padding-bottom: 4rem;
   
   background-color: #F2EFE9;
 }
@@ -97,6 +97,7 @@
 
 .empty_description {
   max-width: 32rem;
+  margin-top: -0.3rem;
   margin-bottom: 1.7rem;
   
   color: #403F4C;

@@ -1,11 +1,19 @@
+import AddSkillModal from "./add_skills/AddSkillModal";
 import styles from "./Skills.module.css";
 
+import { useState } from "react";
+
 export default function SkillsHeader() {
+    const [showModal, setShowModal] = useState(false);
+
     return (
         <div className={styles.page_header}>
             <h1 className={styles.page_title}>My Skills</h1>
 
-            <button className={styles.add_skill_btn}>
+            { showModal &&
+                <AddSkillModal closeButtonHandler={() => setShowModal(false)} /> }
+
+            <button className={styles.add_skill_btn} onClick={() => setShowModal(true)}>
                 Add New Skill
             </button>
         </div>

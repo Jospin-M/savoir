@@ -1,11 +1,12 @@
 import type { CurrentProfileData } from "./EditProfileModal.tsx";
 
 import styles from "./EditProfile.module.css";
+import modalStyles from "../../common/modal/Modal.module.css";
 
 import type { ChangeEvent } from "react";
 import type { Control, FieldErrors } from "react-hook-form";
 import { useProfileData } from "../../../hooks/useProfileData.ts";
-import type { LanguageItem } from "../../../../lib/queryFunctions.ts";
+import type { Language, ProfileLanguageItem } from "../../../../lib/clientQueryFunctions.ts";
 import { Controller, type ControllerRenderProps } from "react-hook-form";
 
 function LanguageOptions({ field, index }: { field:  ControllerRenderProps<CurrentProfileData, "languages">, index: number }) {
@@ -26,8 +27,8 @@ function LanguageOptions({ field, index }: { field:  ControllerRenderProps<Curre
         // using the name of the language, we find the matching entry in the languageData array and 
         // obtain its id. a reference to the language id needs to be maintained so that the server 
         // can correctly process the updated language choices.
-        const { id: newLanguageID } = languageData?.find(lang => lang.name == newChoices[index].name) as { id: number; name: string; };
-        newChoices[index] = {...newChoices[index], id: newLanguageID};
+        const { id: newLanguageID } = languageData?.find(lang => lang.name == newChoices[index].name) as Language;
+        newChoices[index] = {...newChoices[index], id: Number(newLanguageID)};
         field.onChange(newChoices);
     }
 
@@ -67,7 +68,7 @@ function LanguageOptions({ field, index }: { field:  ControllerRenderProps<Curre
  *
  * @param knownLanguages - The languages the user has previously selected.
  */
-function createLanguageItems(knownLanguages: LanguageItem[], field: ControllerRenderProps<CurrentProfileData, "languages">) {
+function createLanguageItems(knownLanguages: ProfileLanguageItem[], field: ControllerRenderProps<CurrentProfileData, "languages">) {
     const languageItems: React.JSX.Element[] = []
     
     knownLanguages.forEach((lang, index) => {
@@ -96,7 +97,7 @@ export default function Languages({ control, errors }: { control: Control<Curren
     /**
      * Validates an array of Language objects according to length and uniqueness rules.
      */
-    function formValidator(value: LanguageItem[] | undefined) {
+    function formValidator(value: ProfileLanguageItem[] | undefined) {
         if (!value) return "At least 1 language is required."; 
 
         if(value.length > 5) {
@@ -121,7 +122,7 @@ export default function Languages({ control, errors }: { control: Control<Curren
             control={control}
             rules={{ validate: formValidator}}
             render={({ field }) => (
-                <div className={styles.form_group}>
+                <div className={modalStyles.form_group}>
                     <label htmlFor={"languages"}>Languages</label>
                     
                     { createLanguageItems(field.value!, field) }
