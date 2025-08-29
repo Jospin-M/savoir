@@ -1,7 +1,7 @@
 import ModalHeader from "../../common/modal/ModalHeader.tsx";
 import ModalBody from "../../common/modal/ModalBody.tsx";
 import Modal from "../../common/modal/Modal.tsx";
-import SaveButton from "./SaveButton.tsx";
+import { SaveButton } from "./Input.tsx";
 
 import type { FormEventHandler, ReactNode } from "react";
 

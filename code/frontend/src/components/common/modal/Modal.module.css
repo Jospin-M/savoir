@@ -94,7 +94,7 @@
     border-radius: 0.6rem;
 
     font-family: "Roboto Slab", serif;
-    font-size: 0.9rem;
+    font-size: 0.87rem;
     color: #403F4C;
 }
 
@@ -190,11 +190,39 @@
     border-radius: 0.6rem;
 
     font-family: "Roboto Slab", serif;
-    font-size: 0.88rem;
+    font-size: 0.84rem;
     color: #403F4C;
 }
 
 .dropdown:focus {
     outline: none;
     border-color: #EC9A29;
+}
+
+.radio_group {
+    display: flex;
+
+    gap: 1.3rem;
+}
+
+.radio_group input {
+    margin-right: 0.6rem;
+
+    accent-color: #EC9A29;
+}
+
+.radio_option {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    
+    gap: 1rem;
+}
+
+.char_count {
+    margin-top: 0.3rem;
+    margin-right: 0.4rem;
+    text-align: right;
+    font-size: 0.85rem;
+    color: #777;
 }

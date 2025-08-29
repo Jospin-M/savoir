@@ -1,18 +1,22 @@
 import StandardModal from "../../common/modal/StandardModal";
 import SectionTitle from "../../common/modal/SectionTitle";
-import { Name, Categories } from "./Textfields";
+import { Name, Categories, Levels, Description } from "./Textfields";
 
 import { useForm } from "react-hook-form";
 
 export type CurrentSkillData = {
     name: string
     category: string
+    level: string
+    description: string
 };
 
 export default function AddSkillModal({ closeButtonHandler }: { closeButtonHandler: () => void }) {
     const defaultValues: CurrentSkillData = {
         name: "",
-        category: ""
+        category: "",
+        level: "",
+        description: ""
     };
     
     const {
@@ -31,6 +35,8 @@ export default function AddSkillModal({ closeButtonHandler }: { closeButtonHandl
             <SectionTitle sectionName="Skill Information" />
             <Name control={control} errors={errors}/>
             <Categories control={control} errors={errors} />
+            <Levels control={control} errors={errors} />
+            <Description control={control} errors={errors} />
         </StandardModal>
     );
 }

@@ -2,6 +2,16 @@ import styles from "./Modal.module.css";
 
 import type { ControllerRenderProps, FieldErrors, FieldValues, Path } from "react-hook-form";
 
+export function SaveButton({ isDisabled } : { isDisabled: boolean }) {
+    return (
+        <div className={styles.modal_footer}>
+            <button className={styles.save_button} type="submit" disabled={isDisabled}>
+                Save
+            </button>
+        </div>
+    );
+}
+
 export function InputField<T extends FieldValues>({ inputTitle, field, errors }: 
     { inputTitle: string, field: ControllerRenderProps<T, Path<T>>, errors: FieldErrors 
 }) {
@@ -24,8 +34,8 @@ export function InputField<T extends FieldValues>({ inputTitle, field, errors }:
     );
 }
 
-export function TextareaField<T extends FieldValues>({ textareaTitle, field, maxLength }: {
-    textareaTitle: string, field: ControllerRenderProps<T, Path<T>>, maxLength: number
+export function TextareaField<T extends FieldValues>({ textareaTitle, field, errors, maxLength, placeholder }: {
+    textareaTitle: string, field: ControllerRenderProps<T, Path<T>>, errors: FieldErrors , maxLength: number, placeholder: string
 }) {
     return (
         <div className={styles.form_group}>
@@ -37,8 +47,15 @@ export function TextareaField<T extends FieldValues>({ textareaTitle, field, max
                 className={styles.form_control} 
                 maxLength={maxLength} 
                 value={field.value}
+                placeholder={placeholder}
                 onChange={e => field.onChange(e.target.value)}
             />
+
+            <div className={styles.char_count}>
+                {field.value.length}/{maxLength} characters
+            </div>
+
+            {errors[field.name] && <p className={styles.error_message}>{errors[field.name]?.message as string}</p>}
         </div>
     );
 }
@@ -46,6 +63,8 @@ export function TextareaField<T extends FieldValues>({ textareaTitle, field, max
 export function DropdownField<T extends FieldValues>({ dropdownTitle,  field, errors, options }: 
     { dropdownTitle: string, field: ControllerRenderProps<T, Path<T>>, errors: FieldErrors, options: string[] 
 }) {
+    // options array should be populated with values from database, so request won't be needed since we can use queryClient
+    // for populating category with value from the database, use same approach as in Languages
     return (
         <div className={styles.form_group}>
             <label htmlFor="dropdown_field">{dropdownTitle}</label>
@@ -55,6 +74,28 @@ export function DropdownField<T extends FieldValues>({ dropdownTitle,  field, er
                     <option key={opt} value={opt}>{opt}</option>
                 ))}
             </select>
+        </div>
+    );
+}
+
+export function RadioGroup<T extends FieldValues>({ radioTitle,  field, errors, options }: 
+    { radioTitle: string, field: ControllerRenderProps<T, Path<T>>, errors: FieldErrors, options: string[] 
+}) {
+    // options array should be populated with values from database, so request won't be needed since we can use queryClient
+    // for populating category with value from the database, use same approach as in Languages
+    return (
+        <div className={styles.form_group}>
+            <label htmlFor="radio_field">{radioTitle}</label>
+            
+            <div id="radio_field" className={styles.radio_option}>
+                {options.map((opt) => (
+                    <label key={opt} htmlFor={opt} className={styles.radio_group}>
+                        <input key={opt} id={opt} type="radio" name="skill-level" value={opt} />
+                        
+                        {opt}
+                    </label>
+                ))}
+            </div>
         </div>
     );
 }
