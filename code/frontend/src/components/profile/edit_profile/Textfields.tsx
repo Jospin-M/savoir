@@ -19,7 +19,7 @@ export default function Textfields({ control, errors }: { control: Control<Curre
                 name="bio"
                 control={control}
                 render= {({ field }) => (
-                    <TextareaField textareaTitle="Bio" field={field} maxLength={230}/>
+                    <TextareaField textareaTitle="Bio" field={field} errors={errors} maxLength={250} placeholder=""/>
                 )}
             />
         </div>
