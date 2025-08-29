@@ -56,3 +56,31 @@ export function Description({ control, errors }: { control: Control<CurrentSkill
         />
     );
 }
+
+export function Prerequsites({ control, errors }: { control: Control<CurrentSkillData>, errors: FieldErrors<CurrentSkillData> }) {
+    const placeholderText = "e.g., Basic knowledge helpful but not required"; 
+
+    return (
+        <Controller 
+            name="prerequisites"
+            control={control}
+            render={({ field }) => (
+                <InputField inputTitle="Prequisites" field={field} errors={errors} placeholder={placeholderText}/>
+            )}
+        />
+    );
+}
+
+export function Materials({ control, errors }: { control: Control<CurrentSkillData>, errors: FieldErrors<CurrentSkillData> }) {
+    const placeholderText = "e.g., Supplies to follow along, good workspace";
+    
+    return (
+        <Controller 
+            name="materialsNeeded"
+            control={control}
+            render={({ field }) => (
+                <InputField inputTitle="Materials Needed" field={field} errors={errors} placeholder={placeholderText}/>
+            )}
+        />
+    );
+}

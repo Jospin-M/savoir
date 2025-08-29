@@ -12,8 +12,8 @@ export function SaveButton({ isDisabled } : { isDisabled: boolean }) {
     );
 }
 
-export function InputField<T extends FieldValues>({ inputTitle, field, errors }: 
-    { inputTitle: string, field: ControllerRenderProps<T, Path<T>>, errors: FieldErrors 
+export function InputField<T extends FieldValues>({ inputTitle, field, errors, placeholder }: 
+    { inputTitle: string, field: ControllerRenderProps<T, Path<T>>, errors: FieldErrors, placeholder?: string 
 }) {
     return (
         <div className={styles.form_group}>
@@ -27,6 +27,7 @@ export function InputField<T extends FieldValues>({ inputTitle, field, errors }:
                 value={field.value}
                 onChange={e => field.onChange(e.target.value)}
                 onBlur={field.onBlur}
+                placeholder={placeholder}
             />
 
             {errors[field.name] && <p className={styles.error_message}>{errors[field.name]?.message as string}</p>}
