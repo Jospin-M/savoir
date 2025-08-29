@@ -42,3 +42,19 @@ export function TextareaField<T extends FieldValues>({ textareaTitle, field, max
         </div>
     );
 }
+
+export function DropdownField<T extends FieldValues>({ dropdownTitle,  field, errors, options }: 
+    { dropdownTitle: string, field: ControllerRenderProps<T, Path<T>>, errors: FieldErrors, options: string[] 
+}) {
+    return (
+        <div className={styles.form_group}>
+            <label htmlFor="dropdown_field">{dropdownTitle}</label>
+
+            <select id="dropdown_field" className={styles.dropdown}>
+                {options.map((opt) => (
+                    <option key={opt} value={opt}>{opt}</option>
+                ))}
+            </select>
+        </div>
+    );
+}

@@ -1,10 +1,10 @@
 import type { CurrentProfileData } from "./EditProfileModal.tsx";
-import { InputField, TextareaField } from "../../common/modal/Textfields.tsx";
+import { InputField, TextareaField } from "../../common/modal/Input.tsx";
 
 import { Controller, type Control, type FieldErrors } from "react-hook-form";
 
 export default function Textfields({ control, errors }: { control: Control<CurrentProfileData>, errors: FieldErrors<CurrentProfileData> }) {
-    return(
+    return (
         <div>
             <Controller 
                 name="name"
