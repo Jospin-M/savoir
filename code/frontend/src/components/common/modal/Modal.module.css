@@ -71,7 +71,7 @@
 
 .modal_body {
     padding: 2.2rem;
-    padding-top: 1.4rem;
+    padding-top: 1rem;
     padding-bottom: 1.4rem;
 }
 
@@ -111,9 +111,8 @@
     margin-bottom: 1rem;
 
     color: #2C2C2C;
-    font-family: "Roboto", sans-serif;
+    font-family: "Roboto Slab", sans-serif;
     font-size: 1rem;
-    font-weight: bold;
 }
 
 .modal_footer {
@@ -162,4 +161,40 @@
     color: red; 
     font-family: "Roboto Slab", sans-serif;
     font-size: 0.8rem;
+}
+
+.section {
+    margin-bottom: 2rem;
+}
+
+.section_title {
+    margin-top: -0.5rem;
+    padding-top: 1.3rem;
+    padding-bottom: 0.5rem;
+
+    font-family: "Roboto", sans-serif;
+    font-weight: bold;
+    font-size: 1.2rem;
+
+    color: #2C2C2C;
+    border-bottom: 1px solid #E0DDD5;
+}
+
+.dropdown {
+    resize: none;
+    width: 99%;
+    height: 2.7rem;
+    padding: 0.5rem 1rem;
+
+    border: 1px solid #E0DED8;
+    border-radius: 0.6rem;
+
+    font-family: "Roboto Slab", serif;
+    font-size: 0.88rem;
+    color: #403F4C;
+}
+
+.dropdown:focus {
+    outline: none;
+    border-color: #EC9A29;
 }
