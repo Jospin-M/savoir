@@ -1,5 +1,5 @@
 import Header from "../../components/common/Header";
-import NavBar from "../../components/common/NavBar";
+import { NavBar } from "../../components/common/Navigation";
 import SkillsContent from "../../components/skills/SkillsContent";
 
 import styles from "../../components/common/Common.module.css";

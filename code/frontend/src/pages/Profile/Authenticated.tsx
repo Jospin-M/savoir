@@ -1,5 +1,5 @@
 import Header from "../../components/common/Header.tsx";
-import NavBar from "../../components/common/NavBar.tsx";
+import { NavBar } from "../../components/common/Navigation.tsx";
 import ProfileHeader from "../../components/profile/ProfileHeader.tsx";
 import ProfileContent from "../../components/profile/ProfileContent.tsx";
 
