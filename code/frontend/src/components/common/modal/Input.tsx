@@ -70,11 +70,14 @@ export function DropdownField<T extends FieldValues>({ dropdownTitle,  field, er
         <div className={styles.form_group}>
             <label htmlFor="dropdown_field">{dropdownTitle}</label>
 
-            <select id="dropdown_field" className={styles.dropdown}>
+            <select id="dropdown_field" className={styles.dropdown} onChange={e => field.onChange(e.target.value)}>
+                <option defaultValue={""} disabled>Select a category</option>
                 {options.map((opt) => (
                     <option key={opt} value={opt}>{opt}</option>
                 ))}
             </select>
+
+            {errors[field.name] && <p className={styles.error_message}>{errors[field.name]?.message as string}</p>}
         </div>
     );
 }
@@ -91,12 +94,14 @@ export function RadioGroup<T extends FieldValues>({ radioTitle,  field, errors, 
             <div id="radio_field" className={styles.radio_option}>
                 {options.map((opt) => (
                     <label key={opt} htmlFor={opt} className={styles.radio_group}>
-                        <input key={opt} id={opt} type="radio" name="skill-level" value={opt} />
+                        <input key={opt} id={opt} type="radio" name="skill-level" value={opt} onChange={e => field.onChange(e.target.value)}/>
                         
                         {opt}
                     </label>
                 ))}
             </div>
+
+            {errors[field.name] && <p className={styles.error_message}>{errors[field.name]?.message as string}</p>}
         </div>
     );
 }

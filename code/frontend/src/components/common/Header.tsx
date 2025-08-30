@@ -1,4 +1,4 @@
-import NavPicture from "./NavPicture";
+import { NavPicture } from "./Navigation";
 
 import styles from "../common/Common.module.css";
 

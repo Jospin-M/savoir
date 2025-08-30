@@ -8,7 +8,7 @@ export function Name({ control, errors }: { control: Control<CurrentSkillData>, 
         <Controller 
             name="name"
             control={control}
-            rules={{ required: "Skill name is required" }}
+            rules={{ required: "Name is required" }}
             render={({ field }) => (
                 <InputField inputTitle="Name" field={field} errors={errors} />
             )}
@@ -43,7 +43,7 @@ export function Levels({ control, errors }: { control: Control<CurrentSkillData>
 }
 
 export function Description({ control, errors }: { control: Control<CurrentSkillData>, errors: FieldErrors<CurrentSkillData> }) {
-    const placeholderText = "Describe your skill and what you can teach...";
+    const placeholderText = "Describe what you'll teach and what learners can expect...";
     
     return (
         <Controller 
