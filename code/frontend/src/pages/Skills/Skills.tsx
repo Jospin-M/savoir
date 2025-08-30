@@ -4,16 +4,26 @@ import SkillsContent from "../../components/skills/SkillsContent";
 
 import styles from "../../components/common/Common.module.css";
 
+import { useQueryClient } from "../../hooks/useQueryClient";
+import { type Category, getCategories } from "../../../lib/clientQueryFunctions";
+import { SkillDataContext } from "../../hooks/useSkillsData";
+
 export default function Skills() {
+    const { data: categoriesData } = useQueryClient<Category[]>(["categories"], getCategories)
+    
     return (
-        <div>
-            <Header/>
-            
-            <div className={styles.main_content}>
-                <NavBar />
+        <SkillDataContext.Provider value={{
+            categories: categoriesData
+        }}>
+            <div>
+                <Header/>
                 
-                <SkillsContent />
+                <div className={styles.main_content}>
+                    <NavBar />
+                    
+                    <SkillsContent />
+                </div>
             </div>
-        </div>
+        </SkillDataContext.Provider>
     );
 }
