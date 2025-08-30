@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 
 export type CurrentSkillData = {
     name: string
-    category: string
+    category_id: number
     level: string
     description: string
     prerequisites: string
@@ -16,7 +16,7 @@ export type CurrentSkillData = {
 export default function AddSkillModal({ closeButtonHandler }: { closeButtonHandler: () => void }) {
     const defaultValues: CurrentSkillData = {
         name: "",
-        category: "",
+        category_id: 0,
         level: "",
         description: "",
         prerequisites: "",
@@ -33,7 +33,7 @@ export default function AddSkillModal({ closeButtonHandler }: { closeButtonHandl
         console.log(skillData)
     }
 
-    const hasErrors = !!errors.name || !!errors.category || !!errors.level || !!errors.description; 
+    const hasErrors = !!errors.name || !!errors.category_id || !!errors.level || !!errors.description; 
     const isDisabled = hasErrors || !isDirty;
 
     return (

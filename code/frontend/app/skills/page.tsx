@@ -1,7 +1,19 @@
 import Skills from "./skills";
 
-export default function SkillsPage() {
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { getCategories } from "../../lib/serverQueryFunctions";
+
+export default async function SkillsPage() {
+   const queryClient = new QueryClient();
+
+   await queryClient.prefetchQuery({
+      queryKey: ["categories"],
+      queryFn: () => getCategories()
+   });
+
    return (
-      <Skills />
+      <HydrationBoundary state={dehydrate(queryClient)}>
+         <Skills />
+      </HydrationBoundary>
    );
 }

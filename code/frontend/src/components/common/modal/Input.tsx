@@ -1,5 +1,6 @@
 import styles from "./Modal.module.css";
 
+import type { Entity } from "../../../../lib/clientQueryFunctions"
 import type { ControllerRenderProps, FieldErrors, FieldValues, Path } from "react-hook-form";
 
 export function SaveButton({ isDisabled } : { isDisabled: boolean }) {
@@ -62,18 +63,20 @@ export function TextareaField<T extends FieldValues>({ textareaTitle, field, err
 }
 
 export function DropdownField<T extends FieldValues>({ dropdownTitle,  field, errors, options }: 
-    { dropdownTitle: string, field: ControllerRenderProps<T, Path<T>>, errors: FieldErrors, options: string[] 
+    { dropdownTitle: string, field: ControllerRenderProps<T, Path<T>>, errors: FieldErrors, options: Entity[] 
 }) {
-    // options array should be populated with values from database, so request won't be needed since we can use queryClient
-    // for populating category with value from the database, use same approach as in Languages
     return (
         <div className={styles.form_group}>
             <label htmlFor="dropdown_field">{dropdownTitle}</label>
 
-            <select id="dropdown_field" className={styles.dropdown} onChange={e => field.onChange(e.target.value)}>
-                <option defaultValue={""} disabled>Select a category</option>
+            <select id="dropdown_field" className={styles.dropdown} onChange={e => {
+                const newChoice = options.find(opt => e.target.value === opt.name)
+                
+                field.onChange(newChoice!.id)
+            }}>
+                <option disabled selected>Select a category</option>
                 {options.map((opt) => (
-                    <option key={opt} value={opt}>{opt}</option>
+                    <option key={opt.name} value={opt.name}>{opt.name}</option>
                 ))}
             </select>
 

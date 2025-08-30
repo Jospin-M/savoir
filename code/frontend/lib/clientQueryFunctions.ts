@@ -31,10 +31,12 @@ export async function getProfileData(id?: string): Promise<ProfileData> {
     return data;
 }
 
-export type Language = {
-    id: string,
+export type Entity = {
+    id: string
     name: string
-}
+};
+
+export type Language = Entity;
 
 /**
  * Retrieves the list of languages the user can potentially add to their profile.
@@ -44,6 +46,14 @@ export type Language = {
  */
 export async function getLanguages(): Promise<Language[]> {
     const data = await sendAuthenticatedHTTPRequest(`/references/languages`, "GET");
+    
+    return data;
+}
+
+export type Category = Entity;
+
+export async function getCategories(): Promise<Category[]> {
+    const { data } = await sendAuthenticatedHTTPRequest(`/skills/categories`, "GET");
     
     return data;
 }

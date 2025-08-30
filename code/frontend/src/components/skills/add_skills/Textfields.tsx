@@ -1,6 +1,7 @@
 import { DropdownField, InputField, RadioGroup, TextareaField } from "../../common/modal/Input";
-
 import type { CurrentSkillData } from "./AddSkillModal";
+
+import { useSkillData } from "../../../hooks/useSkillsData";
 import { Controller, type Control, type FieldErrors } from "react-hook-form";
 
 export function Name({ control, errors }: { control: Control<CurrentSkillData>, errors: FieldErrors<CurrentSkillData> }) {
@@ -17,13 +18,15 @@ export function Name({ control, errors }: { control: Control<CurrentSkillData>, 
 }
 
 export function Categories({ control, errors }: { control: Control<CurrentSkillData>, errors: FieldErrors<CurrentSkillData> }) {
+    const { categories } = useSkillData();
+    
     return (
         <Controller 
-            name="category"
+            name="category_id"
             control={control}
             rules={{ required: "Category is required" }}
             render={({ field }) => (
-                <DropdownField dropdownTitle="Category" field={field} errors={errors} options={["Coding"]}/>
+                <DropdownField dropdownTitle="Category" field={field} errors={errors} options={categories}/>
             )}
         />
     );
@@ -51,7 +54,7 @@ export function Description({ control, errors }: { control: Control<CurrentSkill
             control={control}
             rules={{ required: "Description is required" }}
             render={({ field }) => (
-                <TextareaField textareaTitle="Description" field={field} errors={errors} maxLength={500} placeholder={placeholderText}/>
+                <TextareaField textareaTitle="Description" field={field} errors={errors} maxLength={250} placeholder={placeholderText}/>
             )}
         />
     );

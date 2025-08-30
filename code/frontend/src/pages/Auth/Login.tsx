@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useForm } from "../../hooks/useForm.ts";
 import { useUserStore } from "../../stores/useUserStore.ts";
 import { useRouter } from "next/navigation";
-import Link from "next/Link";
+import Link from "next/link";
 
 import { validateAuthForm } from "../../../src/components/listeners/formValidators.ts";
 import { sendHTTPRequest } from "../../../lib/utils.ts";
