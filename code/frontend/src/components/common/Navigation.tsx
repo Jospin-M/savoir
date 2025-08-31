@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { createURLs } from "../../../lib/utils";
 import { useUserStore } from "../../stores/useUserStore";
 import { useQueryClient } from "../../hooks/useQueryClient";
-import { type ProfileData, getProfileData } from "../../../lib/clientQueryFunctions";
+import { type ProfileData, getProfileData } from "../../../lib/queryFunctions";
 
 /**
  * Determines if the active style for the Link should be shown depending on the URL parameters and 

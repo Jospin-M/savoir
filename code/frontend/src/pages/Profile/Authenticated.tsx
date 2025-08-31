@@ -9,7 +9,7 @@ import { createURLs } from "../../../lib/utils.ts";
 import { useUserStore } from "../../stores/useUserStore";
 import { useQueryClient } from "../../hooks/useQueryClient";
 import { ProfileDataContext, type ContextProfileData } from "../../hooks/useProfileData";
-import { getProfileData, type ProfileData, getLanguages, type Language } from "../../../lib/clientQueryFunctions.ts";
+import { getProfileData, type ProfileData, getLanguages, type Language } from "../../../lib/queryFunctions.ts";
 
 export default function Authenticated() {
     // to decide which page should be shown (authenticated vs. unauthenticated),

@@ -6,7 +6,7 @@ import EditProfileModal from "../edit_profile/EditProfileModal";
 
 import { useState, type JSX } from "react";
 import { useProfileData } from "../../../hooks/useProfileData";
-import type { ProfileLanguageItem } from "../../../../lib/clientQueryFunctions";
+import type { ProfileLanguageItem } from "../../../../lib/queryFunctions";
 /**
  * Creates a visual representation of the user's proficiency in a list of languages.
  * 

@@ -129,3 +129,14 @@ export async function updateProfile(req: Request, res: Response) {
     
     res.status(200).json({ message: "Profile successfully updated." });
 }
+
+export async function getAuthenticatedUserSkills(req: Request, res: Response) {
+    const supabaseClient = createAuthenticatedClient(req);
+    const { data: { user } }  = await supabaseClient.auth.getUser();
+    const { data } = await supabaseClient
+        .from("skills")
+        .select()
+        .eq("user_id", user!.id);
+
+    res.status(200).json(data);
+}

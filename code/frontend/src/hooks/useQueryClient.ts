@@ -7,12 +7,12 @@ import { useQuery } from "@tanstack/react-query";
  * @param queryFunction - Function responsible for making the request that retrieves the data. 
  *                                   Receives the `id` as its single argument.
  * @param id - the unique identifier of the user making the request
- * */
+ */
 export function useQueryClient<T>(queryKey: string[], queryFunction: (id?: string) => Promise<T>, id?: string) {
     const { data, refetch } = useQuery({
         queryKey: queryKey,
-        queryFn: () => queryFunction(id),
-        enabled: Boolean(id), // only run when id exists
+        queryFn: () => id ? queryFunction(id): queryFunction(),
+        enabled: id ? Boolean(id): true, // only run when id exists
         staleTime: Infinity, // 5 minutes, treat cached data as fresh
         refetchOnMount: false,   
         refetchOnWindowFocus: false

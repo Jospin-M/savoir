@@ -6,7 +6,7 @@ import modalStyles from "../../common/modal/Modal.module.css";
 import type { ChangeEvent } from "react";
 import type { Control, FieldErrors } from "react-hook-form";
 import { useProfileData } from "../../../hooks/useProfileData.ts";
-import type { Language, ProfileLanguageItem } from "../../../../lib/clientQueryFunctions.ts";
+import type { Language, ProfileLanguageItem } from "../../../../lib/queryFunctions.ts";
 import { Controller, type ControllerRenderProps } from "react-hook-form";
 
 function LanguageOptions({ field, index }: { field:  ControllerRenderProps<CurrentProfileData, "languages">, index: number }) {
