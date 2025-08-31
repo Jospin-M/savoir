@@ -25,15 +25,3 @@ export async function getLanguages() {
         }
     );
 }
-
-export async function getCategories() {
-    return await sendAuthenticatedHTTPRequest(
-        "/skills/categories",
-        "GET", 
-        undefined, 
-        await getSupabaseSession(), 
-        {
-            cache: "force-cache"
-        }
-    );
-}
