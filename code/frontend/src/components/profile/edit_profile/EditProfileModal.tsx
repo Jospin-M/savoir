@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { updateUser } from "../../../../app/lib/actions.ts";
 import { useProfileData } from "../../../hooks/useProfileData.ts";
-import type { ProfileLanguageItem } from "../../../../lib/clientQueryFunctions.ts";
+import type { ProfileLanguageItem } from "../../../../lib/queryFunctions.ts";
 import { sendAuthenticatedHTTPRequest, uploadFiles } from "../../../../lib/utils.ts";
 
 export type CurrentProfileData = {

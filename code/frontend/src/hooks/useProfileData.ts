@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
-import type { Language, ProfileLanguageItem, ProfileData } from "../../lib/clientQueryFunctions";
 import type { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
+import type { Language, ProfileLanguageItem, ProfileData } from "../../lib/queryFunctions";
 
 export type ContextProfileData = {
     fullName: string,

@@ -1,6 +1,6 @@
 import styles from "./Modal.module.css";
 
-import type { Entity } from "../../../../lib/clientQueryFunctions"
+import type { Entity } from "../../../../lib/queryFunctions"
 import type { ControllerRenderProps, FieldErrors, FieldValues, Path } from "react-hook-form";
 
 export function SaveButton({ isDisabled } : { isDisabled: boolean }) {

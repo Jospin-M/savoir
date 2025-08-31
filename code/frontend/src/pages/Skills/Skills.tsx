@@ -5,21 +5,27 @@ import SkillsContent from "../../components/skills/SkillsContent";
 import styles from "../../components/common/Common.module.css";
 
 import { useQueryClient } from "../../hooks/useQueryClient";
-import { type Category, getCategories } from "../../../lib/clientQueryFunctions";
 import { SkillDataContext } from "../../hooks/useSkillsData";
-import { useUserStore } from "../../stores/useUserStore";
+import { type Category, getCategories, type AuthenticatedSkill, getAuthenticatedUserSkills } from "../../../lib/queryFunctions";
 
 export default function Skills() {
-    const id = useUserStore(state => state.userID)!;
     const { data: categoriesData } = useQueryClient<Category[]>(
         ["categories"], 
-        getCategories,
-        id    
+        getCategories
+    );
+
+    const { data: skillsData, refetch } = useQueryClient<AuthenticatedSkill[]>(
+        ["skills"],
+        getAuthenticatedUserSkills
     );
     
     return (
         <SkillDataContext.Provider value={{
-            categories: categoriesData
+            categories: categoriesData,
+            skillsQuery: {
+                skills: skillsData,
+                refetch: refetch
+            }
         }}>
             <div>
                 <Header/>
