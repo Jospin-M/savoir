@@ -79,7 +79,7 @@ export function Materials({ control, errors }: { control: Control<CurrentSkillDa
     
     return (
         <Controller 
-            name="materialsNeeded"
+            name="materials_needed"
             control={control}
             render={({ field }) => (
                 <InputField inputTitle="Materials Needed" field={field} errors={errors} placeholder={placeholderText}/>

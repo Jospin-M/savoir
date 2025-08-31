@@ -97,6 +97,12 @@ type UpdatedProfileData = {
     profilePhoto: string
 }
 
+/**
+ * Updates the profile information of a user.
+ * 
+ * @param req - a request containing the id of the user whose profile will be retrieved
+ * @param res - a response with the user's profile information
+ */
 export async function updateProfile(req: Request, res: Response) {
     const supabaseClient = createAuthenticatedClient(req);
     const { name, bio, coverPhoto, profilePhoto, languages }: UpdatedProfileData = req.body;

@@ -74,7 +74,6 @@ export function DropdownField<T extends FieldValues>({ dropdownTitle,  field, er
                 
                 field.onChange(newChoice!.id)
             }}>
-                <option disabled selected>Select a category</option>
                 {options.map((opt) => (
                     <option key={opt.name} value={opt.name}>{opt.name}</option>
                 ))}

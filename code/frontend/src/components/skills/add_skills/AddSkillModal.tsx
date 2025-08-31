@@ -2,7 +2,9 @@ import StandardModal from "../../common/modal/StandardModal";
 import SectionTitle from "../../common/modal/SectionTitle";
 import { Name, Categories, Levels, Description, Prerequsites, Materials } from "./Textfields";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { sendAuthenticatedHTTPRequest } from "../../../../lib/utils";
 
 export type CurrentSkillData = {
     name: string
@@ -10,17 +12,18 @@ export type CurrentSkillData = {
     level: string
     description: string
     prerequisites: string
-    materialsNeeded: string
+    materials_needed: string
 };
 
 export default function AddSkillModal({ closeButtonHandler }: { closeButtonHandler: () => void }) {
+    const [isLoading, setIsLoading] = useState(false);
     const defaultValues: CurrentSkillData = {
         name: "",
         category_id: 0,
         level: "",
         description: "",
         prerequisites: "",
-        materialsNeeded: ""
+        materials_needed: ""
     };
     
     const {
@@ -29,12 +32,18 @@ export default function AddSkillModal({ closeButtonHandler }: { closeButtonHandl
         formState: { errors, isDirty }
     } = useForm({ defaultValues: defaultValues });
     
-    function onSubmit(skillData: CurrentSkillData) {
-        console.log(skillData)
+    async function onSubmit(skillData: CurrentSkillData) {
+        setIsLoading(true);
+
+        await sendAuthenticatedHTTPRequest("/skills", "POST", skillData);
+        // call to refetch() will be placed here to update ui with new skill
+        
+        closeButtonHandler();
+        setIsLoading(false);
     }
 
     const hasErrors = !!errors.name || !!errors.category_id || !!errors.level || !!errors.description; 
-    const isDisabled = hasErrors || !isDirty;
+    const isDisabled = hasErrors || isLoading || !isDirty;
 
     return (
         <StandardModal
