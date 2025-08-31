@@ -6,5 +6,5 @@ export async function getCategories(req: Request, res: Response) {
         .from("categories")
         .select("id,name");
 
-    res.status(201).json(data);
+    res.status(200).json(data);
 }   

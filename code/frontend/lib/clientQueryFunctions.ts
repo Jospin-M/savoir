@@ -53,7 +53,7 @@ export async function getLanguages(): Promise<Language[]> {
 export type Category = Entity;
 
 export async function getCategories(): Promise<Category[]> {
-    const { data } = await sendAuthenticatedHTTPRequest(`/skills/categories`, "GET");
+    const data = await sendAuthenticatedHTTPRequest(`/skills/categories`, "GET");
     
     return data;
 }
