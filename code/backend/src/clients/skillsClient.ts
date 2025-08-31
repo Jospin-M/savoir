@@ -8,3 +8,11 @@ export async function getCategories(req: Request, res: Response) {
 
     res.status(200).json(data);
 }   
+
+export async function addSkill(req: Request, res: Response) {
+    await createAuthenticatedClient(req)
+        .from("skills")
+        .insert({ ...req.body });
+        
+    res.status(201).json({ message: "Skill created successfully." });
+}
