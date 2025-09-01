@@ -15,7 +15,7 @@ export default function Skills() {
     );
 
     const { data: skillsData, refetch } = useQueryClient<AuthenticatedSkill[]>(
-        ["skills"],
+        ["profileSkills"],
         getAuthenticatedUserSkills
     );
     

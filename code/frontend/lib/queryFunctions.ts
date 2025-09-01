@@ -94,7 +94,8 @@ export async function getAuthenticatedUserSkills(): Promise<AuthenticatedSkill[]
         undefined, 
         await getSupabaseSession(), 
         {
-            cache: "force-cache"
+            cache: "force-cache",
+            next: { tags: ["user-skills"] }
         }
     );
 }
