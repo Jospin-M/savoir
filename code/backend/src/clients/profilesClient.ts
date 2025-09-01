@@ -10,7 +10,7 @@ async function getUserLanguages(req: Request) {
         .select(`
             proficiency,
             language_id(id,name)
-        `);
+    `);
 
     // the data is explicitly casted here to ensure that we can access the 'name' 
     // property of the 'language_id' object returned by supabase

@@ -12,7 +12,7 @@ export async function getCategories(req: Request, res: Response) {
 export async function addSkill(req: Request, res: Response) {
     await createAuthenticatedClient(req)
         .from("skills")
-        .insert({ ...req.body });
+        .upsert({ ...req.body });
         
     res.status(201).json({ message: "Skill created successfully." });
 }

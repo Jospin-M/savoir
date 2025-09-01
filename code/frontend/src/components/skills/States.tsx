@@ -1,7 +1,9 @@
 import styles from "./Skills.module.css";
 
-import { type Dispatch, type SetStateAction } from "react";
 import { useState } from "react";
+import { useSkillData } from "../../hooks/useSkillsData";
+import { type Dispatch, type SetStateAction } from "react";
+import type { AuthenticatedSkill } from "../../../lib/queryFunctions";
 
 export function Empty() {
     return (
@@ -41,12 +43,39 @@ function FilterOptions({ activeFilter, setActiveFilter }: { activeFilter: string
     );
 }
 
+function SkillListing({ skill }: { skill: AuthenticatedSkill }) {
+    return (
+        <div className={styles.skill_card}>
+
+        </div>
+    );
+}
+
+async function filterSkills(skills: AuthenticatedSkill[], comparator: (activeState: boolean) => boolean) {
+   //console.log(skills)
+
+    return skills?.filter(skill => comparator(skill.active))
+}
+
+function All() {
+    const { skillsQuery: { skills } } = useSkillData();
+    //filterSkills(skills)
+
+    return (<></>);
+}
+
 export function Populated() {
     const [activeFilter, setActiveFilter] = useState("All");
-
+    // activeFilter will be used to decide which page to show
+    const { skillsQuery: { skills } } = useSkillData();
+    console.log(filterSkills(skills, (state) => state === false));
     return (
         <div className={styles.populated_state}>
             <FilterOptions activeFilter={activeFilter} setActiveFilter={setActiveFilter}/>
+        
+            <div className={styles.skills_grid}>
+                
+            </div>
         </div>
     );
 }

@@ -4,6 +4,8 @@ import { Name, Categories, Levels, Description, Prerequsites, Materials } from "
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { updateSkills } from "../../../../app/lib/actions";
+import { useSkillData } from "../../../hooks/useSkillsData";
 import { sendAuthenticatedHTTPRequest } from "../../../../lib/utils";
 
 export type CurrentSkillData = {
@@ -17,6 +19,7 @@ export type CurrentSkillData = {
 
 export default function AddSkillModal({ closeButtonHandler }: { closeButtonHandler: () => void }) {
     const [isLoading, setIsLoading] = useState(false);
+    const { skillsQuery: { refetch } } = useSkillData();
     const defaultValues: CurrentSkillData = {
         name: "",
         category_id: 0,
@@ -36,7 +39,8 @@ export default function AddSkillModal({ closeButtonHandler }: { closeButtonHandl
         setIsLoading(true);
 
         await sendAuthenticatedHTTPRequest("/skills", "POST", skillData);
-        // call to refetch() will be placed here to update ui with new skill
+        await refetch?.();
+        await updateSkills();
         
         closeButtonHandler();
         setIsLoading(false);

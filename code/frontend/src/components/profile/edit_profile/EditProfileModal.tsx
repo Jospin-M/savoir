@@ -87,9 +87,8 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
 
         await sendAuthenticatedHTTPRequest("/profiles/me", "PUT", updatedProfile);
         await refetch?.(); // refresh the data on the page so that the data stored in the query client cache is fresh
-        // NOTE: refetch() is used instead of invalidateQueryClient() since hooks can only be called in components
-
-        updateUser();
+        await updateUser();
+        
         closeButtonHandler();
         setIsLoading(false);
     }
