@@ -1,9 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-@font-face {
-    font-family: "Roboto Slab";
-    src: url("https://assets-persist.lovart.ai/agent-static-assets/NotoSerifCJKsc-Regular.otf") format("opentype");
-    font-weight: normal;
-}
 
 .profile_header {
     display: flex;
