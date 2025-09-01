@@ -4,7 +4,6 @@
   align-items: center;
 
   width: 100%;
-  padding-bottom: 4rem;
   
   background-color: #F2EFE9;
 }
@@ -19,8 +18,10 @@
 }
 
 .page_title {
-  font-family: "Roboto Bold", sans-serif;
+  font-family: "Roboto-Bold", sans-serif;
   font-size: 1.8rem;
+  font-weight: bolder;
+  color: #2C2C2C;
 }
 
 .add_skill_btn {
@@ -103,4 +104,40 @@
   color: #403F4C;
   font-size: 1.3rem;
   line-height: 1.6;
+}
+
+.populated_state {
+  display: flex;
+  width: 94%;
+}
+
+.filter_options {
+  display: flex;
+  height: 2.7rem;
+
+  margin-top: 1rem;
+  padding: 0.3rem;
+
+  background-color: white;
+  border-radius: 0.6rem;
+}
+
+.filter_option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 6rem;
+  
+  border-radius: 0.8rem;
+  cursor: pointer;
+}
+
+.filter_option.active {
+  background-color: #EC9A29;
+  color: white;
+} 
+
+.filter_name {
+  font-family: "Roboto", "sans-serif";
 }
