@@ -1,3 +1,4 @@
+
 .page_content {
   display: flex;
   flex-direction: column;
@@ -146,15 +147,67 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 
-  gap: 0.5rem;
+  width: 94%;
+  gap: 1.6rem;
+  padding-top: 2rem;
 }
 
-.skills_card {
-  padding: 1.8rem;
+.skill_card {
+  padding: 1.5rem;
 
   border-radius: 15px;
   background-color: white;  
 
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.skill_card:hover {
+  transform: translateY(-0.4rem);
   transition: all 0.3s ease;
+}
+
+.skill_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  
+  margin-top: -1rem;
+}
+
+.skill_title {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.3rem;
+  color: #2C2C2C;
+}
+
+.skill_category {
+  width: 20%;
+  padding: 0.6rem;
+  margin-top: 0.8rem;
+  
+  color: #495057;
+  text-align: center;
+  border-radius: 1.2rem;
+  background-color: #E9ECEF;
+  
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.skill_level {
+  display: flex;
+  align-items: center;
+  
+  padding-top: 0.2rem;
+  margin-bottom: 0.5rem;
+
+  font-size: 0.8;
+  font-weight: 350;
+  font-family: "Roboto", sans-serif;
+}
+
+.skill_level div {
+  margin-left: 0.5rem;
+  margin-bottom: 0.2rem;
 }

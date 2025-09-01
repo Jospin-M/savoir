@@ -74,24 +74,6 @@
     color: #2C2C2C;
 }
 
-.language_level {
-    display: flex;
-    align-items: center;
-}
-
-.language_level span {
-    width: 8px;
-    height: 8px;
-    margin-left: 5px;
-
-    border-radius: 50%;
-    background-color: #E0E0E0;
-}
-
-.language_level span.active {
-    background-color: #EC9A29;
-}
-
 .edit_profile_button_container {
     width: 111%;
     height: 2.5rem;

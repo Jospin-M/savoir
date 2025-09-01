@@ -1,6 +1,7 @@
 import styles from "./Skills.module.css";
 
-import { useState } from "react";
+import { useState, type JSX } from "react";
+import { createLevel } from "../profile/sidebar/Sidebar";
 import { useSkillData } from "../../hooks/useSkillsData";
 import { type Dispatch, type SetStateAction } from "react";
 import type { AuthenticatedSkill } from "../../../lib/queryFunctions";
@@ -43,39 +44,63 @@ function FilterOptions({ activeFilter, setActiveFilter }: { activeFilter: string
     );
 }
 
+async function filterSkills(skills: AuthenticatedSkill[], comparator: (activeState: boolean) => boolean) {
+    return skills?.filter(skill => comparator(skill.active))
+}
+
 function SkillListing({ skill }: { skill: AuthenticatedSkill }) {
+    const { categories } = useSkillData();
+    const categoryName = categories?.find(category => category.id === skill.category_id)?.name;
+
     return (
         <div className={styles.skill_card}>
+            <div className={styles.skill_header}>
+                <h3 className={styles.skill_title}>{skill.name}</h3>
+                
+                <span className={styles.skill_category}>
+                    {categoryName}
+                </span>
+            </div>
 
+            <div className={styles.skill_level}>
+                <span className={styles.skill_level}>{skill.level}</span>
+                
+                {createLevel(["Advanced", "Intermediate", "Beginner"], skill.level)}
+            </div>
         </div>
     );
 }
 
-async function filterSkills(skills: AuthenticatedSkill[], comparator: (activeState: boolean) => boolean) {
-   //console.log(skills)
-
-    return skills?.filter(skill => comparator(skill.active))
-}
-
-function All() {
-    const { skillsQuery: { skills } } = useSkillData();
-    //filterSkills(skills)
-
-    return (<></>);
+function All({ skills }: { skills: AuthenticatedSkill[] }) {
+    return (
+        <>
+            {skills.map(skill => <SkillListing skill={skill} key={skill.id}/>)}
+        </>
+    );
 }
 
 export function Populated() {
     const [activeFilter, setActiveFilter] = useState("All");
     // activeFilter will be used to decide which page to show
     const { skillsQuery: { skills } } = useSkillData();
-    console.log(filterSkills(skills, (state) => state === false));
+    let pageToShow: JSX.Element = <></>;
+
+    if(activeFilter === "All") {
+        pageToShow = <All skills={skills}/>
+    }
+
+    console.log(activeFilter === "All")
+    
+    //console.log(filterSkills(skills, (state) => state === false));
     return (
-        <div className={styles.populated_state}>
-            <FilterOptions activeFilter={activeFilter} setActiveFilter={setActiveFilter}/>
-        
-            <div className={styles.skills_grid}>
-                
+        <>
+            <div className={styles.populated_state}>
+                <FilterOptions activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
             </div>
-        </div>
+
+            <div className={styles.skills_grid}>
+                {activeFilter === "All" && <All skills={skills}/>}
+            </div>
+        </>
     );
 }
