@@ -1,40 +1,47 @@
 "use client";
 
 import Button from "../../common/Button";
-import styles from "./Sidebar.module.css";
 import EditProfileModal from "../edit_profile/EditProfileModal";
+
+import styles from "./Sidebar.module.css";
+import commonStyles from "../../common/Common.module.css";
 
 import { useState, type JSX } from "react";
 import { useProfileData } from "../../../hooks/useProfileData";
 import type { ProfileLanguageItem } from "../../../../lib/queryFunctions";
+
+/**
+ * Makes use of the user's profiency level to determine how many stars should be shown.
+ *  
+ * @param options Array of proficiency level names (e.g., ["Advanced", "Intermediate", "Beginner"]) used as keys for the star display mapping.
+ * @param level The user's current proficiency level, must match one of the values in the options array.
+ */
+export function createLevel(options: string[], level: string) {
+    const activeOptions: { [key: string]: string[] } = {};
+    const activeStates = [
+        ["active", "active", "active"],
+        ["active", "active", ""],
+        ["active", "", ""]
+    ];
+
+    activeStates.forEach((states, index) => {
+        activeOptions[options[index]] = states;
+    })
+
+    // if styles[state] = "active", then the <span> element will be colored orange
+    // otherwise, it will be gray
+    const elements: JSX.Element[] = [];
+    activeOptions[level]?.forEach((state, index) => elements.push(<span key={index} className={commonStyles[state]}/>))
+   
+    return <div className={commonStyles.proficiency_level}>{elements}</div>;
+}
+
 /**
  * Creates a visual representation of the user's proficiency in a list of languages.
  * 
  * @param languages A list of all the languages known by the user.
  */
 export function createLanguageItems(languages: ProfileLanguageItem[]) {
-    /**
-     * Makes use of the user's profiency level in the language to determine how many stars should be shown next to the name of the language
-     * on their profile.
-     *  
-     * @param states A mapping of the profiency level to the amount of stars that should be shown.
-     */
-    function createLevel(states: string[]) {
-        const elements: JSX.Element[] = [];
-
-        // if styles[state] = "active", then the <span> element will be colored orange
-        // otherwise, it will be gray
-        states.forEach((state, index) => elements.push(<span key={index} className={styles[state]}/>))
-    
-        return <div className={styles.language_level}>{elements}</div>;
-    }
-
-    const activeStates = {
-        Fluent: ["active", "active", "active"],
-        Intermediate: ["active", "active", ""],
-        Beginner: ["active", "", ""]
-    }
-
     const languageItems: JSX.Element[] = [];
     
     languages?.forEach((language, index) => {
@@ -42,7 +49,7 @@ export function createLanguageItems(languages: ProfileLanguageItem[]) {
             <div key={index} className={styles.language_item}>
                 <span>{language.name}</span>
 
-                {createLevel(activeStates[language.proficiency])}
+                {createLevel(["Fluent", "Intermediate", "Beginner"], language.proficiency)}
             </div>
         ));
     });
