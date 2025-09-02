@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-
 .auth_btn {
     display: inline-block;
     text-align: center;
@@ -232,8 +230,8 @@
   transition: all 0.3s ease;
 }
 
-.nav_item_text {
-  font: "Roboto";
+.nav_item {
+  font: "Roboto", sans-serif;
   font-size: 1.25rem;
   color: #403F4C;
 }

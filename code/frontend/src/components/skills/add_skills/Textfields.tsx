@@ -11,7 +11,7 @@ export function Name({ control, errors }: { control: Control<CurrentSkillData>, 
             control={control}
             rules={{ required: "Name is required" }}
             render={({ field }) => (
-                <InputField inputTitle="Name" field={field} errors={errors} />
+                <InputField inputTitle="Name" field={field} errors={errors} maxLength={22} />
             )}
         />
     );

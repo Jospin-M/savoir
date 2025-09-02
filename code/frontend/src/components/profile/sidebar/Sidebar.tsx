@@ -16,7 +16,7 @@ import type { ProfileLanguageItem } from "../../../../lib/queryFunctions";
  * @param options Array of proficiency level names (e.g., ["Advanced", "Intermediate", "Beginner"]) used as keys for the star display mapping.
  * @param level The user's current proficiency level, must match one of the values in the options array.
  */
-export function createLevel(options: string[], level: string) {
+export function createProficiencyLevel(options: string[], level: string) {
     const activeOptions: { [key: string]: string[] } = {};
     const activeStates = [
         ["active", "active", "active"],
@@ -49,7 +49,7 @@ export function createLanguageItems(languages: ProfileLanguageItem[]) {
             <div key={index} className={styles.language_item}>
                 <span>{language.name}</span>
 
-                {createLevel(["Fluent", "Intermediate", "Beginner"], language.proficiency)}
+                {createProficiencyLevel(["Fluent", "Intermediate", "Beginner"], language.proficiency)}
             </div>
         ));
     });
