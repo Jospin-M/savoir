@@ -93,7 +93,7 @@
     border: 1px solid #E0DED8;
     border-radius: 0.6rem;
 
-    font-family: "Roboto Slab", serif;
+    font-family: "Roboto", sans-serif;
     font-size: 0.87rem;
     color: #403F4C;
 }
@@ -104,6 +104,10 @@
 
 .form_group {
     margin-bottom: 2rem;
+
+    font-family: "Roboto", sans-serif;
+    font-size: 0.87rem;
+    color: #403F4C;
 }
 
 .form_group label {
@@ -189,8 +193,8 @@
     border: 1px solid #E0DED8;
     border-radius: 0.6rem;
 
-    font-family: "Roboto Slab", serif;
-    font-size: 0.84rem;
+    font-family: "Roboto", sans-serif;
+    font-size: 0.87rem;
     color: #403F4C;
 }
 

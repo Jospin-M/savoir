@@ -1,4 +1,4 @@
-import AddSkillModal from "./add_skills/AddSkillModal";
+import AddSkillModal from "./modals/AddSkillModal";
 import styles from "./Skills.module.css";
 
 import { useState } from "react";

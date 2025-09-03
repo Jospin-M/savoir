@@ -1,12 +1,12 @@
 import * as express from "express";
-import { addSkill, getCategories } from "../clients/skillsClient";
+import { updateSkills, getCategories } from "../clients/skillsClient";
 
 const router = express.Router();
 
 router.get("/categories", getCategories);
 
-router.post("/", addSkill);
-// implement routes to post data (POST "/skills") 
+router.post("/", updateSkills);
+
 // and get data for a specific user (GET "/skills/:user_id")
 
 export default router;

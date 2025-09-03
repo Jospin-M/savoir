@@ -1,9 +1,12 @@
 import styles from "./Skills.module.css";
 
-import { useState, useRef, type JSX, useEffect } from "react";
+
 import { useSkillData } from "../../hooks/useSkillsData";
 import { createProficiencyLevel } from "../profile/sidebar/Sidebar";
-import type { AuthenticatedSkill } from "../../../lib/queryFunctions";
+import type { Skill } from "../../../lib/queryFunctions";
+import { useState, useRef, type JSX, useEffect, type Dispatch, type SetStateAction } from "react";
+import type {  } from "react";
+import EditSkillModal from "./modals/EditSkillModal";
 
 /**
  * Makes use of the user's average rating to determine how the rating stars should be displayed.
@@ -66,7 +69,7 @@ function Stats({ average, count }: { average: number, count: number } ) {
                 <span className={styles.stat_label}>Sessions</span>
             </div>
 
-            <div className={styles.stat}>
+            <div className={styles.stat} id={styles.stars}>
                 <div className={styles.rating}>{createRatingLevel(average)}</div>
                 <span className={styles.stat_label}>{average} ({count}) reviews</span>
             </div>
@@ -74,7 +77,7 @@ function Stats({ average, count }: { average: number, count: number } ) {
     );
 }
 
-function ToggleSwitch({ skill }: { skill: AuthenticatedSkill }) {
+function ToggleSwitch({ skill }: { skill: Skill }) {
     const activeStyling = skill.active ? `${styles.active}`: "";
     const [active, setActive] = useState(skill.active);
 
@@ -99,25 +102,32 @@ function ToggleSwitch({ skill }: { skill: AuthenticatedSkill }) {
     );
 }
 
-function Buttons() {
-    return (
-        <div className={styles.action_buttons}>
-            <button className={styles.action_btn}>
-                <i className="ri-edit-line"/>
-            </button>
+function Buttons({ skill, setShowModal }: { 
+    skill: Skill,
+    setShowModal: Dispatch<SetStateAction<boolean>> 
+}) {
+    const { deleteSkill } = useSkillData();
 
-            <button className={styles.action_btn}>
-                <i className="ri-delete-bin-line"/>
-            </button>
-        </div>
+    return (
+        <>
+            <div className={styles.action_buttons}>
+                <button className={styles.action_btn} onClick={() => setShowModal(true)}>
+                    <i className="ri-edit-line"/>
+                </button>
+
+                <button className={styles.action_btn} onClick={() => deleteSkill(skill)}>
+                    <i className="ri-delete-bin-line"/>
+                </button>
+            </div>
+        </>
     );
 }
 
-function Actions({ skill }: { skill: AuthenticatedSkill }) {
+function Actions({ skill, setShowModal }: { skill: Skill, setShowModal: Dispatch<SetStateAction<boolean>> }) {
     return (
         <div className={styles.skill_actions}>
             <ToggleSwitch skill={skill}/>
-            <Buttons />
+            <Buttons setShowModal={setShowModal} skill={skill} />
         </div>
     );
 }
@@ -142,13 +152,15 @@ function equalizeHeights() {
     });
 }
 
-export function SkillListing({ skill }: { skill: AuthenticatedSkill }) {
+export function SkillListing({ skill }: { 
+        skill: Skill
+}) {
     const { categories } = useSkillData();
-    const categoryName = categories?.find(category => category.id === skill.category_id)?.name;
     const reviews = { average: 4.5, count: 8 }; // will be replaced with actual review information from the db once implemented
-
     const cardRef = useRef<HTMLDivElement>(null);
-
+    const [showModal, setShowModal] = useState(false);
+    const categoryName = categories?.find(category => skill.category_id === category.id)?.name
+    
     useEffect(() => {
         // Run after render
         const timer = setTimeout(equalizeHeights, 0);
@@ -163,16 +175,23 @@ export function SkillListing({ skill }: { skill: AuthenticatedSkill }) {
     });
 
     return (
-        <div ref={cardRef} className={styles.skill_card} >
-            <Header skillName={skill.name} categoryName={categoryName!} />
-            <Level level={skill.level}/>
-            
-            <div className={styles.skill_description}>
-                {skill.description}
+        <>
+            <div ref={cardRef} className={styles.skill_card} >
+                <Header skillName={skill.name} categoryName={categoryName!} />
+                <Level level={skill.level}/>
+                
+                <div className={styles.skill_description}>
+                    {skill.description}
+                </div>
+
+                <Stats average={reviews.average} count={reviews.count} />
+                <Actions skill={skill} setShowModal={setShowModal}/>
             </div>
 
-            <Stats average={reviews.average} count={reviews.count} />
-            <Actions skill={skill}/>
-        </div>
+            {showModal && 
+                <EditSkillModal 
+                    skill={skill}
+                    closeButtonHandler={() => setShowModal(false)}/>}
+        </>
     );
 }

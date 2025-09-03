@@ -1,46 +1,34 @@
-import StandardModal from "../../common/modal/StandardModal";
 import SectionTitle from "../../common/modal/SectionTitle";
+import StandardModal from "../../common/modal/StandardModal";
 import { Name, Categories, Levels, Description, Prerequsites, Materials } from "./Textfields";
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { updateSkills } from "../../../../app/lib/actions";
 import { useSkillData } from "../../../hooks/useSkillsData";
-import { sendAuthenticatedHTTPRequest } from "../../../../lib/utils";
+import type { Skill } from "../../../../lib/queryFunctions";
 
-export type CurrentSkillData = {
-    name: string
-    category_id: number
-    level: string
-    description: string
-    prerequisites: string
-    materials_needed: string
-};
-
-export default function AddSkillModal({ closeButtonHandler }: { closeButtonHandler: () => void }) {
+export default function EditSkillModal({ skill, closeButtonHandler }: { 
+    skill: Skill,
+    closeButtonHandler: () => void
+}) {
     const [isLoading, setIsLoading] = useState(false);
-    const { skillsQuery: { refetch } } = useSkillData();
-    const defaultValues: CurrentSkillData = {
-        name: "",
-        category_id: 0,
-        level: "",
-        description: "",
-        prerequisites: "",
-        materials_needed: ""
-    };
-    
+    const defaultValues: Skill = { ...skill };
+    const { updateSkill } = useSkillData();
+
     const {
         control,
         handleSubmit,
         formState: { errors, isDirty }
     } = useForm({ defaultValues: defaultValues });
     
-    async function onSubmit(skillData: CurrentSkillData) {
+    async function onSubmit(skillData: Skill) {
         setIsLoading(true);
 
-        await sendAuthenticatedHTTPRequest("/skills", "POST", skillData);
-        await refetch?.();
-        await updateSkills();
+        const newSkill = { 
+            ...skillData, id: skill.id, category_id: skillData.category_id, active: skill.active! 
+        };
+
+        updateSkill(skill.id, newSkill);
         
         closeButtonHandler();
         setIsLoading(false);
@@ -51,7 +39,7 @@ export default function AddSkillModal({ closeButtonHandler }: { closeButtonHandl
 
     return (
         <StandardModal
-            title={"Add New Skill"}
+            title={"Edit Skill"}
             onClose={closeButtonHandler}
             onSubmit={handleSubmit(onSubmit)}
             isDisabled={isDisabled}

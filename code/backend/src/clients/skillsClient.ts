@@ -9,10 +9,10 @@ export async function getCategories(req: Request, res: Response) {
     res.status(200).json(data);
 }   
 
-export async function addSkill(req: Request, res: Response) {
+export async function updateSkills(req: Request, res: Response) {
     await createAuthenticatedClient(req)
         .from("skills")
         .upsert({ ...req.body });
         
-    res.status(201).json({ message: "Skill created successfully." });
+    res.status(201).json({ message: "Skills updated successfully." });
 }
