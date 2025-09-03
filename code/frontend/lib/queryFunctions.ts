@@ -40,7 +40,7 @@ export async function getProfileData(id?: string): Promise<ProfileData>  {
 }
 
 export type Entity = {
-    id: string
+    id: number
     name: string
 };
 
@@ -70,24 +70,19 @@ export async function getCategories(): Promise<Category[]> {
     return await sendAuthenticatedHTTPRequest("/skills/categories", "GET");
 }
 
-/**
- *  The use of the word 'Authenticated' before 'Skill' is to differentiate the result of skill requests that will return  
-    skill objects with an 'active' state (in the case of the authenticated user making the request) from those that don't need 
-    to know the 'active' state of the skill (public users)
- */
-export type AuthenticatedSkill = {
+export type Skill = {
     id: number
-    user_id: string
+    user_id?: string
     name: string
-    category_id: string
+    category_id: number
     level: string
     description: string
     prerequisites: string
     materials_needed: string
-    active: boolean
+    active?: boolean
 }
 
-export async function getAuthenticatedUserSkills(): Promise<AuthenticatedSkill[]> {
+export async function getAuthenticatedUserSkills(): Promise<Skill[]> {
     return await sendAuthenticatedHTTPRequest(
         "/profiles/me/skills",
         "GET", 

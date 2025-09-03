@@ -241,6 +241,10 @@
   align-items: center;
 }
 
+#stars {
+  padding-top: 0.4rem;
+}
+
 .stat span {
   padding-top: 0.1rem;
 }

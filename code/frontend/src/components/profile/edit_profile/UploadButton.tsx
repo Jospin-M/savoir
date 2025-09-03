@@ -19,13 +19,12 @@ export default function UploadButton({ promptText, field }: UploadProps) {
                 e.preventDefault();
                 fileInputRef?.current?.click();
             }}>
-                <i className={"ri-image-add-line"}>
-                    {` ${promptText} `}
-                </i>
+                <i className={"ri-image-add-line"} />
+                <span>{promptText}</span>
             </button>
 
             <input 
-                id={"photo"}
+                className={"photo"}
                 name={field.name}
                 type="file" 
                 accept="image/*"

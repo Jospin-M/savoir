@@ -27,5 +27,14 @@ app.use(API_ROOT + "references", referenceRouter);
 const PORT = 4000;
 
 app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server is running on http://localhost:${PORT}`)
+    const os = require("os");
+    const interfaces = os.networkInterfaces();
+
+    Object.keys(interfaces).forEach((iface) => {
+        interfaces[iface].forEach((details: any) => {
+        if (details.family === "IPv4" && !details.internal) {
+            console.log(`Server running at http://${details.address}:${PORT}`);
+        }
+        });
+  });
 });

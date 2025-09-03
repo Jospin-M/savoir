@@ -1,10 +1,10 @@
 import { DropdownField, InputField, RadioGroup, TextareaField } from "../../common/modal/Input";
-import type { CurrentSkillData } from "./AddSkillModal";
 
 import { useSkillData } from "../../../hooks/useSkillsData";
+import type { Skill } from "../../../../lib/queryFunctions";
 import { Controller, type Control, type FieldErrors } from "react-hook-form";
 
-export function Name({ control, errors }: { control: Control<CurrentSkillData>, errors: FieldErrors<CurrentSkillData> }) {
+export function Name({ control, errors }: { control: Control<Skill>, errors: FieldErrors<Skill> }) {
     return (
         <Controller 
             name="name"
@@ -17,7 +17,7 @@ export function Name({ control, errors }: { control: Control<CurrentSkillData>, 
     );
 }
 
-export function Categories({ control, errors }: { control: Control<CurrentSkillData>, errors: FieldErrors<CurrentSkillData> }) {
+export function Categories({ control, errors }: { control: Control<Skill>, errors: FieldErrors<Skill> }) {
     const { categories } = useSkillData();
     
     return (
@@ -32,7 +32,7 @@ export function Categories({ control, errors }: { control: Control<CurrentSkillD
     );
 }
 
-export function Levels({ control, errors }: { control: Control<CurrentSkillData>, errors: FieldErrors<CurrentSkillData> }) {
+export function Levels({ control, errors }: { control: Control<Skill>, errors: FieldErrors<Skill> }) {
     return (
         <Controller 
             name="level"
@@ -45,7 +45,7 @@ export function Levels({ control, errors }: { control: Control<CurrentSkillData>
     );
 }
 
-export function Description({ control, errors }: { control: Control<CurrentSkillData>, errors: FieldErrors<CurrentSkillData> }) {
+export function Description({ control, errors }: { control: Control<Skill>, errors: FieldErrors<Skill> }) {
     const placeholderText = "Describe what you'll teach and what learners can expect...";
     
     return (
@@ -60,7 +60,7 @@ export function Description({ control, errors }: { control: Control<CurrentSkill
     );
 }
 
-export function Prerequsites({ control, errors }: { control: Control<CurrentSkillData>, errors: FieldErrors<CurrentSkillData> }) {
+export function Prerequsites({ control, errors }: { control: Control<Skill>, errors: FieldErrors<Skill> }) {
     const placeholderText = "e.g., Basic knowledge helpful but not required"; 
 
     return (
@@ -74,7 +74,7 @@ export function Prerequsites({ control, errors }: { control: Control<CurrentSkil
     );
 }
 
-export function Materials({ control, errors }: { control: Control<CurrentSkillData>, errors: FieldErrors<CurrentSkillData> }) {
+export function Materials({ control, errors }: { control: Control<Skill>, errors: FieldErrors<Skill> }) {
     const placeholderText = "e.g., Supplies to follow along, good workspace";
     
     return (

@@ -230,9 +230,10 @@
   transition: all 0.3s ease;
 }
 
-.nav_item {
-  font: "Roboto", sans-serif;
-  font-size: 1.25rem;
+.nav_item div {
+  font-family: "Roboto", sans-serif;
+  font-weight: 350;
+  font-size: 1.2rem;
   color: #403F4C;
 }
 
@@ -242,6 +243,11 @@
 
   font-size: 1.2rem;
   text-decoration: none;
+}
+
+.nav_item.active i, 
+.nav_item.active div {
+  color: #EC9A29;
 }
 
 .nav_item:hover:not(.active) {

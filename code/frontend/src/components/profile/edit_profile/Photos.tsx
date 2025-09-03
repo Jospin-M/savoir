@@ -26,13 +26,15 @@ export function CoverPhoto({ control, errors }: { control: Control<CurrentProfil
                 <div className={modalStyles.form_group}>
                     <label htmlFor="photo">Cover Photo</label>
 
-                    <div className={styles.modal_cover_photo}>
-                        <img src={field.value?.url} id={field.name}/>
+                    <div className={styles.edit_profile_cover_photo_container}>
+                        <div className={styles.modal_cover_photo}>
+                            <img src={field.value?.url} id={field.name}/>
+                        </div>
+
+                        <UploadButton promptText="Change Cover Photo" field={field} />
+
+                        {errors.coverPhoto && <p className={modalStyles.error_message}>{errors.coverPhoto.message}</p>}
                     </div>
-
-                    <UploadButton promptText="Change Cover Photo" field={field} />
-
-                    {errors.coverPhoto && <p className={modalStyles.error_message}>{errors.coverPhoto.message}</p>}
                 </div>
             )}
         />

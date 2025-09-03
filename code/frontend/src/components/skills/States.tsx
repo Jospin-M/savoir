@@ -2,10 +2,10 @@ import { SkillListing } from "./SkillListing";
 
 import styles from "./Skills.module.css";
 
-import { useState, type JSX } from "react";
+import { useEffect, useState } from "react";
 import { useSkillData } from "../../hooks/useSkillsData";
 import { type Dispatch, type SetStateAction } from "react";
-import type { AuthenticatedSkill } from "../../../lib/queryFunctions";
+import type { Skill } from "../../../lib/queryFunctions";
 
 export function Empty() {
     return (
@@ -45,13 +45,12 @@ function FilterOptions({ activeFilter, setActiveFilter }: { activeFilter: string
     );
 }
 
-function SkillListings({ skills, }: { 
-    skills: AuthenticatedSkill[],
-    onUpdateActive?: (skillId: number, isActive: boolean) => void  
+function SkillListings({ skills }: { 
+    skills: Skill[] 
 }) {
     return (
         <>
-            {skills.map(skill => <SkillListing skill={skill} key={skill.id}/>)}
+            {skills?.map(skill => <SkillListing skill={skill} key={skill.id} />)}
         </>
     );
 }
@@ -59,12 +58,13 @@ function SkillListings({ skills, }: {
 export function Populated() {
     const { skillsQuery: { skills } } = useSkillData();
     const [activeFilter, setActiveFilter] = useState("All");
-    
-    let pageToShow: JSX.Element = <></>;
-
-    if(activeFilter === "All") {
-        pageToShow = <SkillListings skills={skills}/>
-    }
+    const [updatedSkills, setUpdatedSkills] = useState(skills);
+    // verify if what changes is the reference we pass into useState and not the variable itself
+    useEffect(() => {
+        if(skills) {
+            setUpdatedSkills(skills);
+        }
+    }, [skills]);
     
     return (
         <>
@@ -73,13 +73,13 @@ export function Populated() {
             </div>
 
             <div className={styles.skills_grid}>
-                {activeFilter === "All" && <SkillListings skills={skills}/>}
+                {activeFilter === "All" && <SkillListings skills={updatedSkills}  />}
                 
-                {activeFilter === "Active" && 
-                    <SkillListings skills={skills?.filter(skill => skill.active === true)} />}
+                {activeFilter === "Active"
+                    &&  <SkillListings skills={updatedSkills?.filter(skill => skill.active === true)} />}
                 
                 {activeFilter === "Inactive" 
-                    && <SkillListings skills={skills?.filter(skill => skill.active === false)} />}
+                    && <SkillListings skills={updatedSkills?.filter(skill => skill.active === false)} />}
             </div>
         </>
     );

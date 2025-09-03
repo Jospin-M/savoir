@@ -88,8 +88,13 @@ export function DropdownField<T extends FieldValues>({ dropdownTitle,  field, er
 export function RadioGroup<T extends FieldValues>({ radioTitle,  field, errors, options }: 
     { radioTitle: string, field: ControllerRenderProps<T, Path<T>>, errors: FieldErrors, options: string[] 
 }) {
-    // options array should be populated with values from database, so request won't be needed since we can use queryClient
-    // for populating category with value from the database, use same approach as in Languages
+    //options should be sorted alphabetically on the server so that the client gets sorted elements
+    const selectedOption = document.getElementById(field.value)!;
+    
+    if(selectedOption instanceof HTMLInputElement) {
+        selectedOption.checked = true;
+    }
+
     return (
         <div className={styles.form_group}>
             <label htmlFor="radio_field">{radioTitle}</label>
