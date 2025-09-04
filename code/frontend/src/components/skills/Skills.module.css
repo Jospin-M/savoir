@@ -66,6 +66,10 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
+.empty_state p {
+  font-family: "Roboto", sans-serif;
+}
+
 .empty_illustration {
   display: flex;
   align-items: center;

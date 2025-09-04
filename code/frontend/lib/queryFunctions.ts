@@ -67,11 +67,20 @@ export async function getLanguages(): Promise<Language[]> {
 export type Category = Entity;
 
 export async function getCategories(): Promise<Category[]> {
-    return await sendAuthenticatedHTTPRequest("/skills/categories", "GET");
+    return await sendAuthenticatedHTTPRequest(
+        "/skills/categories",
+        "GET", 
+        undefined, 
+        await getSupabaseSession(), 
+        {
+            cache: "force-cache",
+            next: { tags: ["categories"] }
+        }
+    );
 }
 
 export type Skill = {
-    id: number
+    id?: number
     user_id?: string
     name: string
     category_id: number
