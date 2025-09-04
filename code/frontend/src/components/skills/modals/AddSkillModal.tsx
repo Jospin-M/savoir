@@ -6,12 +6,15 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSkillData } from "../../../hooks/useSkillsData";
 import type { Skill } from "../../../../lib/queryFunctions";
+import { useUserStore } from "../../../stores/useUserStore";
 
 export default function AddSkillModal({ closeButtonHandler }: { closeButtonHandler: () => void }) {
+    const userID = useUserStore(state => state.userID)!;
     const [isLoading, setIsLoading] = useState(false);
-    const { skillsQuery: { skills }, addSkill } = useSkillData();
+    const { addSkill } = useSkillData();
     const defaultValues: Skill = {
-        id: skills[skills.length - 1].id + 1,
+        id: -1, // this is a placeholder (it's required for the RPC to work), when the skill is sent to the database, it receives a proper id
+        user_id: userID,
         name: "",
         category_id: 1,
         level: "",

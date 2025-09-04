@@ -176,7 +176,7 @@ export function SkillListing({ skill }: {
 
     return (
         <>
-            <div ref={cardRef} className={styles.skill_card} >
+            <div ref={cardRef} className={styles.skill_card} key={Math.random().toString()}>
                 <Header skillName={skill.name} categoryName={categoryName!} />
                 <Level level={skill.level}/>
                 
