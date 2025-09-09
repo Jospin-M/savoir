@@ -1,3 +1,4 @@
+import { RouteChangeListener } from "../src/components/common/RouteChangeListener";
 import Providers from "./providers";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -12,9 +13,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <body>
             <div id="root"> 
-                <Providers>
-                  {children}
-                </Providers>
+              <Providers>
+                <RouteChangeListener />
+                {children}
+              </Providers>
             </div>
         </body>
     </html>
