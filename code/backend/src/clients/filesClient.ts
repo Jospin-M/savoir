@@ -2,6 +2,9 @@ import { createAuthenticatedClient } from "./supabaseClient";
 
 import { Request, Response } from "express";
 
+/**
+ * Generates presigned upload URLS for a set of folders.
+ */
 export async function getPresignedURL(req: Request, res: Response) {
     const supabaseClient = createAuthenticatedClient(req);
     const uploadURLS: Record<string, { 

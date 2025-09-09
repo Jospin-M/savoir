@@ -59,7 +59,7 @@ export function Populated() {
     const { skillsQuery: { skills } } = useSkillData();
     const [activeFilter, setActiveFilter] = useState("All");
     const [updatedSkills, setUpdatedSkills] = useState(skills);
-    // verify if what changes is the reference we pass into useState and not the variable itself
+    
     useEffect(() => {
         if(skills) {
             setUpdatedSkills(skills);

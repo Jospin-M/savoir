@@ -5,6 +5,7 @@ import SkillsContent from "../../components/skills/SkillsContent";
 import styles from "../../components/common/Common.module.css";
 
 import { useState } from "react";
+import { useQueryClient as qc } from "@tanstack/react-query";
 import { useQueryClient } from "../../hooks/useQueryClient";
 import { SkillDataContext } from "../../hooks/useSkillsData";
 import { type Category, getCategories, type Skill, getAuthenticatedUserSkills } from "../../../lib/queryFunctions";
@@ -21,15 +22,20 @@ export default function Skills() {
     );
 
     const [skills, setSkills] = useState(skillsData);
+    const queryClient = qc();
 
-    function updateSkill(id: number, updatedData: Skill) {
+    function updateSkill(updatedSkill: Skill) {
         setSkills((prev: Skill[]) =>
-            prev.map(skill => skill.id === id ? { ...updatedData }: skill)
+            prev.map(skill => skill.id === updatedSkill.id ? updatedSkill: skill)
         );
+        
+        queryClient.setQueryData(["profileSkills"],  () => {
+            return skillsData.map(skill => skill.id === updatedSkill.id ? updatedSkill: skill);
+        })
     } 
 
     function addSkill(newSkill: Skill) {
-        setSkills([...skills, { ...newSkill }]);
+        setSkills([...skills, newSkill]);
     }
 
     function deleteSkill(skillToDelete: Skill) {

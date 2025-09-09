@@ -5,7 +5,7 @@ import type { QueryObserverResult, RefetchOptions } from "@tanstack/react-query"
 export type ContextSkillData = {
     categories: Category[],
     addSkill: (newSkill: Skill) => void,
-    updateSkill: (id: number, skillToUpdate: Skill) => void,
+    updateSkill: (skillToUpdate: Skill) => void,
     deleteSkill: (skillToDelete: Skill) => void,
     skillsQuery: { 
         skills: Skill[], 
