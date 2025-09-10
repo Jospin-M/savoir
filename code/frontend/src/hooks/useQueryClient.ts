@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 /**
@@ -18,8 +19,15 @@ export function useQueryClient<T>(queryKey: string[], queryFunction: (id?: strin
         refetchOnWindowFocus: false
     });
 
-    // attach a type to the data that matches the shape of the expected response
-    const typedData =  data as T;
+    // store first data snapshot in a ref so that we can use it for comparison
+    const baselineRef = useRef<T | undefined>(undefined);
+    
+    if(data && baselineRef.current === undefined) {
+        baselineRef.current = data;
+    }
 
-    return { data: typedData, refetch };
+    const isCacheUpdated = baselineRef.current !== undefined 
+        && JSON.stringify(baselineRef.current) !== JSON.stringify(data);
+    
+    return { data: data as T, isCacheUpdated };
 }
