@@ -16,7 +16,7 @@ export default function Skills() {
         getCategories
     );
 
-    const { data: skillsData, refetch } = useQueryClient<Skill[]>(
+    const { data: skillsData } = useQueryClient<Skill[]>(
         ["profileSkills"],
         getAuthenticatedUserSkills
     );
@@ -46,8 +46,7 @@ export default function Skills() {
         <SkillDataContext.Provider value={{
             categories: categoriesData,
             skillsQuery: {
-                skills: skills,
-                refetch: refetch
+                skills: skills
             },
             addSkill: addSkill,
             updateSkill: updateSkill,

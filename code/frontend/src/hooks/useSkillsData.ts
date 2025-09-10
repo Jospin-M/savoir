@@ -1,6 +1,5 @@
 import { createContext, useContext } from "react";
 import type { Skill, Category } from "../../lib/queryFunctions";
-import type { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 
 export type ContextSkillData = {
     categories: Category[],
@@ -8,9 +7,7 @@ export type ContextSkillData = {
     updateSkill: (skillToUpdate: Skill) => void,
     deleteSkill: (skillToDelete: Skill) => void,
     skillsQuery: { 
-        skills: Skill[], 
-        refetch: ((options?: RefetchOptions | undefined) => Promise<QueryObserverResult<Skill[], Error>>) | null
-    }
+        skills: Skill[]}
 };
 
 export const SkillDataContext = createContext<ContextSkillData>({ 
@@ -18,7 +15,7 @@ export const SkillDataContext = createContext<ContextSkillData>({
     addSkill: () => {},
     updateSkill: () => {},
     deleteSkill: () => {},
-    skillsQuery: { skills: [], refetch: null }
+    skillsQuery: { skills: []}
 });
 
 export const useSkillData = () => useContext(SkillDataContext);
