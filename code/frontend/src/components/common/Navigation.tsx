@@ -3,8 +3,8 @@ import styles from "./Common.module.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { createURLs } from "../../../lib/utils";
+import { useData } from "../../hooks/useQueryClient";
 import { useUserStore } from "../../stores/useUserStore";
-import { useQueryClient } from "../../hooks/useQueryClient";
 import { type ProfileData, getProfileData } from "../../../lib/queryFunctions";
 
 /**
@@ -53,7 +53,7 @@ export function NavPicture() {
     // in the case where this component needs to be generalized to work for any other user,
     // simply pass the id as a prop from the appropriate parent component
     const id = useUserStore(state => state.userID)!;
-    const { data } = useQueryClient<ProfileData>(
+    const { data } = useData<ProfileData>(
         ["profileData", id], 
         getProfileData, 
         id

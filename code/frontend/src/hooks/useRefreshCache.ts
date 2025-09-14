@@ -1,5 +1,7 @@
 import { sendAuthenticatedHTTPRequest } from "../../lib/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useUserStore, type UserState } from "../stores/useUserStore";
+import { useData } from "./useQueryClient";
 
 type QueryKey = { 
     key: string
@@ -7,20 +9,26 @@ type QueryKey = {
 }
 
 export function useRefreshCache<T>(endpoint: string, queryKey: QueryKey) {
-    const qc = useQueryClient();
+    const queryClient = useQueryClient();
+    const { refetch } = useData([queryKey.key], () => sendAuthenticatedHTTPRequest("/profiles/me/skills", "GET"))
+    
     const { mutate } = useMutation({
         mutationFn: async (updatedData: T[]) => {
-            return await sendAuthenticatedHTTPRequest(endpoint, "POST", updatedData)
+            await sendAuthenticatedHTTPRequest(endpoint, "POST", updatedData);
+            //await refetch();
         },
 
         onMutate: async function(updatedData: T[]) {
-            await qc.cancelQueries({ queryKey: [queryKey.key, queryKey.param] });
-
+            await queryClient.cancelQueries({ queryKey: [queryKey.key, queryKey.param] });
+            console.log("updating cache", updatedData)
             // snapshot the previous data
-            const previousData = qc.getQueryData([queryKey.key, queryKey.param]);
+            const previousData = queryClient.getQueryData([queryKey.key, queryKey.param]);
 
             // optimistically update the cache 
-            qc.setQueryData([queryKey.key], () => updatedData);
+            console.log(queryKey.key)
+            //queryClient.setQueryData([queryKey.key], updatedData);
+            queryClient.invalidateQueries({ queryKey: [queryKey.key] });
+            
 
             // return context value with snapshotted data
             return { previousData };
@@ -28,12 +36,13 @@ export function useRefreshCache<T>(endpoint: string, queryKey: QueryKey) {
 
         // roll back on mutation fail
         onError: (_err, _updateSkills, context) => {
-            qc.setQueryData([queryKey.key], context?.previousData);
+            
+            queryClient.setQueryData([queryKey.key], context?.previousData);
         },
 
         // trigger a refetch to update the cache after we have sent the request
         onSettled: () => {
-            qc.invalidateQueries({ queryKey: [queryKey.key] });
+            queryClient.invalidateQueries({ queryKey: [queryKey.key] });
         }
     });
 

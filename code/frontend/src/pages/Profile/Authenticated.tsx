@@ -7,7 +7,7 @@ import styles from "../../components/common/Common.module.css";
 
 import { createURLs } from "../../../lib/utils.ts";
 import { useUserStore } from "../../stores/useUserStore";
-import { useQueryClient } from "../../hooks/useQueryClient";
+import { useData } from "../../hooks/useQueryClient";
 import { ProfileDataContext, type ContextProfileData } from "../../hooks/useProfileData";
 import { getProfileData, type ProfileData, getLanguages, type Language } from "../../../lib/queryFunctions.ts";
 
@@ -15,13 +15,13 @@ export default function Authenticated() {
     // to decide which page should be shown (authenticated vs. unauthenticated),
     // compare the stored user id with the one from the query parameter (which can be obtained with useParams)
     const id = useUserStore((state) => state.userID)!;
-    const { data: profileData, refetch } = useQueryClient<ProfileData>(
+    const { data: profileData } = useData<ProfileData>(
         ["profileData", id], 
         getProfileData, 
         id
     );
 
-    const { data: languagesData } = useQueryClient<Language[]>(["languages"], getLanguages);
+    const { data: languagesData } = useData<Language[]>(["languages"], getLanguages);
     const pictureURLs = createURLs([profileData?.coverPhoto?.buffer, profileData?.profilePhoto?.buffer]);
 
     let contextProfileData: ContextProfileData = {
@@ -44,8 +44,7 @@ export default function Authenticated() {
         <ProfileDataContext.Provider value={{
             userID: id,
             profileQuery: { 
-                data: contextProfileData, 
-                refetch: refetch
+                data: contextProfileData
             },
             languages: languagesData
         }}>
