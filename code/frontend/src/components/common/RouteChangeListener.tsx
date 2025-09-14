@@ -3,34 +3,31 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import type { Skill } from "../../../lib/queryFunctions";
-import { useQueryClient } from "../../hooks/useQueryClient";
+import { useUserStore } from "../../stores/useUserStore";
 import { useRefreshCache } from "../../hooks/useRefreshCache";
 
 export function RouteChangeListener() {
     const pathname = usePathname();
     const [, setPrevPath] = useState("");
-    const[sendUpdatedSkills, setShouldUpdateSkills] = useState(false);
+    const skills = useUserStore(state => state.skills);
+    const isSkillsCacheUpdated = useUserStore(state => state.isSkillsCacheUpdated);
+    const setSkills = useUserStore(state => state.setSkills);
+
     const { refresh: refreshSkills } = useRefreshCache<Skill>("/skills", { key: "profileSkills" });
-    const { data: updatedData, isCacheUpdated: isSkillsCacheUpdated } = useQueryClient<Skill[]>(["profileSkills"], () => new Promise((_resolve, _reject) => {}))
-
+    console.log(isSkillsCacheUpdated)
     useEffect(() => {
-        console.log(`Router changed to: ${pathname}`);
         setPrevPath((prev) => {
-            console.log("Previous route: ", prev);
-
-            if(prev === "/skills" && isSkillsCacheUpdated) {
-                setShouldUpdateSkills(true);
+            if(prev === "/skills" && isSkillsCacheUpdated && skills) {
+                refreshSkills(skills);
+                
+                // query cache is not being updated for some reason
             }
 
             return pathname ? pathname: "";
         }); 
-    }, [pathname])
 
-    if(sendUpdatedSkills) {
-        refreshSkills(updatedData);
-        //refreshCache<Skill>("/skills", { key: "profileSkills" }, updatedData as Skill[]);
-        setShouldUpdateSkills(false);
-    }
+        return () => {}; // cleanup function is required here since not using one causes the Effect to be run twice
+    }, [pathname])
 
     return <></>;
 }

@@ -1,16 +1,15 @@
-import { useRef } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 /**
- * Custom React Query hook for fetching and caching data tied to a specific ID.
+ * Custom React Query hook for fetching and caching data.
  *
  * @param queryKey - Unique key array used by React Query to identify and cache the query's data.
  * @param queryFunction - Function responsible for making the request that retrieves the data. 
  *                                   Receives the `id` as its single argument.
  * @param id - the unique identifier of the user making the request
  */
-export function useQueryClient<T>(queryKey: string[], queryFunction: (id?: string) => Promise<T>, id?: string) {
-    const { data, refetch } = useQuery({
+export function useData<T>(queryKey: string[], queryFunction: (id?: string) => Promise<T>, id?: string) {
+    const { data, refetch,  } = useQuery({
         queryKey: queryKey,
         queryFn: () => id ? queryFunction(id): queryFunction(),
         enabled: id ? Boolean(id): true, // only run when id exists
@@ -19,15 +18,19 @@ export function useQueryClient<T>(queryKey: string[], queryFunction: (id?: strin
         refetchOnWindowFocus: false
     });
 
-    // store first data snapshot in a ref so that we can use it for comparison
-    const baselineRef = useRef<T | undefined>(undefined);
-    
-    if(data && baselineRef.current === undefined) {
-        baselineRef.current = data;
-    }
+    return { data: data as T, refetch };
+}
 
-    const isCacheUpdated = baselineRef.current !== undefined 
-        && JSON.stringify(baselineRef.current) !== JSON.stringify(data);
-    
-    return { data: data as T, isCacheUpdated };
+/**
+ * Checks if the cached query data differs from the provided current value by performing
+ * a deep comparison using JSON serialization.
+ * 
+ * @param queryKey - The React Query key used to identify the cached data.
+ * @param currentValue - The current value to compare against the cached data.
+ */
+export function isDataUpdated<T>(queryKey: string[], currentValue: T) {
+    const { data } = useData(queryKey, () => new Promise((_resolve, _reject) => {}));
+    console.log(JSON.stringify(data) !== JSON.stringify(currentValue))
+    console.log(data, currentValue)
+    return JSON.stringify(data) !== JSON.stringify(currentValue);
 }

@@ -1,6 +1,5 @@
 import { createContext, useContext } from "react";
-import type { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
-import type { Language, ProfileLanguageItem, ProfileData } from "../../lib/queryFunctions";
+import type { Language, ProfileLanguageItem } from "../../lib/queryFunctions";
 
 export type ContextProfileData = {
     fullName: string,
@@ -13,10 +12,8 @@ export type ContextProfileData = {
 export const ProfileDataContext = createContext<{
     userID: string,
     profileQuery: {
-        data: ContextProfileData | null,
-        refetch: ((options?: RefetchOptions | undefined) => Promise<QueryObserverResult<ProfileData, Error>>) | null
-    },
+        data: ContextProfileData | null}, 
     languages: Language[]
-}>({ userID: "", profileQuery: { data: null, refetch: null }, languages: [] });
+}>({ userID: "", profileQuery: { data: null }, languages: [] });
 
 export const useProfileData = () => useContext(ProfileDataContext);
