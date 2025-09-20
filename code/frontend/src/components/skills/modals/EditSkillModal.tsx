@@ -25,7 +25,7 @@ export default function EditSkillModal({ skill, closeButtonHandler }: {
         setIsLoading(true);
 
         const newSkill = { 
-            ...skillData, id: skill.id, category_id: skillData.category_id, active: skill.active! 
+            ...skillData
         };
 
         updateSkill(newSkill);
