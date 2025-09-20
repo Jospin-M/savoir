@@ -1,7 +1,7 @@
 import { sendAuthenticatedHTTPRequest } from "../../lib/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useUserStore, type UserState } from "../stores/useUserStore";
 import { useData } from "./useQueryClient";
+import { getAuthenticatedUserSkills } from "../../lib/queryFunctions";
 
 type QueryKey = { 
     key: string
@@ -10,42 +10,42 @@ type QueryKey = {
 
 export function useRefreshCache<T>(endpoint: string, queryKey: QueryKey) {
     const queryClient = useQueryClient();
-    const { refetch } = useData([queryKey.key], () => sendAuthenticatedHTTPRequest("/profiles/me/skills", "GET"))
+    const fullQueryKey = queryKey.param ? [queryKey.key, queryKey.param]: [queryKey.key]; // Build consistent key
+    const { refetch } = useData([queryKey.key], () => new Promise((_resolve, _reject) => {}));
     
     const { mutate } = useMutation({
         mutationFn: async (updatedData: T[]) => {
             await sendAuthenticatedHTTPRequest(endpoint, "POST", updatedData);
-            //await refetch();
         },
 
         onMutate: async function(updatedData: T[]) {
-            await queryClient.cancelQueries({ queryKey: [queryKey.key, queryKey.param] });
-            console.log("updating cache", updatedData)
-            // snapshot the previous data
-            const previousData = queryClient.getQueryData([queryKey.key, queryKey.param]);
-
-            // optimistically update the cache 
-            console.log(queryKey.key)
-            //queryClient.setQueryData([queryKey.key], updatedData);
-            queryClient.invalidateQueries({ queryKey: [queryKey.key] });
+            await queryClient.cancelQueries({ queryKey: fullQueryKey });
             
-
-            // return context value with snapshotted data
+            // Snapshot previous data
+            const previousData = queryClient.getQueryData(fullQueryKey);
+            
+            // Update cache with same key
+            await queryClient.setQueryData(fullQueryKey, updatedData);
+            
             return { previousData };
         },
 
-        // roll back on mutation fail
-        onError: (_err, _updateSkills, context) => {
-            
-            queryClient.setQueryData([queryKey.key], context?.previousData);
+        onError: (_err, _updateData, context) => {
+            const fullQueryKey = queryKey.param 
+                ? [queryKey.key, queryKey.param] 
+                : [queryKey.key];
+            queryClient.setQueryData(fullQueryKey, context?.previousData);
         },
-
-        // trigger a refetch to update the cache after we have sent the request
-        onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: [queryKey.key] });
+    
+        onSettled: async () => {
+            await queryClient.invalidateQueries({ queryKey: [queryKey.key] });
+            await queryClient.fetchQuery({
+                queryKey: fullQueryKey,
+                queryFn: getAuthenticatedUserSkills
+            });
+            await refetch();
         }
     });
-
     function refresh(updatedData: T[]) {
         mutate(updatedData);
     }

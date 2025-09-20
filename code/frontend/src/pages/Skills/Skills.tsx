@@ -4,12 +4,11 @@ import SkillsContent from "../../components/skills/SkillsContent";
 
 import styles from "../../components/common/Common.module.css";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useUserStore } from "../../stores/useUserStore";
 import { SkillDataContext } from "../../hooks/useSkillsData";
-import { useData, isDataUpdated } from "../../hooks/useQueryClient";
+import { useData } from "../../hooks/useQueryClient";
 import { type Category, getCategories, type Skill, getAuthenticatedUserSkills } from "../../../lib/queryFunctions";
-import { QueryClient } from "@tanstack/react-query";
 
 export default function Skills() {
     const { data: categoriesData } = useData<Category[]>(
@@ -25,7 +24,7 @@ export default function Skills() {
     const skills = useUserStore(state => state.skills);
     const setSkills = useUserStore(state => state.setSkills);
     const setIsSkillsUpdated = useUserStore(state => state.setIsSkillsUpdated);
-
+    
     useEffect(() => {
         // create a shallow copy of the skill data and save it with Zustand so we don't have to directly modify the query cache
         const skillsDataCopy = Array.from(skillsData ? skillsData: []);
@@ -35,37 +34,27 @@ export default function Skills() {
             setSkills(skillsDataCopy);
         }
     }, [skillsData]);
-     
-    const [localSkills, setLocalSkills] = useState(skills);
-    const isCacheUpdated = isDataUpdated(["profileSkills"], localSkills);
-    
-    console.log(skillsData, localSkills)
-    useEffect(() => {
-        // this is a flag that is used in RouteChangeListener to determine whether or not a request should be sent to server
-        setIsSkillsUpdated(isCacheUpdated);
-    }, [localSkills]);
 
     function addSkill(newSkill: Skill) {
-        setSkills([...localSkills, newSkill]); // manually set skills since the value of localSkills seems not to persist after a few route changes
-        setLocalSkills([...localSkills, newSkill]);
+        setSkills([...skills, newSkill]); // manually set skills since the value of skills seems not to persist after a few route changes
+        setIsSkillsUpdated(true);
     }
 
     function updateSkill(updatedSkill: Skill) {
-        new QueryClient().setQueryData(["profileSkills"], localSkills.map(skill => skill.id === updatedSkill.id ? updatedSkill: skill));
-        setSkills(localSkills.map(skill => skill.id === updatedSkill.id ? updatedSkill: skill));
-        setLocalSkills(localSkills.map(skill => skill.id === updatedSkill.id ? updatedSkill: skill));
+        setSkills(skills.map(skill => skill.id === updatedSkill.id ? updatedSkill: skill));
+        setIsSkillsUpdated(true);
     } 
 
     function deleteSkill(skillToDelete: Skill) {
-        setSkills(localSkills.filter(skill => skill.id !== skillToDelete.id));
-        setLocalSkills(localSkills.filter(skill => skill.id !== skillToDelete.id));
+        setSkills(skills.filter(skill => skill.id !== skillToDelete.id));
+        setIsSkillsUpdated(true);
     }
 
     return (
         <SkillDataContext.Provider value={{
             categories: categoriesData,
             skillsQuery: {
-                skills: localSkills
+                skills: skills
             },
             addSkill,
             updateSkill,

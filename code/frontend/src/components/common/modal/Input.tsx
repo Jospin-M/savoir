@@ -66,11 +66,13 @@ export function TextareaField<T extends FieldValues>({ textareaTitle, field, err
 export function DropdownField<T extends FieldValues>({ dropdownTitle,  field, errors, options }: 
     { dropdownTitle: string, field: ControllerRenderProps<T, Path<T>>, errors: FieldErrors, options: Entity[] 
 }) {
+    const { name: defaultOption } = options.find(opt => opt.id === field.value)!;
+
     return (
         <div className={styles.form_group}>
             <label htmlFor="dropdown_field">{dropdownTitle}</label>
 
-            <select id="dropdown_field" className={styles.dropdown} onChange={e => {
+            <select value={defaultOption} id="dropdown_field" className={styles.dropdown} onChange={e => {
                 const newChoice = options.find(opt => e.target.value === opt.name)
                 
                 field.onChange(newChoice!.id)
