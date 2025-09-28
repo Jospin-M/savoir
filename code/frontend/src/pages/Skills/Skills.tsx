@@ -23,7 +23,8 @@ export default function Skills() {
 
     const skills = useUserStore(state => state.skills);
     const setSkills = useUserStore(state => state.setSkills);
-    
+    const setIsSkillsUpdated = useUserStore(state => state.setIsSkillsUpdated);
+
     useEffect(() => {
         // create a shallow copy of the skill data and save it with Zustand so we don't have to directly modify the query cache
         const skillsDataCopy = Array.from(skillsData ? skillsData: []);
@@ -36,16 +37,18 @@ export default function Skills() {
 
     function addSkill(newSkill: Skill) {
         setSkills([...skills, newSkill]); // manually set skills since the value of skills seems not to persist after a few route changes
+        setIsSkillsUpdated(true);
     }
 
     function updateSkill(updatedSkill: Skill) {
         setSkills(skills.map(skill => skill.id === updatedSkill.id ? updatedSkill: skill));
+        setIsSkillsUpdated(true);
     } 
 
     function deleteSkill(skillToDelete: Skill) {
-        setSkills(skills.filter(skill => skill.id !== skillToDelete.id));
+        setSkills(skills.filter(skill => skill.id !== skillToDelete.id));    
+        setIsSkillsUpdated(true);        
     }
-
     return (
         <SkillDataContext.Provider value={{
             categories: categoriesData,

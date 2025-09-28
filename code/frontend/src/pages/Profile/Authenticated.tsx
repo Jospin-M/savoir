@@ -20,7 +20,8 @@ export default function Authenticated() {
     const { data: profileData } = useData<ProfileData>(["user-profile", id], getProfileData, id);
 
     const setProfile = useUserStore(state => state.setProfile);
-    
+    const setIsProfileUpdated = useUserStore(state => state.setIsProfileUpdated);
+
     const { data: languagesData } = useData<Language[]>(["languages"], getLanguages);
     const pictureURLs = createURLs([profileData?.coverPhoto?.buffer, profileData?.profilePhoto?.buffer]);
 
@@ -48,6 +49,7 @@ export default function Authenticated() {
 
     function updateProfile(dataToUpload: UserProfile, dataToDisplay: ContextProfileData) {
         setProfile(dataToUpload);
+        setIsProfileUpdated(true);
         setProfileData(dataToDisplay);
     }
 
