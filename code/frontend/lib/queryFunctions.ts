@@ -57,7 +57,7 @@ export type Language = Entity;
  * the response returned by the server contains a list longer than 5.
  */
 export async function getLanguages(): Promise<Language[]> {
-    return await makeRequest("/references/languages");
+    return await makeRequest("/references/languages", "languages");
 }
 
 export type Category = Entity;

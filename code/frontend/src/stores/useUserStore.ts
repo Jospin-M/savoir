@@ -19,14 +19,8 @@ export type UserState = {
     userProfile: UserProfile | null;
     setProfile: (profile: UserProfile) => void;
 
-    isProfileUpdated: boolean;
-    setIsProfileUpdated: (isUpdated: boolean) => void;
-
     skills: Skill[];
     setSkills: (skills: Skill[]) => void;
-
-    isSkillsCacheUpdated: boolean;
-    setIsSkillsUpdated: (isUpdated: boolean) => void;
 };
 
 export const useUserStore = create<UserState>()(
@@ -39,14 +33,8 @@ export const useUserStore = create<UserState>()(
             userProfile: null,
             setProfile: (profile) => set({ userProfile: profile }),
 
-            isProfileUpdated: false,
-            setIsProfileUpdated: (isUpdated) => set({ isProfileUpdated: isUpdated }),
-
             skills: [],
             setSkills: (skills) => set({ skills: [...skills] }),
-
-            isSkillsCacheUpdated: false,
-            setIsSkillsUpdated: (isUpdated) => set({ isSkillsCacheUpdated: isUpdated })
         }),
 
         { name: "user-storage" }
