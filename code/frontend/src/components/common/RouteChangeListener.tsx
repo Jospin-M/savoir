@@ -12,18 +12,24 @@ export function RouteChangeListener() {
     
     const userID = useUserStore(state => state.userID);
     const userProfile = useUserStore(state => state.userProfile);
+    const isProfileUpdated = useUserStore(state => state.isProfileUpdated);
+    const setIsProfileUpdated = useUserStore(state => state.setIsProfileUpdated);
 
     const skills = useUserStore(state => state.skills);
+    const setIsSkillsUpdated = useUserStore(state => state.setIsSkillsUpdated);
+    const isSkillsCacheUpdated = useUserStore(state => state.isSkillsCacheUpdated);
 
     const { refresh: updateSkills } = useRefreshCache<Skill[]>("/skills", "POST", { key: "user-skills", param: userID! });
     const { refresh: updateProfile } = useRefreshCache<UserProfile>("/profiles/me", "PUT", { key: "user-profile" });
     
     useEffect(() => {
         setPrevPath((prev) => {
-            if(prev === `/profile/${userID}` && userProfile) {
+            if(prev === `/profile/${userID}` && isProfileUpdated && userProfile) {
                 updateProfile(userProfile);
-            } else if(prev === "/skills" && skills) {
+                setIsProfileUpdated(false);
+            } else if(prev === "/skills" && isSkillsCacheUpdated && skills) {
                 updateSkills(skills);
+                setIsSkillsUpdated(false);
             }
 
             return pathname ? pathname: "";
