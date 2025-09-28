@@ -17,7 +17,7 @@ export default function Skills() {
     );
 
     const { data: skillsData } = useData<Skill[]>(
-        ["profileSkills"],
+        ["user-skills"],
         getAuthenticatedUserSkills
     );
 

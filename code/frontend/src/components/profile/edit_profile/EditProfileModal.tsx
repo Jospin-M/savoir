@@ -5,6 +5,7 @@ import Languages from "./Languages.tsx";
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+
 import { updateUser } from "../../../../app/lib/actions.ts";
 import { useProfileData } from "../../../hooks/useProfileData.ts";
 import type { ProfileLanguageItem } from "../../../../lib/queryFunctions.ts";
@@ -46,7 +47,7 @@ function initializeFiles(profileData: CurrentProfileData): [File[], string[]] {
 
 export default function EditProfileModal({ closeButtonHandler }: { closeButtonHandler: () => void }) {
     const [isLoading, setIsLoading] = useState(false);
-    const { profileQuery: { data, refetch }, userID } = useProfileData();
+    const { profileQuery: { data }, userID } = useProfileData();
     
     async function onSubmit(profileData: CurrentProfileData) {
         setIsLoading(true);

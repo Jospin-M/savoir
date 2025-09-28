@@ -14,7 +14,7 @@ export default async function SkillsPage() {
    });
 
    await queryClient.prefetchQuery({
-      queryKey: ["profileSkills"],
+      queryKey: ["user-skills"],
       queryFn: () => getAuthenticatedUserSkills()
    });
 
