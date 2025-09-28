@@ -1,17 +1,32 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { Skill } from "../../lib/queryFunctions";
+import type { ProfileLanguageItem } from "../../lib/queryFunctions";
+
+export type UserProfile = {
+    name: string;
+    bio: string;
+    languages: ProfileLanguageItem[];
+    coverPhoto: string;
+    profilePhoto: string;
+}
 
 export type UserState = {
-    userID: string | null
-    setUserID: (id: string) => void
-    clearUserID: () => void
+    userID: string | null;
+    clearUserID: () => void;
+    setUserID: (id: string) => void;
 
-    skills: Skill[]
-    setSkills: (skills: Skill[]) => void
+    userProfile: UserProfile | null;
+    setProfile: (profile: UserProfile) => void;
 
-    isSkillsCacheUpdated: boolean
-    setIsSkillsUpdated: (isUpdated: boolean) => void
+    isProfileUpdated: boolean;
+    setIsProfileUpdated: (isUpdated: boolean) => void;
+
+    skills: Skill[];
+    setSkills: (skills: Skill[]) => void;
+
+    isSkillsCacheUpdated: boolean;
+    setIsSkillsUpdated: (isUpdated: boolean) => void;
 };
 
 export const useUserStore = create<UserState>()(
@@ -21,14 +36,19 @@ export const useUserStore = create<UserState>()(
             setUserID: (id) => set({ userID: id }),
             clearUserID: () => set({ userID: null }),
 
+            userProfile: null,
+            setProfile: (profile) => set({ userProfile: profile }),
+
+            isProfileUpdated: false,
+            setIsProfileUpdated: (isUpdated) => set({ isProfileUpdated: isUpdated }),
+
             skills: [],
             setSkills: (skills) => set({ skills: [...skills] }),
 
             isSkillsCacheUpdated: false,
             setIsSkillsUpdated: (isUpdated) => set({ isSkillsCacheUpdated: isUpdated })
         }),
-        {
-            name: "user-storage"
-        }
+
+        { name: "user-storage" }
     )
 );

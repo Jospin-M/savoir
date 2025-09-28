@@ -6,14 +6,19 @@ import Languages from "./Languages.tsx";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { updateUser } from "../../../../app/lib/actions.ts";
+import { uploadFiles } from "../../../../lib/utils.ts";
 import { useProfileData } from "../../../hooks/useProfileData.ts";
 import type { ProfileLanguageItem } from "../../../../lib/queryFunctions.ts";
-import { sendAuthenticatedHTTPRequest, uploadFiles } from "../../../../lib/utils.ts";
+
+type FileData = { 
+    file: File | null;
+    url: string | undefined;
+    location: string | undefined;
+}
 
 export type CurrentProfileData = {
-    coverPhoto: { file: File | null, url: string | undefined, location: string | undefined } | null,
-    profilePhoto: { file: File | null, url: string | undefined, location: string| undefined } | null,
+    coverPhoto:  FileData | null,
+    profilePhoto: FileData | null,
     name: string | undefined,
     bio: string | undefined,
     languages: ProfileLanguageItem[] | undefined
@@ -28,18 +33,18 @@ export type CurrentProfileData = {
  * @returns two parallel arrays: one containing the files themselves and one containing 
  * the corresponding storage folder names.
  */
-function initializeFiles(profileData: CurrentProfileData): [File[], string[]] {
+function initializeFiles(coverPhoto: FileData, profilePhoto: FileData): [File[], string[]] {
     const files: File[] = [];
     const folders = []; // represents the folders within the storage bucket that the files will go into
 
-    if(profileData.coverPhoto?.file) {
+    if(coverPhoto.file) {
         folders.push("covers");
-        files.push(profileData.coverPhoto?.file)
+        files.push(coverPhoto.file)
     } 
     
-    if(profileData.profilePhoto?.file) {
+    if(profilePhoto.file) {
         folders.push("avatars");
-        files.push(profileData.profilePhoto?.file);
+        files.push(profilePhoto?.file);
     }
 
     return [files, folders];
@@ -47,27 +52,27 @@ function initializeFiles(profileData: CurrentProfileData): [File[], string[]] {
 
 export default function EditProfileModal({ closeButtonHandler }: { closeButtonHandler: () => void }) {
     const [isLoading, setIsLoading] = useState(false);
-    const { profileQuery: { data }, userID } = useProfileData();
-    
+    const { profileQuery: { data }, userID, updateProfile } = useProfileData();
+
     async function onSubmit(profileData: CurrentProfileData) {
         setIsLoading(true);
-
+        
         const updatedProfile = {
-            name: profileData.name,
-            bio: profileData.bio,
-            languages: profileData.languages,
+            name: profileData.name!,
+            bio: profileData.bio!,
+            languages: profileData.languages!,
             coverPhoto: "",
             profilePhoto: ""
         };
 
-        const [files, folders] = initializeFiles(profileData);
+        const [files, folders] = initializeFiles(profileData.coverPhoto!, profileData.profilePhoto!);
         const fileData = { bucket: "user-images", folders: folders, id: userID };
         const compressionOptions = {
             avatars: { maxSizeMB: 0.2, maxWidthOrHeight: 300, useWebWorker: true, initialQuality: 0.7 },
             covers: { maxSizeMB: 1, maxWidthOrHeight: 1280, useWebWorker: true, initialQuality: 0.8 }
         };
 
-        if(files.length > 0) { 
+        if(files.length > 0) {
             const filePaths = await uploadFiles(fileData, files, "user-images", compressionOptions);
             
             if(folders.includes("covers")) {
@@ -86,9 +91,13 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
             updatedProfile.profilePhoto = data?.profilePhoto.location as string;
         } 
 
-        await sendAuthenticatedHTTPRequest("/profiles/me", "PUT", updatedProfile);
-        await refetch?.(); // refresh the data on the page so that the data stored in the query client cache is fresh
-        await updateUser();
+        updateProfile?.(updatedProfile, {
+            fullName: profileData.name!,
+            bio: profileData.bio!,
+            profilePhoto: { url: profileData.profilePhoto?.url!, location: profileData.profilePhoto?.url! },
+            coverPhoto: { url: profileData.coverPhoto?.url!, location: profileData.coverPhoto?.url! },
+            languages: profileData.languages!
+        });
         
         closeButtonHandler();
         setIsLoading(false);

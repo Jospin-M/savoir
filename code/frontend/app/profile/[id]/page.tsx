@@ -8,7 +8,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
     const queryClient = new QueryClient();
 
     await queryClient.prefetchQuery({
-        queryKey: ["profileData", id],
+        queryKey: ["user-profile", id],
         queryFn: () => getProfileData(id)
     });
 
