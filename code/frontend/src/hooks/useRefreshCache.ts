@@ -1,4 +1,4 @@
-import { revalidateTag } from "../../app/actions";
+import { revalidateTag } from "../../app/lib/actions";
 import { sendAuthenticatedHTTPRequest } from "../../lib/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -7,13 +7,13 @@ type QueryKey = {
     param?: string
 }
 
-export function useRefreshCache<T>(endpoint: string, queryKey: QueryKey) {
+export function useRefreshCache<T extends object>(endpoint: string, method: string, queryKey: QueryKey) {
     const queryClient = useQueryClient();
     const fullQueryKey = queryKey.param ? [queryKey.key, queryKey.param]: [queryKey.key]; // Build consistent key
     
     const { mutate } = useMutation({
-        mutationFn: async (updatedData: T[]) => {
-            await sendAuthenticatedHTTPRequest(endpoint, "POST", updatedData);
+        mutationFn: async (updatedData: T) => {
+            await sendAuthenticatedHTTPRequest(endpoint, method, updatedData);
         },
 
         onMutate: async function() {
@@ -35,7 +35,7 @@ export function useRefreshCache<T>(endpoint: string, queryKey: QueryKey) {
         }
     });
     
-    function refresh(updatedData: T[]) {
+    function refresh(updatedData: T) {
         mutate(updatedData);
     }
 

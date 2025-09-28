@@ -3,24 +3,32 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import type { Skill } from "../../../lib/queryFunctions";
-import { useUserStore } from "../../stores/useUserStore";
+import { type UserProfile, useUserStore } from "../../stores/useUserStore";
 import { useRefreshCache } from "../../hooks/useRefreshCache";
 
 export function RouteChangeListener() {
     const pathname = usePathname();
-    const [, setPrevPath] = useState("");
+    const [, setPrevPath] = useState(""); // useState is used here so we can obtain the previous path
     
+    const userID = useUserStore(state => state.userID);
+    const userProfile = useUserStore(state => state.userProfile);
+    const isProfileUpdated = useUserStore(state => state.isProfileUpdated);
+    const setIsProfileUpdated = useUserStore(state => state.setIsProfileUpdated);
+
     const skills = useUserStore(state => state.skills);
     const setIsSkillsUpdated = useUserStore(state => state.setIsSkillsUpdated);
     const isSkillsCacheUpdated = useUserStore(state => state.isSkillsCacheUpdated);
     
-    const { refresh: refreshSkills } = useRefreshCache<Skill>("/skills", { key: "user-skills" });
+    const { refresh: updateSkills } = useRefreshCache<Skill[]>("/skills", "POST", { key: "user-skills" });
+    const { refresh: updateProfile } = useRefreshCache<UserProfile>("/profiles/me", "PUT", { key: "user-profile" });
     
     useEffect(() => {
         setPrevPath((prev) => {
-            if(prev === "/skills" && isSkillsCacheUpdated && skills) {
-                console.log("Request should be sent");
-                refreshSkills(skills);
+            if(prev === `/profile/${userID}` && isProfileUpdated && userProfile) {
+                updateProfile(userProfile);
+                setIsProfileUpdated(false);
+            } else if(prev === "/skills" && isSkillsCacheUpdated && skills) {
+                updateSkills(skills);
                 setIsSkillsUpdated(false);
             }
 
