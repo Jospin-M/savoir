@@ -1,12 +1,12 @@
+import EditSkillModal from "./modals/EditSkillModal";
+
 import styles from "./Skills.module.css";
 
-
+import { useUserStore } from "../../stores/useUserStore";
+import type { Skill } from "../../../lib/queryFunctions";
 import { useSkillData } from "../../hooks/useSkillsData";
 import { createProficiencyLevel } from "../profile/sidebar/Sidebar";
-import type { Skill } from "../../../lib/queryFunctions";
 import { useState, useRef, type JSX, useEffect, type Dispatch, type SetStateAction } from "react";
-import type {  } from "react";
-import EditSkillModal from "./modals/EditSkillModal";
 
 /**
  * Makes use of the user's average rating to determine how the rating stars should be displayed.
@@ -78,9 +78,10 @@ function Stats({ average, count }: { average: number, count: number } ) {
 }
 
 function ToggleSwitch({ skill }: { skill: Skill }) {
-    const activeStyling = skill.active ? `${styles.active}`: "";
     const [active, setActive] = useState(skill.active);
-
+    const activeStyling = skill.active ? `${styles.active}`: "";
+    const setIsSkillsUpdated = useUserStore(state => state.setIsSkillsUpdated);
+    
     return (
         <div className={styles.toggle_container}>
             <span className={styles.toggle_label}>Active</span>
@@ -92,7 +93,8 @@ function ToggleSwitch({ skill }: { skill: Skill }) {
                     onChange={() => {}}
                     onClick={() => {
                         setActive(!active);
-                        skill.active = !active
+                        skill.active = !active;
+                        setIsSkillsUpdated(true);
                     }}
                 />
 

@@ -21,22 +21,26 @@ export type ProfileData = {
     languages: ProfileLanguageItem[]
 }
 
+async function makeRequest(endpoint: string, tag?: string) {
+    return await sendAuthenticatedHTTPRequest(
+        endpoint, 
+        "GET", 
+        undefined, 
+        await getSupabaseSession(), 
+        {
+            cache: "force-cache",
+            next: { tags: [tag ? tag: ""] }
+        }
+    );
+}
+
 /**
  * Retrieves the necessary data for the profile page to be populated.
  * 
  * @param id - the user's id
  */
 export async function getProfileData(id?: string): Promise<ProfileData>  {
-    return await sendAuthenticatedHTTPRequest(
-        `/profiles/${id}`, 
-        "GET", 
-        undefined, 
-        await getSupabaseSession(), 
-        {
-            cache: "force-cache",
-            next: { tags: ["user-profile"] }
-        }
-    );
+    return await makeRequest(`/profiles/${id}`, "user-profile");
 }
 
 export type Entity = {
@@ -53,30 +57,13 @@ export type Language = Entity;
  * the response returned by the server contains a list longer than 5.
  */
 export async function getLanguages(): Promise<Language[]> {
-    return await sendAuthenticatedHTTPRequest(
-        "/references/languages",
-        "GET", 
-        undefined, 
-        await getSupabaseSession(), 
-        {
-            cache: "force-cache"
-        }
-    );
+    return await makeRequest("/references/languages");
 }
 
 export type Category = Entity;
 
 export async function getCategories(): Promise<Category[]> {
-    return await sendAuthenticatedHTTPRequest(
-        "/skills/categories",
-        "GET", 
-        undefined, 
-        await getSupabaseSession(), 
-        {
-            cache: "force-cache",
-            next: { tags: ["categories"] }
-        }
-    );
+    return await makeRequest("/skills/categories", "categories");
 }
 
 export type Skill = {
@@ -92,14 +79,5 @@ export type Skill = {
 }
 
 export async function getAuthenticatedUserSkills(): Promise<Skill[]> {
-    return await sendAuthenticatedHTTPRequest(
-        "/profiles/me/skills",
-        "GET", 
-        undefined, 
-        await getSupabaseSession(), 
-        {
-            cache: "force-cache",
-            next: { tags: ["user-skills"] }
-        }
-    );
+    return await makeRequest("/profiles/me/skills", "user-skills");
 }
