@@ -20,8 +20,7 @@ export default function Authenticated() {
     const { data: profileData } = useData<ProfileData>(["user-profile", id], getProfileData, id);
 
     const setProfile = useUserStore(state => state.setProfile);
-    const setIsProfileUpdated = useUserStore(state => state.setIsProfileUpdated);
-
+    
     const { data: languagesData } = useData<Language[]>(["languages"], getLanguages);
     const pictureURLs = createURLs([profileData?.coverPhoto?.buffer, profileData?.profilePhoto?.buffer]);
 
@@ -48,7 +47,6 @@ export default function Authenticated() {
     }, [profileData]); // initially, use the data provided by the server, otherwise, work with data in user store
 
     function updateProfile(dataToUpload: UserProfile, dataToDisplay: ContextProfileData) {
-        setIsProfileUpdated(true);
         setProfile(dataToUpload);
         setProfileData(dataToDisplay);
     }

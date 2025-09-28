@@ -13,7 +13,14 @@ export function useRefreshCache<T extends object>(endpoint: string, method: stri
     
     const { mutate } = useMutation({
         mutationFn: async (updatedData: T) => {
-            await sendAuthenticatedHTTPRequest(endpoint, method, updatedData);
+            const cachedData = queryClient.getQueryData(fullQueryKey)
+            const isDataUpdated = JSON.stringify(cachedData) !== JSON.stringify(updatedData);
+            
+            if(isDataUpdated) {
+                await sendAuthenticatedHTTPRequest(endpoint, method, updatedData);
+            } else {
+                throw new Error("NO_CHANGES");
+            }
         },
 
         onMutate: async function() {
@@ -25,8 +32,10 @@ export function useRefreshCache<T extends object>(endpoint: string, method: stri
             return { previousData };
         },
 
-        onError: (_err, _updateData, context) => {
-            queryClient.setQueryData(fullQueryKey, context?.previousData);
+        onError: (err, _updatedData, context) => {
+            if(err.message !== "NO_CHANGES") {
+                queryClient.setQueryData(fullQueryKey, context?.previousData);
+            }
         },
     
         onSuccess: () => {
