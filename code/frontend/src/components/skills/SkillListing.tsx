@@ -26,7 +26,7 @@ export function createRatingLevel(rating: number) {
     ];
 
     function createStars(count: number, className: string) {
-        return Array.from({ length: count }, (_) => {
+        return Array.from({ length: count }, () => {
             return <i className={className} key={Math.random().toString()}/>
         });
     }

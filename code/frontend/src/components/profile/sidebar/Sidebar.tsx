@@ -42,7 +42,7 @@ export function createProficiencyLevel(options: string[], level: string) {
  * 
  * @param languages A list of all the languages known by the user.
  */
-export function createLanguageItems(languages: ProfileLanguageItem[]) {
+function createLanguageItems(languages: ProfileLanguageItem[]) {
     const languageItems: JSX.Element[] = [];
     
     languages?.forEach((language, index) => {

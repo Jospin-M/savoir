@@ -37,7 +37,7 @@ export default function Skills() {
         }
 
         return () => {};
-    }, [skillsData]);
+    }, [skillsData, setSkills, skills.length]);
 
     const { refresh: updateSkills } = useRefreshCache<Skill[]>("/skills", "POST", { key: "user-skills" });
 
@@ -53,7 +53,7 @@ export default function Skills() {
         document.addEventListener("visibilitychange", updateCache);
 
         return () => document.removeEventListener("visibilitychange", updateCache);
-    }, [isSkillsCacheUpdated, skills]);
+    }, [isSkillsCacheUpdated, skills, setIsSkillsUpdated, updateSkills]);
 
     function addSkill(newSkill: Skill) {
         setIsSkillsUpdated(true);

@@ -36,7 +36,17 @@ export function RouteChangeListener() {
         }); 
 
         return () => {}; // cleanup function is required here since not using one causes the Effect to be run twice
-    }, [pathname])
+    }, [
+        pathname, 
+        isProfileUpdated, 
+        isSkillsCacheUpdated, 
+        setIsProfileUpdated, 
+        setIsSkillsUpdated, 
+        skills, 
+        updateProfile, 
+        updateSkills, 
+        userID, 
+        userProfile])
 
     return <></>;
 }
