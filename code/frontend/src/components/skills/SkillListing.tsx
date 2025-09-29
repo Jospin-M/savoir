@@ -61,6 +61,14 @@ function Level({ level }: { level: string }) {
     );
 }
 
+export function Stars({ starsToColor }: { starsToColor: number }) {
+    return (
+        <div className={styles.rating}>
+            {createRatingLevel(starsToColor)}
+        </div>
+    );
+}
+
 function Stats({ average, count }: { average: number, count: number } ) {
     return (
         <div className={styles.skill_stats}>
@@ -70,7 +78,8 @@ function Stats({ average, count }: { average: number, count: number } ) {
             </div>
 
             <div className={styles.stat} id={styles.stars}>
-                <div className={styles.rating}>{createRatingLevel(average)}</div>
+                <Stars starsToColor={average}/>
+                
                 <span className={styles.stat_label}>{average} ({count}) reviews</span>
             </div>
         </div>

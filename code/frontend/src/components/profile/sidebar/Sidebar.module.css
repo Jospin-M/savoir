@@ -1,54 +1,13 @@
-.sidebar_container {
-    display: flex;
-
-    width: 23rem;
-    min-height: 28rem;
-}
-
 .profile_sidebar {
-    width: 100%;
+    min-height: fit-content;
+    min-width: 15rem;
+    max-width: 30rem;
+
     padding-left: 1.5rem;
+    padding-right: 1.5rem;
     margin-bottom: 2rem;
+    
     z-index: 1;
-}
-
-.card {
-    width: 100%;
-    padding: 1.15rem;
-    margin-bottom: 1.5rem;
-
-    border-radius: 1rem;
-    background-color: white;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-.card_header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding-bottom: -1rem;
-}
-
-.card_header h2 {
-    margin: 0;
-    
-    font-family: "Roboto Bold", sans-serif;
-    font-weight: bolder;
-    font-size: 1.2rem;
-    color: #2C2C2C;
-}
-
-.card_header [class^=ri-] {
-    font-family: remixicon !important;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    
-    cursor: pointer;
-}
-
-#profile {
-    max-height: 11.5rem;
 }
 
 .bio_text {
@@ -75,8 +34,14 @@
 }
 
 .edit_profile_button_container {
-    width: 111%;
+    display: flex;
+    
     height: 2.5rem;
+}
 
-    border-radius: 8px;
+@media (max-width: 1200px) {
+    .profile_sidebar {
+        width: 90%;
+        max-width: none;
+    }
 }

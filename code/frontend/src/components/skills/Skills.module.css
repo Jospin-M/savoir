@@ -262,7 +262,7 @@
 
 .rating i {
   color: #EC9A29;
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 
 .skill_actions {
@@ -358,8 +358,93 @@ input:checked + .slider:before {
   color: #EC9A29;
 }
 
+.profile_skills_grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  
+  gap: 1.7rem;
+  padding-top: 1rem;
+}
+
+.profile_skill_card {
+  position: relative;
+  padding: 1rem;
+
+  border-radius: 0.5rem;
+  background-color: #F8F8F8;
+}
+
+.profile_skill_card_header {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 0.6rem;
+}
+
+.profile_skill_card_header h3 {
+  margin: 0;
+    
+  font-family: "Roboto Bold", sans-serif;
+  font-weight: bolder;
+  font-size: 1.15rem;
+  color: #2C2C2C;
+}
+
+.profile_skill_level {
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  color: #667;
+  margin-top: 0.7rem;
+}
+
+.profile_skill_rating {
+  display: flex;
+  flex-direction: row;
+  gap: 0.4rem;
+
+  height: 1rem;
+  margin-top: 0.8rem;
+
+  color: #EC9A29;
+  font-family: "Roboto", sans-serif;
+}
+
+.profile_add_skill {
+  border: 2px dashed #E0E0E0;
+  border-radius: 8px;
+
+  min-height: 6.5rem;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #667;
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.profile_add_skill span {
+  padding-left: 0.7rem;
+
+  font-family: "Roboto", sans-serif;
+}
+
+.profile_add_skill:hover {
+  border-color: #EC9A29;
+  color: #EC9A29;
+}
+
 @media (max-width: 1200px) {
   .skills_grid {
+    min-width: 60rem;
     grid-template-columns: 1fr;
+  }
+
+  .profile_skills_grid {
+    display: flex;
+    flex-direction: column;
   }
 }

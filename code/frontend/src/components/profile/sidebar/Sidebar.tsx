@@ -4,6 +4,7 @@ import Button from "../../common/Button";
 import EditProfileModal from "../edit_profile/EditProfileModal";
 
 import styles from "./Sidebar.module.css";
+import profileStyles from "../Profile.module.css";
 import commonStyles from "../../common/Common.module.css";
 
 import { useState, type JSX } from "react";
@@ -64,33 +65,31 @@ export default function Sidebar() {
     const [showModal, setShowModal] = useState(false);
 
     return ((
-        <div className={styles.sidebar_container}>
-            <div className={styles.profile_sidebar}>
-                <div className={styles.card} id={styles.profile}>
-                    <div className={styles.card_header}>
-                        <h2>About Me</h2>
-                    </div>
-
-                    <p className={styles.bio_text}>{data?.bio}</p>
+        <div className={styles.profile_sidebar}>
+            <div className={profileStyles.card} id={profileStyles.profile}>
+                <div className={profileStyles.card_header}>
+                    <h2>About Me</h2>
                 </div>
 
-                <div className={styles.card}>
-                    <div className={styles.card_header}>
-                        <h2>Languages</h2>
-                    </div>
-
-                    <div className={styles.languages_container}>
-                        {languageItems}
-                    </div>
-                </div>
-
-                <div className={styles.edit_profile_button_container}>
-                    <Button prompt="Edit Profile" isDisabled={false} handleClick={() => setShowModal(true)}/>
-                </div>
-
-                {showModal && 
-                    <EditProfileModal closeButtonHandler={() => setShowModal(false)} />}
+                <p className={styles.bio_text}>{data?.bio}</p>
             </div>
+
+            <div className={profileStyles.card}>
+                <div className={profileStyles.card_header}>
+                    <h2>Languages</h2>
+                </div>
+
+                <div className={styles.languages_container}>
+                    {languageItems}
+                </div>
+            </div>
+
+            <div className={styles.edit_profile_button_container}>
+                <Button prompt="Edit Profile" isDisabled={false} handleClick={() => setShowModal(true)}/>
+            </div>
+
+            {showModal && 
+                <EditProfileModal closeButtonHandler={() => setShowModal(false)} />}
         </div>
     ));
 }
