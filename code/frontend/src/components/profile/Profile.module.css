@@ -3,20 +3,65 @@
 .profile_header {
     display: flex;
     flex-direction: column;
-    align-items: center;
     
+    min-width: 25rem;
     width: 97.5%;
-    height: 20rem;
 
     padding-left: 1.3rem;
     padding-top: 1rem;
 }
 
-.cover_photo_container {
-    width: 100%;
-    height: 70%;
+.profile_content {
+    display: flex;
+    gap: 0.5rem;
+    
+    width: 98.75%;
+}
 
-    border-radius: 10rem;
+.card {
+    padding: 1.15rem;
+    margin-bottom: 1.5rem;
+
+    border-radius: 1rem;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.card_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-bottom: -1rem;
+}
+
+.card_header h2 {
+    margin: 0;
+    
+    font-family: "Roboto Bold", sans-serif;
+    font-weight: bolder;
+    font-size: 1.2rem;
+    color: #2C2C2C;
+}
+
+.card_header [class^=ri-] {
+    font-family: remixicon !important;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    
+    cursor: pointer;
+}
+
+#profile {
+    max-height: 11.5rem;
+}
+
+.cover_photo_container {
+    position: relative;
+
+    width: 100%;
+    max-height: 15rem;
+    height: 70%;
 }
 
 .cover_photo {
@@ -32,14 +77,11 @@
 
 .profile_picture_container {
     display: flex;
-    flex-direction: row;
-    position: absolute;
-
-    padding-top: 7.5rem;
-    left: 13rem;
+    justify-content: flex-start;
+    position: relative;
 
     max-width: 75rem; /* Match cover photo width */
-    padding-left: 2rem; /* Position from left */
+    margin-top: -6rem;
 }
 
 .profile_picture {
@@ -65,9 +107,39 @@
     color: #2C2C2C;
 }
 
-.profile_content {
-    display: flex;
-    align-items: center;
+.profile_main {
+    width: 90%;
+}
 
-    padding-left: 0.5rem;
+@media (max-width: 1200px) {
+    .cover_photo {
+        width: 93%;
+        height: 85%;
+    }
+
+    .profile_name {
+        padding-top: 3.5rem;
+    }
+
+    .profile_name h2 {
+        width: 50%;
+
+        font-size: 1.8rem;
+    }
+
+    .profile_picture {
+        width: 9rem;
+        height: 9rem;
+    }
+    
+    .profile_main {
+        display: block;
+        
+        min-width: 10rem;
+        padding-left: 1.5rem;
+    }
+
+    .profile_content {
+        flex-direction: column;
+    }
 }

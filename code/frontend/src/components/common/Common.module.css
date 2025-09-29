@@ -2,9 +2,8 @@
     display: inline-block;
     text-align: center;
 
-    height: 100%;
-    
     width: 100%;
+    height: 100%;
 
     border: none;
     border-radius: 0.3rem;
@@ -119,6 +118,7 @@
   align-items: center;
   justify-content: space-between;
 
+  min-width: 41.25rem;
   width: 100%;
   height: 5rem;
 
@@ -284,6 +284,7 @@
   
   width: 100%;
   min-height: fit-content;
+  padding: 1.15rem;
   padding-bottom: 3rem;
   
   flex: 1;
@@ -328,9 +329,6 @@
 }
 
 @media (max-width: 950px) {
-  .search_bar {
-  }
-
   .search_icon_container {
     padding-right: 1rem;
   }

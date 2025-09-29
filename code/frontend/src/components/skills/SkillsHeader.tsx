@@ -8,7 +8,7 @@ export default function SkillsHeader() {
 
     return (
         <div className={styles.page_header}>
-            <h1 className={styles.page_title}>My Skills</h1>
+            <h1 className={styles.page_title}>Skills</h1>
 
             { showModal &&
                 <AddSkillModal closeButtonHandler={() => setShowModal(false)} /> }

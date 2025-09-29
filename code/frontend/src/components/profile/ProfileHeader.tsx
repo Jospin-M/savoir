@@ -15,7 +15,7 @@ export default function ProfileHeader() {
                 <img className={styles.profile_picture} src={data?.profilePhoto.url}/>
 
                 <div className={styles.profile_name}>
-                    <h2 className={styles.profile_header_name }>{data?.fullName}</h2>
+                    <h2>{data?.fullName}</h2>
                 </div>
             </div>
         </div>
