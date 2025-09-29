@@ -14,10 +14,9 @@ import { type Skill, getAuthenticatedUserSkills } from "../../../lib/queryFuncti
 function SkillPreviews() {
     const previews: React.JSX.Element[] = [];
 
-    const router = useRouter();
     const { data: skills } = useData<Skill[]>(["user-skills"], getAuthenticatedUserSkills);
-
-    skills.forEach((skill) => {
+    const activeSkills = skills.filter(skill => skill.active === true);
+    activeSkills.forEach((skill) => {
         previews.push(
             <div className={skillStyles.profile_skill_card} key={skill.id}>
                 <div className={skillStyles.profile_skill_card_header}>
@@ -38,6 +37,8 @@ function SkillPreviews() {
             </div>
         );
     });
+
+    const router = useRouter();
 
     return (
         <div className={skillStyles.profile_skills_grid}>
