@@ -1,20 +1,12 @@
 import UploadButton from "./UploadButton.tsx";
+
+import styles from "./EditProfile.module.css";
+import modalStyles from "../../common/modal/Modal.module.css";
+
 import type { CurrentProfileData } from "./EditProfileModal.tsx";
 
-import modalStyles from "../../common/modal/Modal.module.css";
-import styles from "./EditProfile.module.css";
-
+import { validateFileSize } from "./utils.ts";
 import { Controller, type Control, type FieldErrors } from "react-hook-form";
-
-export function validateFileSize(value: { file: File | null, url: string | undefined} | null) {
-    if(value?.file) {
-        if(value.file.size >= 5e6) {
-            return "File too large. Maximum allowed size is 5MB."
-        }
-    }
-
-    return true;
-}
 
 export function CoverPhoto({ control, errors }: { control: Control<CurrentProfileData>, errors: FieldErrors<CurrentProfileData> }) {
     return (

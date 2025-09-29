@@ -94,8 +94,8 @@ export default function EditProfileModal({ closeButtonHandler }: { closeButtonHa
         updateProfile?.(updatedProfile, {
             fullName: profileData.name!,
             bio: profileData.bio!,
-            profilePhoto: { url: profileData.profilePhoto?.url!, location: profileData.profilePhoto?.url! },
-            coverPhoto: { url: profileData.coverPhoto?.url!, location: profileData.coverPhoto?.url! },
+            profilePhoto: { url: profileData.profilePhoto?.url, location: profileData.profilePhoto?.url },
+            coverPhoto: { url: profileData.coverPhoto?.url, location: profileData.coverPhoto?.url },
             languages: profileData.languages!
         });
         

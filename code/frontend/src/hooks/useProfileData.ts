@@ -3,8 +3,8 @@ import type { UserProfile } from "../stores/useUserStore";
 import type { Language, ProfileLanguageItem } from "../../lib/queryFunctions";
 
 type Photo = {
-    url: string;
-    location: string;
+    url: string | undefined;
+    location: string | undefined;
 }
 
 export type ContextProfileData = {

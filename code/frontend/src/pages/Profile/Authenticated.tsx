@@ -1,17 +1,16 @@
 import Header from "../../components/common/Header.tsx";
 import { NavBar } from "../../components/common/Navigation.tsx";
-import ProfileHeader from "../../components/profile/ProfileHeader.tsx";
 import ProfileContent from "../../components/profile/ProfileContent.tsx";
 
 import styles from "../../components/common/Common.module.css";
 
 import { createURLs } from "../../../lib/utils.ts";
-import type { UserProfile } from "../../stores/useUserStore";
-import { useUserStore } from "../../stores/useUserStore";
+import { useEffect, useState, useMemo } from "react";
 import { useData } from "../../hooks/useQueryClient";
+import { useUserStore, type UserProfile } from "../../stores/useUserStore";
 import { ProfileDataContext, type ContextProfileData } from "../../hooks/useProfileData";
 import { getProfileData, type ProfileData, getLanguages, type Language } from "../../../lib/queryFunctions.ts";
-import { useEffect, useState } from "react";
+
 import { useRefreshCache } from "../../hooks/useRefreshCache.ts";
 
 export default function Authenticated() {
@@ -28,13 +27,15 @@ export default function Authenticated() {
     const { data: languagesData } = useData<Language[]>(["languages"], getLanguages);
     const pictureURLs = createURLs([profileData?.coverPhoto?.buffer, profileData?.profilePhoto?.buffer]);
 
-    let contextProfileData: ContextProfileData = {
-        fullName: "",
-        bio: "",
-        coverPhoto: { url: "", location: "" },
-        profilePhoto: { url: "", location: "" },
-        languages: []
-    };
+    let contextProfileData: ContextProfileData = useMemo(() => {
+        return {
+            fullName: "",
+            bio: "",
+            coverPhoto: { url: "", location: "" },
+            profilePhoto: { url: "", location: "" },
+            languages: []
+        }
+    }, []);
     
     contextProfileData =  {
         fullName: profileData?.fullName,
@@ -42,13 +43,13 @@ export default function Authenticated() {
         coverPhoto: { url: pictureURLs[0], location: profileData?.coverPhoto?.location }, 
         profilePhoto: { url: pictureURLs[1], location: profileData?.profilePhoto?.location },
         languages: profileData?.languages
-    }
-
+    };
+    
     const [profile, setProfileData] = useState<ContextProfileData>(contextProfileData);
 
     useEffect(() => {
         setProfileData(contextProfileData);
-    }, [profileData]); // initially, use the data provided by the server, otherwise, work with data in user store
+    }, [profileData, contextProfileData]); // initially, use the data provided by the server, otherwise, work with data in user store
 
     const userID = useUserStore(state => state.userID);
     const { refresh: updateProfileData } = useRefreshCache<UserProfile>(`/profiles/${userID}`, "PUT", { key: "user-skills", param: userID! })
@@ -66,7 +67,7 @@ export default function Authenticated() {
 
         return () => document.removeEventListener("visibilitychange", updateCache);
 
-    }, [isProfileUpdated, userProfile]);
+    }, [isProfileUpdated, userProfile, setIsProfileUpdated, updateProfileData]);
 
     function updateProfile(dataToUpload: UserProfile, dataToDisplay: ContextProfileData) {
         setProfile(dataToUpload);
