@@ -118,7 +118,7 @@
   align-items: center;
   justify-content: space-between;
 
-  min-width: 41.25rem;
+  min-width: 46rem;
   width: 100%;
   height: 5rem;
 
@@ -328,7 +328,11 @@
   background-color: #EC9A29;
 }
 
-@media (max-width: 950px) {
+  .page_content {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
   .search_icon_container {
     padding-right: 1rem;
   }

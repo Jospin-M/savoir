@@ -3,6 +3,7 @@
   justify-content: space-between;
   align-items: center;
 
+  min-width: 28rem;
   width: 97%;
   padding-top: 1rem;
 }
@@ -439,7 +440,7 @@ input:checked + .slider:before {
 
 @media (max-width: 1200px) {
   .skills_grid {
-    min-width: 60rem;
+    width: 100%;
     grid-template-columns: 1fr;
   }
 

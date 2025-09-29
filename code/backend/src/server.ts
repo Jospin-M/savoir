@@ -4,6 +4,7 @@ import profileRouter from "./routes/profileRoutes";
 import referenceRouter from "./routes/referenceRoutes";
 import skillsRouter from "./routes/skillsRoutes";
 
+import os from "os";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -21,8 +22,8 @@ const API_ROOT = "/api/";
 
 app.use(API_ROOT + "auth", authRouter);
 app.use(API_ROOT + "files", fileRoutes);
-app.use(API_ROOT + "profiles", profileRouter);
 app.use(API_ROOT + "skills", skillsRouter);
+app.use(API_ROOT + "profiles", profileRouter);
 app.use(API_ROOT + "references", referenceRouter);
 
 const PORT = 4000;
