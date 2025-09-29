@@ -49,7 +49,7 @@ export default function Authenticated() {
 
     useEffect(() => {
         setProfileData(contextProfileData);
-    }, [profileData, contextProfileData]); // initially, use the data provided by the server, otherwise, work with data in user store
+    }, [profileData]); // initially, use the data provided by the server, otherwise, work with data in user store
 
     const userID = useUserStore(state => state.userID);
     const { refresh: updateProfileData } = useRefreshCache<UserProfile>(`/profiles/${userID}`, "PUT", { key: "user-skills", param: userID! })
