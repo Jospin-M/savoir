@@ -2,15 +2,18 @@
 
 .profile_header {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    width: 97.5%;
+    height: 20rem;
 
-    width: 80rem;
-    height: 20em;
     padding-left: 1.3rem;
     padding-top: 1rem;
 }
 
 .cover_photo_container {
-    width: 98.5%;
+    width: 100%;
     height: 70%;
 
     border-radius: 10rem;
@@ -24,6 +27,7 @@
     width: 100%;
     height: 100%;
     border-radius: 0.7rem;
+    object-fit: cover; /* Prevents image distortion */
 }
 
 .profile_picture_container {
@@ -32,7 +36,10 @@
     position: absolute;
 
     padding-top: 7.5rem;
-    padding-left: 1.5rem;
+    left: 13rem;
+
+    max-width: 75rem; /* Match cover photo width */
+    padding-left: 2rem; /* Position from left */
 }
 
 .profile_picture {
@@ -60,4 +67,7 @@
 
 .profile_content {
     display: flex;
+    align-items: center;
+
+    padding-left: 0.5rem;
 }
