@@ -1,22 +1,9 @@
-
-.page_content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  width: 100%;
-  min-height: fit-content;
-  padding-bottom: 3rem;
-  
-  background-color: #F2EFE9;
-}
-
 .page_header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  width: 94%;
+  width: 97%;
   padding-top: 1rem;
 }
 
@@ -115,7 +102,7 @@
 
 .populated_state {
   display: flex;
-  width: 94%;
+  width: 97%;
 }
 
 .filter_options {
@@ -152,13 +139,15 @@
 .skills_grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  width: 94%;
+  width: 97%;
   gap: 1.6rem;
   padding-top: 2rem;
+  padding-bottom: 1rem;
 }
 
 .skill_card {
   display: grid;
+  min-width: 20rem;
   grid-template-rows: auto auto 1fr auto auto;
   padding: 1.5rem;
 
@@ -367,4 +356,10 @@ input:checked + .slider:before {
 
 .action_btn:hover {
   color: #EC9A29;
+}
+
+@media (max-width: 1200px) {
+  .skills_grid {
+    grid-template-columns: 1fr;
+  }
 }

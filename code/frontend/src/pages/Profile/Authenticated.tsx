@@ -90,10 +90,7 @@ export default function Authenticated() {
                 <div className={styles.main_content}>
                     <NavBar />
                     
-                    <div className={styles.page_content}>
-                        <ProfileHeader />
-                        <ProfileContent />
-                    </div>
+                    <ProfileContent />
                 </div>
             </div>
         </ProfileDataContext.Provider>
