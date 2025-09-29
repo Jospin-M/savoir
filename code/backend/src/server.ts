@@ -8,6 +8,7 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import express from "express";
+import os from "os";
 
 const app = express();
 
@@ -27,11 +28,10 @@ app.use(API_ROOT + "references", referenceRouter);
 const PORT = 4000;
 
 app.listen(PORT, "0.0.0.0", () => {
-    const os = require("os");
-    const interfaces = os.networkInterfaces();
+    const interfaces: NodeJS.Dict<os.NetworkInterfaceInfo[]> = os.networkInterfaces();
 
     Object.keys(interfaces).forEach((iface) => {
-        interfaces[iface].forEach((details: any) => {
+        interfaces[iface]?.forEach((details: os.NetworkInterfaceInfo) => {
         if (details.family === "IPv4" && !details.internal) {
             console.log(`Server running at http://${details.address}:${PORT}`);
         }
