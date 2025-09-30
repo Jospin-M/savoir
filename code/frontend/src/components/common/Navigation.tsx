@@ -54,7 +54,7 @@ export function NavPicture() {
     // simply pass the id as a prop from the appropriate parent component
     const id = useUserStore(state => state.userID)!;
     const { data } = useData<ProfileData>(
-        ["profileData", id], 
+        ["user-profile", id], 
         getProfileData, 
         id
     );
