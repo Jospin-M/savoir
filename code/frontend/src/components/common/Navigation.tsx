@@ -2,7 +2,6 @@ import styles from "./Common.module.css";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { createURLs } from "../../../lib/utils";
 import { useData } from "../../hooks/useQueryClient";
 import { useUserStore } from "../../stores/useUserStore";
 import { type ProfileData, getProfileData } from "../../../lib/queryFunctions";
@@ -61,7 +60,7 @@ export function NavPicture() {
     
     return (
         <Link href={`/profile/${id}`} className={styles.profile_pic_link}>
-            <img className={styles.nav_bar_profile_pic} src={createURLs([data?.profilePhoto.buffer])[0]}/>
+            <img className={styles.nav_bar_profile_pic} src={data?.profilePhoto?.url}/>
         </Link>
     );
 }

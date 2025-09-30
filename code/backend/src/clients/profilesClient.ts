@@ -1,3 +1,4 @@
+import { url } from "inspector";
 import { createAuthenticatedClient } from "./supabaseClient";
 import { Request, Response } from "express";
 
@@ -35,25 +36,22 @@ async function getUserLanguages(req: Request) {
 }
 
 async function getPictures(paths: string[], req: Request) {
-    const buffers: Buffer[] = [];
-    const promises = [];
-    
-    for(const path of paths) {
-        const { data } = await createAuthenticatedClient(req)
-            .storage
-            .from("user-images")
-            .download(path);
-            
-        if(data) {
-            promises.push(data.arrayBuffer());
-        }
-    }
+    paths.forEach((path, index) => { // remove the timestamp from the path
+        paths[index] = path.split("?")[0]; 
+    })
 
-    const results = await Promise.all(promises)
-    results.forEach(buffer => {
-        buffers.push(Buffer.from(buffer))
-    });
-    return buffers;
+    const { data } = await createAuthenticatedClient(req)
+        .storage
+        .from("user-images")
+        .createSignedUrls(paths, 365 * 24 * 60 * 60);
+
+    const urls: string[] = [];
+
+    data?.forEach(image => {
+        urls.push(image.signedUrl);
+    })
+    
+    return urls;
 }
 
 /**
@@ -75,16 +73,14 @@ export async function getProfile(req: Request, res: Response) {
     }
 
     const { first_name, last_name, bio, profile_photo_path, cover_photo_path } = data!;
-    const [languageData, buffers] = await Promise.all([
-        getUserLanguages(req),
-        getPictures([profile_photo_path, cover_photo_path], req)
-    ]);
-    
+    const languageData = await getUserLanguages(req);
+    const [profilePhotoUrl, coverPhotoUrl] = await getPictures([profile_photo_path, cover_photo_path], req);
+
     res.status(200).json({
         fullName: first_name + " " + last_name,
         bio: bio,
-        profilePhoto: { buffer: buffers[0], location: profile_photo_path },
-        coverPhoto: { buffer: buffers[1], location: cover_photo_path },
+        profilePhoto: { url: profilePhotoUrl, location: profile_photo_path },
+        coverPhoto: { url: coverPhotoUrl, location: cover_photo_path },
         languages: languageData
     });
 }

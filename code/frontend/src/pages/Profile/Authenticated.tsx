@@ -4,8 +4,7 @@ import ProfileContent from "../../components/profile/ProfileContent.tsx";
 
 import styles from "../../components/common/Common.module.css";
 
-import { createURLs } from "../../../lib/utils.ts";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useData } from "../../hooks/useQueryClient";
 import { useUserStore, type UserProfile } from "../../stores/useUserStore";
 import { ProfileDataContext, type ContextProfileData } from "../../hooks/useProfileData";
@@ -25,30 +24,10 @@ export default function Authenticated() {
     const setIsProfileUpdated = useUserStore(state => state.setIsProfileUpdated);
 
     const { data: languagesData } = useData<Language[]>(["languages"], getLanguages);
-    const pictureURLs = createURLs([profileData?.coverPhoto?.buffer, profileData?.profilePhoto?.buffer]);
-
-    let contextProfileData: ContextProfileData = useMemo(() => {
-        return {
-            fullName: "",
-            bio: "",
-            coverPhoto: { url: "", location: "" },
-            profilePhoto: { url: "", location: "" },
-            languages: []
-        }
-    }, []);
-    
-    contextProfileData =  {
-        fullName: profileData?.fullName,
-        bio: profileData?.bio,
-        coverPhoto: { url: pictureURLs[0], location: profileData?.coverPhoto?.location }, 
-        profilePhoto: { url: pictureURLs[1], location: profileData?.profilePhoto?.location },
-        languages: profileData?.languages
-    };
-    
-    const [profile, setProfileData] = useState<ContextProfileData>(contextProfileData);
+    const [profile, setProfileData] = useState<ContextProfileData>({ ...profileData });
 
     useEffect(() => {
-        setProfileData(contextProfileData);
+        setProfileData({ ...profileData });
     }, [profileData]); // initially, use the data provided by the server, otherwise, work with data in user store
 
     const userID = useUserStore(state => state.userID);

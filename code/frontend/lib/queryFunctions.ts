@@ -1,5 +1,5 @@
 import { getSupabaseSession } from "../utils/supabase/server";
-import { type Buffer, sendAuthenticatedHTTPRequest } from "./utils";
+import { sendAuthenticatedHTTPRequest } from "./utils";
 
 export type ProfileLanguageItem = {
     id: number,
@@ -7,17 +7,16 @@ export type ProfileLanguageItem = {
     proficiency: "Fluent" | "Intermediate" | "Beginner"
 }
 
+type Photo = {
+    url: string,
+    location: string
+}
+
 export type ProfileData = {
     fullName: string,
     bio: string,
-    profilePhoto: {
-        buffer: Buffer,
-        location: string
-    },
-    coverPhoto: {
-        buffer: Buffer,
-        location: string
-    },
+    profilePhoto: Photo
+    coverPhoto: Photo,
     languages: ProfileLanguageItem[]
 }
 

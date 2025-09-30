@@ -36,17 +36,7 @@ export function RouteChangeListener() {
         }); 
 
         return () => {}; // cleanup function is required here since not using one causes the Effect to be run twice
-    }, [
-        pathname, 
-        isProfileUpdated, 
-        isSkillsCacheUpdated, 
-        setIsProfileUpdated, 
-        setIsSkillsUpdated, 
-        skills, 
-        updateProfile, 
-        updateSkills, 
-        userID, 
-        userProfile])
+    }, [pathname]); // the reason the other dependencies are not added is because they cause the effect to run on every change, which is not what we want 
 
     return <></>;
 }

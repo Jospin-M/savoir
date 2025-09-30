@@ -147,30 +147,3 @@ export async function uploadFiles(fileData: UploadData, files: File[], bucket: s
   
     return filePaths;
 }
-
-export type Buffer = {
-    data: number[],
-    name: string
-}
-
-/**
- * Generates an array of object URLs from an array of file buffers. These URLs can be used in the 
- * browser to reference binary data (e.g., for previews or temporary file handling) without uploading 
- * to a server.
- * 
- * @param files - A list of objects representing binary file data
- */
-export function createURLs(files: Buffer[]) {
-    const urls = [];
-    
-    for(const file of files) {
-        if(file) {
-            const byteArray = new Uint8Array(file.data);
-            const blob = new Blob([byteArray]);
-            const url = URL.createObjectURL(blob);
-            urls.push(url);
-        }
-    }
-
-    return urls;
-}
