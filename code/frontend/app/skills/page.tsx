@@ -1,23 +1,17 @@
 import Skills from "./skills";
 
 import { getAuthenticatedUserSkills } from "../../lib/queryFunctions";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { getQueryClient } from "../getQueryClient";
 
 export default async function SkillsPage() {
-   const queryClient = new QueryClient({
-      defaultOptions: {
-         queries: {
-            staleTime: Infinity,
-            gcTime: Infinity
-         }
-      }
-   });
-
+   const queryClient = getQueryClient();
+   
    await queryClient.prefetchQuery({
       queryKey: ["user-skills"],
       queryFn: () => getAuthenticatedUserSkills()
    });
-
+   
    return (
       <HydrationBoundary state={dehydrate(queryClient)}>
          <Skills />

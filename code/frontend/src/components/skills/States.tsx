@@ -2,7 +2,7 @@ import { SkillListing } from "./SkillListing";
 
 import styles from "./Skills.module.css";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSkillData } from "../../hooks/useSkillsData";
 import { type Dispatch, type SetStateAction } from "react";
 import type { Skill } from "../../../lib/queryFunctions";
@@ -58,13 +58,6 @@ function SkillListings({ skills }: {
 export function Populated() {
     const { skillsQuery: { skills } } = useSkillData();
     const [activeFilter, setActiveFilter] = useState("All");
-    const [updatedSkills, setUpdatedSkills] = useState(skills);
-    
-    useEffect(() => {
-        if(skills) {
-            setUpdatedSkills(skills);
-        }
-    }, [skills]);
     
     return (
         <>
@@ -73,13 +66,13 @@ export function Populated() {
             </div>
 
             <div className={styles.skills_grid}>
-                {activeFilter === "All" && <SkillListings skills={updatedSkills}  />}
+                {activeFilter === "All" && <SkillListings skills={skills} />}
                 
                 {activeFilter === "Active"
-                    &&  <SkillListings skills={updatedSkills?.filter(skill => skill.active === true)} />}
+                    &&  <SkillListings skills={skills?.filter(skill => skill.active === true)} />}
                 
                 {activeFilter === "Inactive" 
-                    && <SkillListings skills={updatedSkills?.filter(skill => skill.active === false)} />}
+                    && <SkillListings skills={skills?.filter(skill => skill.active === false)} />}
             </div>
         </>
     );

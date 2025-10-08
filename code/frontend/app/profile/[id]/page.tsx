@@ -1,12 +1,13 @@
 import Profile from "./profile.tsx";
 
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { getQueryClient } from "../../getQueryClient.tsx";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getProfileData, getLanguages, getAuthenticatedUserSkills } from "../../../lib/queryFunctions.ts";
 
 export default async function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } =  await params;
-    const queryClient = new QueryClient();
-
+    const queryClient = getQueryClient();
+    
     await queryClient.prefetchQuery({
         queryKey: ["user-profile", id],
         queryFn: () => getProfileData(id)

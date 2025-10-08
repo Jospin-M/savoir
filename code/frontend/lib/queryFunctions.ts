@@ -1,4 +1,4 @@
-import { getSupabaseSession } from "../utils/supabase/server";
+import { createClient, getSupabaseSession } from "../utils/supabase/server";
 import { sendAuthenticatedHTTPRequest } from "./utils";
 
 export type ProfileLanguageItem = {
@@ -39,7 +39,7 @@ async function makeRequest(endpoint: string, tag?: string) {
  * @param id - the user's id
  */
 export async function getProfileData(id?: string): Promise<ProfileData>  {
-    return await makeRequest(`/profiles/${id}`, "user-profile");
+    return await makeRequest(`/profiles/${id}`, `user-profile-${id}`);
 }
 
 export type Entity = {
@@ -78,5 +78,8 @@ export type Skill = {
 }
 
 export async function getAuthenticatedUserSkills(): Promise<Skill[]> {
-    return await makeRequest("/profiles/me/skills", "user-skills");
+    const { data: { user } } = await (await createClient()).auth.getUser();
+    const { id } = user!;
+
+    return await makeRequest("/profiles/me/skills", `user-skills-${id}`);
 }

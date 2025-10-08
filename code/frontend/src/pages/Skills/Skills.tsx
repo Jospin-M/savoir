@@ -25,20 +25,22 @@ export default function Skills() {
     const skills = useUserStore(state => state.skills);
     const setSkills = useUserStore(state => state.setSkills);
     const setIsSkillsUpdated = useUserStore(state => state.setIsSkillsUpdated);
-    const isSkillsCacheUpdated = useUserStore(state => state.isSkillsCacheUpdated)
-
+    const isSkillsCacheUpdated = useUserStore(state => state.isSkillsCacheUpdated);
+    
     useEffect(() => {
         // create a shallow copy of the skill data and save it with Zustand so we don't have to directly modify the query cache
         const skillsDataCopy = Array.from(skillsData ? skillsData: []);
 
         // only initialiaze skills on the first load, otherwise, reuse the values already present in the Zustand store
+        // NOTE: the reason we store the skills with Zustand is so that we don't have to overwrite the cache when 
+        // we're making updates and also so that we can access the skills in RouteChangeListener where we send the requests.
         if(skills.length == 0) { 
             setSkills(skillsDataCopy);
         }
 
         return () => {};
-    }, [skillsData, setSkills, skills.length]);
-
+    }, [skillsData]);
+    
     const { refresh: updateSkills } = useRefreshCache<Skill[]>("/skills", "POST", { key: "user-skills" });
 
     // Saves pending skills changes when user switches tabs, minimizes window, or closes page
