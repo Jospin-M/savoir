@@ -8,13 +8,15 @@ import commonStyles from "../common/Common.module.css";
 
 import { useRouter } from "next/navigation";
 import { useData } from "../../hooks/useQueryClient";
+import { useUserStore } from "../../stores/useUserStore";
 
 import { type Skill, getAuthenticatedUserSkills } from "../../../lib/queryFunctions";
 
 function SkillPreviews() {
     const previews: React.JSX.Element[] = [];
 
-    const { data: skills } = useData<Skill[]>(["user-skills"], getAuthenticatedUserSkills);
+    const userID = useUserStore(state => state.userID)!;
+    const { data: skills } = useData<Skill[]>(["user-skills", userID], getAuthenticatedUserSkills);
     const activeSkills = skills.filter(skill => skill.active === true);
     activeSkills.forEach((skill) => {
         previews.push(

@@ -17,8 +17,10 @@ export default function Skills() {
         getCategories
     );
 
+    const userID = useUserStore(state => state.userID)!;
+
     const { data: skillsData } = useData<Skill[]>(
-        ["user-skills"],
+        ["user-skills", userID],
         getAuthenticatedUserSkills
     );
 

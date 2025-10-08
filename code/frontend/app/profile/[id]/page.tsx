@@ -17,9 +17,9 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
         queryKey: ["languages"],
         queryFn: () => getLanguages()
     });
-
+    
     await queryClient.prefetchQuery({
-        queryKey: ["user-skills"],
+        queryKey: ["user-skills", id],
         queryFn: () => getAuthenticatedUserSkills()
     });
 

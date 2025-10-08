@@ -31,7 +31,7 @@ export default function Authenticated() {
     }, [profileData]); // initially, use the data provided by the server, otherwise, work with data in user store
 
     const userID = useUserStore(state => state.userID);
-    const { refresh: updateProfileData } = useRefreshCache<UserProfile>(`/profiles/${userID}`, "PUT", { key: "user-skills", param: userID! })
+    const { refresh: updateProfileData } = useRefreshCache<UserProfile>(`/profiles/${userID}`, "PUT", { key: "user-profile", param: userID! })
 
     // Saves pending profile changes when user switches tabs, minimizes window, or closes page
     useEffect(() => {

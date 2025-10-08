@@ -8,11 +8,11 @@ export default function ProfileHeader() {
     return (
         <div className={styles.profile_header}>
             <div className={styles.cover_photo_container}>
-                <img className={styles.cover_photo} src={data?.coverPhoto.url}/>
+                <img className={styles.cover_photo} src={data?.coverPhoto?.url}/>
             </div>
             
             <div className={styles.profile_picture_container}>
-                <img className={styles.profile_picture} src={data?.profilePhoto.url}/>
+                <img className={styles.profile_picture} src={data?.profilePhoto?.url}/>
 
                 <div className={styles.profile_name}>
                     <h2>{data?.fullName}</h2>
