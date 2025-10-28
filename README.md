@@ -9,7 +9,7 @@ Savoir is a skill-sharing platform designed to connect people who want to learn 
 ## Current Status
 
 **Project Phase:** Foundation & Core Features  
-**Completion:** ~35% (2 of 7 phases implemented)
+**Completion:** 2 of 7 phases implemented
 
 The project is in active development with authentication and basic skill posting functionality complete. Currently working on implementing the skill discovery and search features that will allow users to find and connect with skill providers.
 
