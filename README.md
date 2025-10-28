@@ -7,8 +7,7 @@ A community-driven skill-sharing platform where users can teach what they know a
 Savoir is a skill-sharing platform designed to connect people who want to learn with those who want to teach. Whether you're looking to master a new programming language, learn guitar, or improve your design skills, Savoir helps you find the right mentor in your community. The platform facilitates skill exchanges, allowing users to both teach and learn in a collaborative environment.
 
 ## Current Status
-
-**Project Phase:** Foundation & Core Features  
+  
 **Completion:** 2 of 7 phases implemented
 
 The project is in active development with authentication and basic skill posting functionality complete. Currently working on implementing the skill discovery and search features that will allow users to find and connect with skill providers.
@@ -18,15 +17,15 @@ The project is in active development with authentication and basic skill posting
 ## Completed Features
 
 ### User Authentication & Profile Management
-- ✓ User registration with email and password
-- ✓ Secure login system
-- ✓ Password reset functionality
-- ✓ User profile creation and management
+- User registration with email and password
+- Secure login system
+- Password reset functionality
+- User profile creation and management
 
 ### Skill Posting
-- ✓ Users can create and list skills they can teach
-- ✓ Skill profile creation with details and descriptions
-- ✓ Personal skill dashboard
+- Users can create and list skills they can teach
+- Skill profile creation with details and descriptions
+- Personal skill dashboard
 
 ---
 
@@ -38,8 +37,6 @@ Implementing comprehensive skill browsing and discovery features:
 - **Skill Browsing:** View all available skills offered by community members
 - **Smart Search:** Find skills by name, category, or description keywords
 - **Category Filtering:** Filter skills by categories (coding, design, music, languages, etc.)
-
-**Expected Completion:** [Add your target date]
 
 ---
 
