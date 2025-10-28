@@ -1,4 +1,3 @@
-import { url } from "inspector";
 import { createAuthenticatedClient } from "./supabaseClient";
 import { Request, Response } from "express";
 
