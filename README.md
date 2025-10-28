@@ -1,4 +1,4 @@
-# Savoir 🎓
+# Savoir
 
 A community-driven skill-sharing platform where users can teach what they know and learn what they need.
 
@@ -15,7 +15,7 @@ The project is in active development with authentication and basic skill posting
 
 ---
 
-## ✅ Completed Features
+## Completed Features
 
 ### User Authentication & Profile Management
 - ✓ User registration with email and password
@@ -30,7 +30,7 @@ The project is in active development with authentication and basic skill posting
 
 ---
 
-## 🔨 Currently Working On
+## Currently Working On
 
 ### Skill Discovery & Search (In Progress)
 
@@ -43,20 +43,20 @@ Implementing comprehensive skill browsing and discovery features:
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
-### Phase 1: Foundation ✅
+### Phase 1: Foundation 
 - [x] User authentication system
 - [x] Profile management
 - [x] Basic skill posting
 
-### Phase 2: Discovery 🚧 (Current)
+### Phase 2: Discovery (Current)
 - [ ] Skill browsing interface
 - [ ] Search functionality
 - [ ] Category filtering
 - [ ] Skill detail pages
 
-### Phase 3: Skill Swap Management ⏳ (Next Up)
+### Phase 3: Skill Swap Management
 - Request system for skill swaps
 - Notifications & session tracking
 
@@ -74,7 +74,7 @@ Implementing comprehensive skill browsing and discovery features:
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 **Frontend:**
 - React, Next.js, HTML/CSS/JavaScript/TypeScript
