@@ -10,18 +10,17 @@ import { useState } from "react";
 import { useForm } from "../../hooks/useForm.ts";
 import { useUserStore } from "../../stores/useUserStore.ts";
 import { useRouter } from "next/navigation";
-import Link from "next/Link";
+import Link from "next/link";
 
-import { validateSignUpForm } from "../../../src/components/listeners/formValidators.ts";
+import { validateSignUpForm } from "../../components/listeners/formValidators.ts";
 import { sendHTTPRequest } from "../../../lib/utils.ts";
 
 export default function SignUp() {
     const [form, saveInput] = useForm(useState({ fullName: "", email: "", password: "" }));
     const [error, setError] = useState("");
     const router = useRouter();
-    // const [loading, setLoading] = useState(false); handle loading state
-    const setUser = useUserStore((state) => state.setUser);
-    // move this code to server middleware
+    const setUser = useUserStore((state) => state.setRegistrationInfo);
+    
     async function handleSignUp(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
         
