@@ -33,7 +33,7 @@ export default function Skills() {
         // create a shallow copy of the skill data and save it with Zustand so we don't have to directly modify the query cache
         const skillsDataCopy = Array.from(skillsData ? skillsData: []);
 
-        // only initialiaze skills on the first load, otherwise, reuse the values already present in the Zustand store
+        // only initialiaze skills on the first load. otherwise, reuse the values already present in the Zustand store
         // NOTE: the reason we store the skills with Zustand is so that we don't have to overwrite the cache when 
         // we're making updates and also so that we can access the skills in RouteChangeListener where we send the requests.
         if(skills.length == 0) { 
@@ -61,7 +61,7 @@ export default function Skills() {
 
     function addSkill(newSkill: Skill) {
         setIsSkillsUpdated(true);
-        setSkills([...skills, newSkill]); // manually set skills since the value of skills seems not to persist after a few route changes
+        setSkills([...skills, newSkill]);
     }
 
     function updateSkill(updatedSkill: Skill) {
@@ -73,6 +73,7 @@ export default function Skills() {
         setIsSkillsUpdated(true);
         setSkills(skills.filter(skill => skill.id !== skillToDelete.id));  
     }
+
     return (
         <SkillDataContext.Provider value={{
             categories: categoriesData,

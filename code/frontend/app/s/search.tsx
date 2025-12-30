@@ -1,9 +1,9 @@
 "use client"
 
-import Browse from "../../src/pages/Browse/Browse";
+import SearchResults from "../../src/views/Browse/SearchResults";
 
 export default function Search() {
     return (
-        <Browse />
+        <SearchResults />
     );
 }

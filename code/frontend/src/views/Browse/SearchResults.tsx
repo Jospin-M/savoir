@@ -1,15 +1,18 @@
 import Header from "../../components/common/Header";
-import { NavBar } from "../../components/common/Navigation";
-
+import { Filters } from "../../components/browse/Filters";
 import styles from "../../components/common/Common.module.css";
 
-export default function Browse() {
+export default function SearchResults() {
     return (
         <div>
             <Header/>
             
             <div className={styles.main_content}>
-                <NavBar />
+                <Filters />
+                
+                <div className={styles.page_content}>
+                    
+                </div>
             </div>
         </div>
     );

@@ -1,6 +1,6 @@
 "use client"
 
-import Authenticated from "../../../src/pages/Profile/Authenticated.tsx";
+import Authenticated from "../../../src/views/Profile/Authenticated.tsx";
 
 export default function Profile() {
     return (

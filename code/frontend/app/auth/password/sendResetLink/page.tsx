@@ -1,6 +1,6 @@
 "use client"
 
-import IntiatePasswordReset from "../../../../src/pages/Auth/InitiatePasswordReset";
+import IntiatePasswordReset from "../../../../src/views/Auth/InitiatePasswordReset";
 
 export default function Page() {
     return (
