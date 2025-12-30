@@ -63,31 +63,7 @@ export function TextareaField<T extends FieldValues>({ textareaTitle, field, err
     );
 }
 
-export function DropdownField<T extends FieldValues>({ dropdownTitle,  field, errors, options }: 
-    { dropdownTitle: string, field: ControllerRenderProps<T, Path<T>>, errors: FieldErrors, options: Entity[] 
-}) {
-    const { name: defaultOption } = options.find(opt => opt.id === field.value)!;
-
-    return (
-        <div className={styles.form_group}>
-            <label htmlFor="dropdown_field">{dropdownTitle}</label>
-
-            <select value={defaultOption} id="dropdown_field" className={styles.dropdown} onChange={e => {
-                const newChoice = options.find(opt => e.target.value === opt.name)
-                
-                field.onChange(newChoice!.id)
-            }}>
-                {options.map((opt) => (
-                    <option key={opt.name} value={opt.name}>{opt.name}</option>
-                ))}
-            </select>
-
-            {errors[field.name] && <p className={styles.error_message}>{errors[field.name]?.message as string}</p>}
-        </div>
-    );
-}
-
-export function RadioGroup<T extends FieldValues>({ radioTitle,  field, errors, options }: 
+export function RadioGroup<T extends FieldValues>({ radioTitle, field, errors, options }: 
     { radioTitle: string, field: ControllerRenderProps<T, Path<T>>, errors: FieldErrors, options: string[] 
 }) {
     //options should be sorted alphabetically on the server so that the client gets sorted elements
@@ -112,6 +88,47 @@ export function RadioGroup<T extends FieldValues>({ radioTitle,  field, errors, 
             </div>
 
             {errors[field.name] && <p className={styles.error_message}>{errors[field.name]?.message as string}</p>}
+        </div>
+    );
+}
+
+type FilterOption = Entity & { disabled: boolean };
+
+export function DropdownField<T extends FieldValues>({ dropdownTitle,  field, errors, options }: 
+    { dropdownTitle: string, field: ControllerRenderProps<T, Path<T>>, errors: FieldErrors, options: FilterOption[] 
+}) {
+    const { name: defaultOption } = options.find(opt => opt.id === field.value)!;
+
+    return (
+        <div className={styles.form_group}>
+            <label htmlFor="dropdown_field">{dropdownTitle}</label>
+
+            <select value={defaultOption} id="dropdown_field" className={styles.dropdown} onChange={e => {
+                const newChoice = options.find(opt => e.target.value === opt.name)
+                
+                field.onChange(newChoice!.id)
+            }}>
+                {options.map((opt) => (
+                    <option key={opt.name} value={opt.name} disabled={opt.disabled}>{opt.name}</option>
+                ))}
+            </select>
+
+            {errors[field.name] && <p className={styles.error_message}>{errors[field.name]?.message as string}</p>}
+        </div>
+    );
+}
+
+export function CheckboxField<T extends FieldValues>({ field, options }: 
+    { field: ControllerRenderProps<T, Path<T>>, options: FilterOption[] 
+}) {
+    return (
+        <div className={styles.form_group}>
+            {options.map((opt) => (
+                <div className={styles.checkbox_option}>
+                    <input type="checkbox" key={opt.id + opt.name + opt.disabled} id={opt.name} value={opt.name} onChange={e => field.onChange(e.target.value)} disabled={opt.disabled}/>
+                    <label htmlFor={opt.name}>{opt.name}</label>
+                </div>
+            ))}
         </div>
     );
 }

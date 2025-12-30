@@ -1,6 +1,6 @@
 "use client"
 
-import SignUp from "../../../src/pages/Auth/SignUp";
+import SignUp from "../../../src/views/Auth/SignUp";
 
 export default function Page() {
     return (

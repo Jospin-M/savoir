@@ -230,3 +230,19 @@
     font-size: 0.85rem;
     color: #777;
 }
+
+.checkbox_option {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 0.8rem;
+}
+
+.checkbox_option label {
+    display: flex;
+    justify-content: center;
+
+    margin: 0;
+    margin-left: 0.5rem;
+    margin-top: 0.1rem;
+}

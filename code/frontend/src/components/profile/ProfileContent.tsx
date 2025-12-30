@@ -18,7 +18,7 @@ function SkillPreviews() {
     const userID = useUserStore(state => state.userID)!;
     const { data: skills } = useData<Skill[]>(["user-skills", userID], getAuthenticatedUserSkills);
     const activeSkills = skills?.filter(skill => skill.active === true);
-    activeSkills.forEach((skill) => {
+    activeSkills?.forEach((skill) => {
         previews.push(
             <div className={skillStyles.profile_skill_card} key={skill.id}>
                 <div className={skillStyles.profile_skill_card_header}>

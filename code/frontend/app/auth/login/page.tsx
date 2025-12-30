@@ -1,6 +1,6 @@
 "use client"
 
-import Login from "../../../src/pages/Auth/Login";
+import Login from "../../../src/views/Auth/Login";
 
 export default function Page() {
     return (

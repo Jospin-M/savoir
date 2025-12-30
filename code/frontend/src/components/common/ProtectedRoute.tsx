@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 import { useUserStore } from "../../stores/useUserStore"
-import Login from "../../pages/Auth/Login";
+import Login from "../../views/Auth/Login";
 
 
 export default function ProtectedRoute({ children }: { children: ReactNode }) {

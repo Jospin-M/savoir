@@ -1,4 +1,4 @@
-import { DropdownField, InputField, RadioGroup, TextareaField } from "../../common/modal/Input";
+import { DropdownField, InputField, RadioGroup, TextareaField, type FilterOption } from "../../common/modal/Input";
 
 import { useSkillData } from "../../../hooks/useSkillsData";
 import type { Skill } from "../../../../lib/queryFunctions";
@@ -19,6 +19,10 @@ export function Name({ control, errors }: { control: Control<Skill>, errors: Fie
 
 export function Categories({ control, errors }: { control: Control<Skill>, errors: FieldErrors<Skill> }) {
     const { categories } = useSkillData();
+    const options: FilterOption[] = [];
+    categories.forEach((category) => {
+        options.push({ ...category, disabled: false})
+    });
     
     return (
         <Controller 
@@ -26,7 +30,7 @@ export function Categories({ control, errors }: { control: Control<Skill>, error
             control={control}
             rules={{ required: "Category is required" }}
             render={({ field }) => (
-                <DropdownField dropdownTitle="Category" field={field} errors={errors} options={categories}/>
+                <DropdownField dropdownTitle="Category" field={field} errors={errors} options={options}/>
             )}
         />
     );

@@ -1,6 +1,6 @@
 "use client"
 
-import VerifyAccount from "../../../src/pages/Auth/VerifyAccount";
+import VerifyAccount from "../../../src/views/Auth/VerifyAccount";
 
 export default function Page() {
     return (
