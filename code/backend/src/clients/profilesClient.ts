@@ -4,13 +4,14 @@ import { Request, Response } from "express";
 /**
  * Retrieves the languages known by the user along with their profiency levels in those languages.
  */
-async function getUserLanguages(req: Request) {
+async function getUserLanguages(req: Request, userID: string) {
     const { data } = await createAuthenticatedClient(req)
         .from("users_languages")
         .select(`
             proficiency,
             language_id(id,name)
-    `);
+        `)
+        .eq("user_id", userID);
 
     // the data is explicitly casted here to ensure that we can access the 'name' 
     // property of the 'language_id' object returned by supabase
@@ -61,9 +62,11 @@ async function getPictures(paths: string[], req: Request) {
  */
 export async function getProfile(req: Request, res: Response) {
     const supabaseClient = createAuthenticatedClient(req);
+    const [userID] = req.path.split("/").filter(Boolean)
     const { data, error } = await supabaseClient
         .from("users")
         .select("first_name,last_name,bio,profile_photo_path,cover_photo_path")
+        .eq("id", userID)
         .maybeSingle();
         
     if(error) {
@@ -72,9 +75,12 @@ export async function getProfile(req: Request, res: Response) {
     }
 
     const { first_name, last_name, bio, profile_photo_path, cover_photo_path } = data!;
-    const languageData = await getUserLanguages(req);
-    const [profilePhotoUrl, coverPhotoUrl] = await getPictures([profile_photo_path, cover_photo_path], req);
-
+    const [languageData, photos]: [unknown, string[]] = await Promise.all([
+        getUserLanguages(req, userID), 
+        getPictures([profile_photo_path, cover_photo_path], req)
+    ]);
+    const [profilePhotoUrl, coverPhotoUrl] = photos;
+    
     res.status(200).json({
         fullName: first_name + " " + last_name,
         bio: bio,

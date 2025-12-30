@@ -1,14 +1,14 @@
-import Rectangle from "../../components/common/Rectangle";
-import PasswordInputBox from "../../components/auth/PasswordInputBox";
-import Button from "../../components/common/Button";
+import Rectangle from "../../components/common/Rectangle.tsx";
+import PasswordInputBox from "../../components/auth/PasswordInputBox.tsx";
+import Button from "../../components/common/Button.tsx";
 import styles from "../../components/auth/Auth.module.css"
 
 import { useState } from "react";
-import { useForm } from "../../hooks/useForm";
+import { useForm } from "../../hooks/useForm.ts";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "../../stores/useUserStore.ts";
 
-import { validateInputLength } from "../../components/listeners/formValidators";
+import { validateInputLength } from "../../components/listeners/formValidators.ts";
 import supabase, { sendHTTPRequest } from "../../../lib/utils.ts";
 
 export default function VerifyAccount() {
@@ -17,8 +17,8 @@ export default function VerifyAccount() {
     const router = useRouter();
 
     const setUserID = useUserStore((state) => state.setUserID);
-    const clearUser = useUserStore((state) => state.clearUser);
-    const user = useUserStore((state) => state.user);
+    const clearUser = useUserStore((state) => state.clearRegistrationInfo);
+    const user = useUserStore((state) => state.registrationInfo);
     
     async function handleVerification(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();

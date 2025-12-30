@@ -5,9 +5,9 @@ import ProfileContent from "../../components/profile/ProfileContent.tsx";
 import styles from "../../components/common/Common.module.css";
 
 import { useEffect, useState } from "react";
-import { useData } from "../../hooks/useQueryClient";
-import { useUserStore, type UserProfile } from "../../stores/useUserStore";
-import { ProfileDataContext, type ContextProfileData } from "../../hooks/useProfileData";
+import { useData } from "../../hooks/useQueryClient.ts";
+import { useUserStore, type UserProfile } from "../../stores/useUserStore.ts";
+import { ProfileDataContext, type ContextProfileData } from "../../hooks/useProfileData.ts";
 import { getProfileData, type ProfileData, getLanguages, type Language } from "../../../lib/queryFunctions.ts";
 
 import { useRefreshCache } from "../../hooks/useRefreshCache.ts";

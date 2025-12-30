@@ -12,7 +12,7 @@ import { useUserStore } from "../../stores/useUserStore.ts";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-import { validateAuthForm } from "../../../src/components/listeners/formValidators.ts";
+import { validateAuthForm } from "../../components/listeners/formValidators.ts";
 import { sendHTTPRequest } from "../../../lib/utils.ts";
 import supabase from "../../../lib/utils.ts";
 

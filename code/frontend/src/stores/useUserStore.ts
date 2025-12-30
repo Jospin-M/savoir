@@ -11,6 +11,13 @@ export type UserProfile = {
     profilePhoto: string;
 }
 
+type RegistrationForm = {
+    id: string;
+    first_name: string;
+    last_name: string;
+    email: string
+}
+
 export type UserState = {
     userID: string | null;
     clearUserID: () => void;
@@ -19,12 +26,15 @@ export type UserState = {
     userProfile: UserProfile | null;
     setProfile: (profile: UserProfile) => void;
 
+    registrationInfo: RegistrationForm | null,
+    setRegistrationInfo: (info: RegistrationForm) => void;
+    clearRegistrationInfo: () => void;
+
     isProfileUpdated: boolean;
     setIsProfileUpdated: (isUpdated: boolean) => void;
 
     skills: Skill[];
     setSkills: (skills: Skill[]) => void;
-
 
     isSkillsCacheUpdated: boolean;
     setIsSkillsUpdated: (isUpdated: boolean) => void;
@@ -39,6 +49,10 @@ export const useUserStore = create<UserState>()(
 
             userProfile: null,
             setProfile: (profile) => set({ userProfile: profile }),
+
+            registrationInfo: null,
+            setRegistrationInfo: (info) => set({ registrationInfo: info }),
+            clearRegistrationInfo: () => set({ registrationInfo: null }),
 
             isProfileUpdated: false,
             setIsProfileUpdated: (isUpdated) => set({ isProfileUpdated: isUpdated }),
