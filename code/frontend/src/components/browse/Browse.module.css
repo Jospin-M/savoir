@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.sidebar {
+    min-width: 12rem;
+    width: 13%;
+
+    padding: 1rem; 
+    
+    background-color: white;
+}
+
+.filter_section {
+    margin-bottom: 2rem;
+}
+
+.filter_section h3 {
+    margin-top: 1rem;
+     
+    font-family: "Roboto Flex", sans-serif;
+    font-weight: 750;
+    font-size: 1.2rem;
+    color: #2C2C2C;
+}
